@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nature's Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; scroll-behavior: smooth; }
+        body { background: #f4f7f6; color: #2c3e30; line-height: 1.6; }
+        
+        nav { background: #1a2e22; padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.2); position: fixed; width: 100%; top: 0; z-index: 1000; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: #8bc34a; cursor: pointer; display: flex; align-items: center; gap: 10px; }
+        .nav-links { list-style: none; display: flex; gap: 30px; }
+        .nav-links a { text-decoration: none; color: #d4e157; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: #fff; }
+
+        .hero { text-align: center; padding: 150px 20px 80px; background: linear-gradient(rgba(26, 46, 34, 0.7), rgba(26, 46, 34, 0.7)), url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat; color: #fff; }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 20px; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .hero p { max-width: 600px; margin: 0 auto 30px; font-size: 1.2rem; color: #e0e0e0; }
+        .btn-maps { background: #4caf50; color: #fff; padding: 15px 30px; border-radius: 5px; text-decoration: none; font-weight: bold; display: inline-block; transition: background 0.3s; border: 2px solid #4caf50; }
+        .btn-maps:hover { background: #fff; color: #1a2e22; border-color: #fff; }
+
+        .stats { display: flex; justify-content: center; gap: 50px; padding: 50px; background: #fff; flex-wrap: wrap; }
+        .stat-item { text-align: center; }
+        .stat-item h2 { font-size: 2.5rem; color: #4caf50; }
+        .stat-item p { font-size: 1.1rem; color: #555; }
+
+        .section { padding: 80px 50px; text-align: center; max-width: 1200px; margin: 0 auto; }
+        .section h2 { font-size: 2rem; margin-bottom: 40px; color: #1a2e22; }
+        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .card { background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s; border-top: 5px solid #4caf50; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .card h3 { margin-bottom: 15px; color: #1a2e22; }
+
+        .zoo-cams { background: #1a2e22; background-image: radial-gradient(#243924 1px, transparent 1px); background-size: 20px 20px; color: #fff; padding: 80px 50px; text-align: center; }
+        .zoo-cams h2 { color: #8bc34a; margin-bottom: 10px; }
+        .zoo-cams p { color: #bdc3c7; margin-bottom: 40px; }
+        .cams-dashboard { display: flex; max-width: 1200px; margin: 0 auto; background: #243924; border-radius: 10px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3); text-align: left; border: 1px solid #4caf50; }
+        .cams-sidebar { width: 300px; background: #243924; padding: 20px 0; overflow-y: auto; border-right: 1px solid #4caf50; max-height: 550px; }
+        .cams-sidebar h4 { color: #8bc34a; padding: 10px 20px; text-transform: uppercase; font-size: 0.9rem; border-bottom: 1px solid #4caf50; margin-bottom: 10px; }
+        .animal-btn { display: flex; align-items: center; width: 100%; text-align: left; background: none; border: none; color: #ecf0f1; padding: 12px 20px; cursor: pointer; font-size: 1rem; transition: background 0.2s; border-bottom: 1px solid #1a2e22; }
+        .animal-btn:hover { background: #1a2e22; }
+        .animal-btn.active { background: #4caf50; color: #fff; font-weight: bold; }
+
+        .animal-btn span { margin-left: 10px; flex: 1; }
+        .biome-tag { font-size: 0.6rem; padding: 3px 8px; border-radius: 10px; text-transform: uppercase; font-weight: bold; color: #000; }
+        .tag-marine { background: #29b6f6; color: #fff; }
+        .tag-desert { background: #ffeb3b; color: #000; }
+        .tag-savanna { background: #cddc39; color: #000; }
+        .tag-rainforest { background: #2e7d32; color: #fff; }
+        .tag-forest { background: #4caf50; color: #fff; }
+        .tag-tundra { background: #e0f7fa; color: #000; }
+
+        .video-main { flex: 1; display: flex; flex-direction: column; }
+        .video-header { padding: 15px 20px; background: #1a2e22; border-bottom: 1px solid #4caf50; }
+        .video-header h3 { color: #8bc34a; margin: 0; }
+        .video-wrapper { flex: 1; aspect-ratio: 16/9; background: #000; }
+        .video-wrapper iframe { width: 100%; height: 100%; border: none; }
+
+        .biomes-section { background: #fff; padding: 80px 50px; }
+        .biomes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
+        .biome-card { position: relative; height: 250px; border-radius: 10px; overflow: hidden; cursor: pointer; transition: transform 0.3s; border: 2px solid #1a2e22; }
+        .biome-card:hover { transform: scale(1.02); }
+        .biome-card img { width: 100%; height: 100%; object-fit: cover; }
+        .biome-overlay, .biome-verlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(26, 46, 34, 0.9)); color: #fff; padding: 20px; }
+        .biome-overlay h3, .biome-verlay h3 { margin: 0; font-size: 1.5rem; color: #8bc34a; }
+        .biome-overlay p, .biome-verlay p { font-size: 0.9rem; margin-top: 5px; color: #ddd; }
+
+        #map-section { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2000; background: #fff; }
+        #map { width: 100%; height: 100%; }
+        .close-map { position: absolute; top: 20px; right: 20px; z-index: 5000; background: #ff5f56; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 16px; }
+        .map-header { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 5000; background: rgba(26, 46, 34, 0.9); padding: 10px 30px; border-radius: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .map-header h2 { margin: 0; font-size: 1.2rem; color: #8bc34a; }
+
+        .donate-section { background: linear-gradient(135deg, #4caf50 0%, #1a2e22 100%); color: #fff; padding: 80px 20px; text-align: center; }
+        .donate-section h2 { font-size: 2.5rem; margin-bottom: 20px; }
+        .donate-section p { max-width: 600px; margin: 0 auto 40px; font-size: 1.2rem; }
+        .btn-donate { background: #fff; color: #1a2e22; padding: 15px 40px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.2rem; display: inline-block; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .btn-donate:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+
+        footer { background: #1a2e22; color: #fff; padding: 50px; text-align: center; }
+        footer p { margin-bottom: 10px; color: #bdc3c7; }
+
+        #mrbunny-fab { position: fixed; bottom: 24px; right: 24px; width: 54px; height: 54px; background: #4caf50; border-radius: 50%; border: 2px solid #8bc34a; font-size: 1.45rem; cursor: pointer; box-shadow: 0 4px 18px rgba(0,0,0,.65); display: flex; align-items: center; justify-content: center; z-index: 2147483647; transition: transform .15s; user-select: none; }
+        #mrbunny-fab:hover { transform: scale(1.1); }
+        #mrbunny-panel { position: fixed; bottom: 90px; right: 24px; width: 320px; height: 430px; background: #243924; border: 1px solid #4caf50; border-radius: 6px; box-shadow: 0 10px 44px rgba(0,0,0,.9); z-index: 2147483646; display: none; flex-direction: column; overflow: hidden; font-family: 'Segoe UI', sans-serif; }
+        #mrbunny-panel.bopen { display: flex; }
+        #bhdr { background: #1a2e22; padding: 12px 14px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #4caf50; flex-shrink: 0; }
+        #bav { width: 32px; height: 32px; background: #4caf50; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; color: #fff; }
+        #bhtx { flex: 1; } #btitle { color: #fff; font-weight: 700; font-size: .88rem; } #bsub { color: #8bc34a; font-size: .65rem; margin-top: 1px; }
+        #bmsgs { flex: 1; overflow-y: auto; padding: 12px 10px; display: flex; flex-direction: column; gap: 8px; background: #243924; }
+        #bmsgs::-webkit-scrollbar { width: 3px; } #bmsgs::-webkit-scrollbar-thumb { background: #4caf50; border-radius: 2px; }
+        .bwb { display: flex; flex-direction: column; align-items: flex-start; } .bwu { display: flex; flex-direction: column; align-items: flex-end; }
+        .blb { font-size: .6rem; color: #8bc34a; margin-bottom: 2px; } .blu { font-size: .6rem; color: #8bc34a; margin-bottom: 2px; }
+        .bbot { background: #1a2e22; color: #ecf0f1; border: 1px solid #4caf50; border-radius: 2px 10px 10px 10px; padding: 8px 11px; font-size: .8rem; line-height: 1.55; max-width: 93%; }
+        .busr { background: #4caf50; color: #fff; border-radius: 10px 2px 10px 10px; padding: 8px 11px; font-size: .8rem; line-height: 1.55; max-width: 93%; font-weight: 600; }
+        .btyp { color: #8bc34a; font-size: .75rem; font-style: italic; padding: 2px; }
+        #bbar { display: flex; border-top: 1px solid #4caf50; background: #1a2e22; flex-shrink: 0; }
+        #binp { flex: 1; background: #243924; border: 1px solid #4caf50; color: #ecf0f1; outline: none; font-size: .82rem; padding: 11px 12px; font-family: inherit; }
+        #binp::placeholder { color: #8bc34a; }
+        #binp:focus { border-color: #8bc34a; }
+        #bbtn { background: #4caf50; border: none; color: #fff; font-weight: 700; font-size: .9rem; padding: 0 16px; cursor: pointer; transition: background .15s; }
+        #bbtn:hover { background: #8bc34a; } #bbtn:disabled { background: #7f8c8d; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo" onclick="closeMap()">🌿 Nature's Map</div>
+        <ul class="nav-links">
+            <li><a href="#" onclick="closeMap()">Platform</a></li>
+            <li><a href="#" onclick="closeMap()">Biomes</a></li>
+            <li><a href="#" onclick="closeMap()">Live Cameras</a></li>
+            <li><a href="#" onclick="closeMap()">Donate & Resources</a></li>
+        </ul>
+    </nav>
+
+    <div class="hero">
+        <h1>Explore Nature's Map</h1>
+        <p>Look at animals and habitats from around the world. Watch live wildlife, track animals, and explore the what Mother Nature made.</p>
+        <a href="#" class="btn-maps" onclick="openMap()">Explore the Map</a>
+    </div>
+
+    <div class="stats">
+        <div class="stat-item">
+            <h2>450,000+</h2>
+            <p>Species Mapped</p>
+        </div>
+        <div class="stat-item">
+            <h2>196+</h2>
+            <p>Countries & Territories</p>
+        </div>
+        <div class="stat-item">
+            <h2>8</h2>
+            <p>Live Wildlife Cameras</p>
+        </div>
+    </div>
+    <div class="biomes-section" id="biomes">
+        <div class="sectioon" style="padding: 0 0 40px 0;"></div>
+            <h2>Explore the Biomes</h2>
+            <p>Learn about the different ecosystems that make up our planet and the animals that call them home.</p>
+    </div>
+    <div class="biomes-grid">
+            <div class="biome-card">
+                <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=600&q=80" alt="Basically MC Jungle">
+                <div class="biome-overlay"><h3>Tropical Rainforest</h3><p>Warm, wet, and home to over half of all of the worl'd plants and animal species.</p></div>
+        </div>
+        <div class="biome-card">
+            <img src="https://z-cdn-media.chatglm.cn/files/78581ee8-6eda-4c8f-9c60-11cc420b8a8e.png?auth_key=1888118725-9c6666dca1d24fb28be0aea1ed9c2e12-0-38810324a7c1fdd22aefc93c04fa98d7" alt="Savannah">
+            <div class="biome-overlay"><h3>Savanna</h3><p>Greasslands with scattered trees, famours for large herbivores and predators.</p></div>
+        </div>
+        <div class="biome-card">
+            <img src="https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?auto=format&fit=crop&w=600&q=80" alt="Ocen">
+            <div class="biome-overlay"><h3>Oceans</h3><p>Covers around 70% of our world. This is where all life started from.</p></div>
+        </div>
+        <div class="biome-card">
+            <img src="https://images.unsplash.com/photo-1418985991508-e47386d96a71?auto=format&fit=crop&w=600&q=80" alt="Snow">
+            <div class="biome-overlay"><h3>Tundra</h3><p>Very cold places where animals like polar bears and artic foxes live</p></div>
+        </div>
+        <div class="biome-card">
+            <img src="https://z-cdn-media.chatglm.cn/files/7d411faf-eb72-45a0-9a26-0dde66cd5daa.png?auth_key=1888118725-fe78f7a939ec4f0487413a349cfc3e0e-0-0199ac3002f2b4810fffa8d564c96b43" alt="desert">
+            <div class="biome-verlay"><h3>Desert</h3><p>Dry Areas usually filled with sand. Did you know Antartica is a desert?</p></div>
+        </div>
+        <div class="biome-card">
+            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=600&q=80" alt="birch forest">
+            <div class="biome-overlay"><h3>Broadleaf Forest</h3><p>Forests with four distinct seasons, home to bears, deer and owls.</p></div>
+        </div>
+        <div class="biome-card">
+            <img src="https://z-cdn-media.chatglm.cn/files/a0f7ce0b-39e7-4372-b37d-028a500e94f6.png?auth_key=1888118464-babb4667e6dc4804b465d8ebde73b43d-0-09e7ad2fb97f741f1f9c3e1fca377e64" alt="swamp">
+            <div class="biome-overlay"><h3>Wetlands</h3><p>Swamps and marshes, vital for water purification.</p></div>
+        </div>
+        <div class="biome-card">
+            <img src="https://www.activewild.com/wp-content/uploads/2016/05/Wild-Cats-List-Puma.jpg" alt="Chaparall">
+            <div class="biome-overlay"><h3>Chaparall</h3><p>Shrubland plant community with a Mediterranean climate of mild, wet winters and hot, dry summers.</p></div>
+        </div>
+    </div>
+
+    <div class="zoo-cams" id="cam">
+        <h2>Global Live Wildlife</h2>
+        <p>Observe animals live from Monterey Bay Aquarium and Explore.org's verified nature network.</p>
+        <div class="cams-dashboard">
+            <div class="cams-sidebar">
+                <h4>Monterey Bay Aquarium</h4>
+                <button class="animal-btn active" onclick="switchCam('Sea Otters', 'j_5bzK5pJ6k')"><span>🦦 Sea Otters</span><div class="biome-tag tag-marine">Marine</div></button>
+                <button class="animal-btn" onclick="switchCam('Kelp Forest', 'b3pPS-CjSf4')"><span>🐠 Kelp Forest</span><div class="biome-tag tag-marine">Marine</div></button>
+                <button class="animal-btn" onclick="switchCam('Open Sea', 'P9lJvZmO0tY')"><span>🦈 Open Sea</span><div class="biome-tag tag-marine">Marine</div></button>
+                
+                <h4>Explore.org Wildlife</h4>
+                <button class="animal-btn" onclick="switchCam('Brown Bears (Katmai)', 'm5_sUoNz1CA')"><span>🐻 Brown Bears</span><div class="biome-tag tag-forest">Forest</div></button>
+                <button class="animal-btn" onclick="switchCam('African Elephants', '8A_Bo6mPTl4')"><span>🐘 African Elephants</span><div class="biome-tag tag-savanna">Savanna</div></button>
+                <button class="animal-btn" onclick="switchCam('Giant Pandas', 'r9fvY8J5qEo')"><span>🐼 Giant Pandas</span><div class="biome-tag tag-rainforest">Bamboo Forest</div></button>
+                <button class="animal-btn" onclick="switchCam('Hummingbirds', 'eV4D5KBPsK8')"><span>🐦 Hummingbirds</span><div class="biome-tag tag-forest">Forest</div></button>
+                <button class="animal-btn" onclick="switchCam('Tiger Cubs', '4_GZUNpQZjw')"><span>🐅 Tiger Cubs</span><div class="biome-tag tag-savanna">Forest</div></button>
+            </div>
+            <div class="video-main">
+                <div class="video-header">
+                    <h3 id="cam-title">Now Watching: Sea Otters</h3>
+                </div>
+                <div class="video-wrapper">
+                    <iframe id="live-cam-iframe" src="https://www.youtube.com/embed/j_5bzK5pJ6k?autoplay=1&mute=1" title="Live Wildlife Cam" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Biodiversity Indicators</h2>
+        <p>Nature's Map GBF-adopted indicators are used to track global, national, and regional progress towards our biodiversity goals.</p>
+        <br>
+        <div class="cards">
+            <div class="card"><h3>Species Protection Index</h3></div>
+            <div class="card"><h3>Species Habitat Index</h3></div>
+            <div class="card"><h3>Species Information Index</h3></div>
+        </div>
+    </div>
+    <div class="donate-section">
+        <h2>Support Saving Our World</h2>
+        <p>Your support helps protect the incredible species and habitats you have just explored. Partner with the World Wildlife Fund to help make a difference.</p>
+        <a href="https://www.worldwildlife.org/about/" target="_blank" class="btn-donate">Donate to WWF</a>
+    </div>
+    
+    <footer>
+        <p>Humans May Rule the World. A True Leader Helps Everyone Under Their Rule!</p>
+        <p>Copyright © 2026 Nature's Map Platform</p>
+    </footer>
+    <div id="map-section">
+        <div class="map-header"><h2>Global Wildlife Habitats</h2></div>
+        <button class="close-map" onclick="closeMap()">Close Map (X)</button>
+        <div id="map"></div>
+    </div>
+
+    <div id="mrbunny-fab">🐰</div>
+    <div id="mrbunny-panel">
+        <div id="bhdr">
+            <div id="bav">🐰</div>
+            <div id="bhtx">
+                <div id="btitle">MrBunny AI</div>
+                <div id="bsub">Nature's Map Assistant</div>
+            </div>
+        </div>
+        <div id="bmsgs">
+            <div class="bwb">
+                <div class="blb">MrBunny</div>
+                <div class="bbot">Hey! I'm MrBunny, your Nature's Map assistant! I am a digitalized bunny!</div>
+            </div>
+        </div>
+        <div id="bbar">
+            <input type="text" id="binp" placeholder="Ask MrBunny anything...">
+            <button id="bbtn">➤</button>
+        </div>
+    </div>
+
+    <script>
+        var map;
+        function openMap() {
+            document.getElementById('map-section').style.display = 'block';
+            if (!map) {
+                map = L.map('map').setView([20.0, 0.0], 2);
+                L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                    attribution: '© Esri', maxZoom: 18
+                }).addTo(map);
+                
+                var animals = [
+                    { name: 'Bengal Tiger', lat: 25.0, lon: 80.0, region: 'India', icon: '🐯' },
+                    { name: 'African Elephant', lat: -2.0, lon: 36.0, region: 'Kenya', icon: '🐘' },
+                    { name: 'Giant Panda', lat: 30.0, lon: 102.0, region: 'China', icon: '🐼' },
+                    { name: 'Grizzly Bear', lat: 44.0, lon: -110.0, region: 'Yellowstone, USA', icon: '🐻' },
+                    { name: 'Polar Bear', lat: 75.0, lon: -40.0, region: 'Arctic', icon: '🐻‍❄️' },
+                    { name: 'Kangaroo', lat: -25.0, lon: 135.0, region: 'Australia', icon: '🦘' },
+                    { name: 'Jaguar', lat: -10.0, lon: -60.0, region: 'Amazon Rainforest', icon: '🐆' },
+                    { name: 'Mountain Gorilla', lat: -1.0, lon: 29.0, region: 'Rwanda', icon: '🦍' },
+                    { name: 'Giraffe', lat: -3.0, lon: 37.0, region: 'Tanzania', icon: '🦒' },
+                    { name: 'African Lion', lat: -2.0, lon: 35.0, region: 'Serengeti', icon: '🦁' }
+                ];
+
+                for (var i = 0; i < animals.length; i++) {
+                    var a = animals[i];
+                    L.marker([a.lat, a.lon], {
+                        icon: L.divIcon({
+                            html: '<div style="font-size: 28px;">' + a.icon + '</div>',
+                            className: 'animal-marker', iconSize: [30, 30], iconAnchor: [15, 15]
+                        })
+                    }).addTo(map).bindPopup('<b>' + a.name + '</b><br>Region: ' + a.region);
+                }
+            } else {
+                setTimeout(function() { map.invalidateSize(); }, 100);
+            }
+        }
+        function closeMap() { document.getElementById('map-section').style.display = 'none'; }
+
+        function switchCam(animalName, youtubeId) {
+            var iframe = document.getElementById('live-cam-iframe');
+            var title = document.getElementById('cam-title');
+            // Added mute=1 to bypass browser autoplay restrictions
+            iframe.src = "https://www.youtube.com/embed/" + youtubeId + "?autoplay=1&mute=1";
+            title.innerText = "Now Watching: " + animalName;
+            var btns = document.getElementsByClassName('animal-btn');
+            for (var i = 0; i < btns.length; i++) { btns[i].classList.remove('active'); }
+            event.currentTarget.classList.add('active');
+        }
+
+        var OR_KEY = "YOUR_OPENROUTER_API_KEY";
+        var AI_MODELS = ['openai/gpt-oss-120b:free', 'openai/gpt-oss-20b:free', 'google/gemma-3-27b-it:free', 'meta-llama/llama-3.3-8b-instruct:free'];
+
+        function callAI(messages, cb) {
+            var lastErr = 'Request failed';
+            var modelIndex = 0;
+            function tryNext() {
+                if (modelIndex >= AI_MODELS.length) { cb(null, lastErr); return; }
+                var model = AI_MODELS[modelIndex]; modelIndex++;
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', "https://openrouter.ai/api/v1/chat/completions", true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.setRequestHeader('Authorization', 'Bearer ' + OR_KEY);
+                xhr.setRequestHeader('HTTP-Referer', window.location.href);
+                xhr.setRequestHeader('X-Title', 'Natures Map');
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        try {
+                            var data = JSON.parse(xhr.responseText);
+                            if (data.choices && data.choices[0] && data.choices[0].message) { cb(data.choices[0].message.content, null); return; }
+                        } catch (e) {}
+                    }
+                    tryNext();
+                };
+                xhr.onerror = function() { tryNext(); };
+                xhr.send(JSON.stringify({ model: model, messages: messages }));
+            }
+            tryNext();
+        }
+
+        var jHistory = [];
+        var jSys = "You are MrBunny, an AI assistant made by Koushik Tummepalli for Nature's Map. Help people learn about animals, biomes, and conservation. Stay focused on wildlife, nature, and geography. Be warm, concise, and practical. ALWAYS BE PG_13!";
+
+        function scrollJ() { var m = document.getElementById('bmsgs'); m.scrollTop = m.scrollHeight; }
+        function addJBub(role, text) {
+            var mDiv = document.getElementById('bmsgs');
+            var row = document.createElement('div');
+            row.className = role === 'user' ? 'bwu' : 'bwb';
+            var lbl = document.createElement('div');
+            lbl.className = role === 'user' ? 'blu' : 'blb';
+            lbl.innerText = role === 'user' ? 'You' : 'MrBunny';
+            var bub = document.createElement('div');
+            bub.className = role === 'user' ? 'busr' : 'bbot';
+            bub.innerText = text;
+            row.appendChild(lbl); row.appendChild(bub);
+            mDiv.appendChild(row);
+            scrollJ();
+        }
+        function setJTyping(on) {
+            var mDiv = document.getElementById('bmsgs');
+            var ex = document.getElementById('btyp');
+            if (on && !ex) {
+                var t = document.createElement('div');
+                t.id = 'btyp'; t.className = 'btyp';
+                t.innerText = 'MrBunny is processing...';
+                mDiv.appendChild(t); scrollJ();
+            } else if (!on && ex) { ex.remove(); }
+        }
+
+        document.getElementById('mrbunny-fab').addEventListener('click', function() {
+            var panel = document.getElementById('mrbunny-panel');
+            panel.classList.toggle('bopen');
+            if (panel.classList.contains('bopen')) {
+                document.getElementById('binp').focus();
+            }
+        });
+
+        function sendMsg() {
+            var inp = document.getElementById('binp');
+            var btn = document.getElementById('bbtn');
+            var text = inp.value.trim();
+            if (!text) return;
+
+            inp.value = ''; inp.disabled = true; btn.disabled = true;
+            addJBub('user', text);
+
+            var messages = [{role: 'system', content: jSys}];
+            for (var i = 0; i < jHistory.length; i++) {
+                messages.push({role: jHistory[i].role, content: jHistory[i].content});
+            }
+            messages.push({role: 'user', content: text});
+
+            setJTyping(true);
+
+            if (!OR_KEY || OR_KEY === "YOUR_OPENROUTER_API_KEY") {
+                setJTyping(false);
+                addJBub('assistant', 'I require an OpenRouter API key to connect to the mainframe.');
+                inp.disabled = false; btn.disabled = false; inp.focus();
+                return;
+            }
+
+            callAI(messages, function(reply, err) {
+                setJTyping(false);
+                if (err) {
+                    addJBub('assistant', 'My apologies. The network is experiencing interference.');
+                } else {
+                    addJBub('assistant', reply);
+                    jHistory.push({role: 'user', content: text});
+                    jHistory.push({role: 'assistant', content: reply});
+                }
+                inp.disabled = false; btn.disabled = false; inp.focus();
+            });
+        }
+
+        document.getElementById('bbtn').addEventListener('click', sendMsg);
+        document.getElementById('binp').addEventListener('keydown', function(e){ if(e.key === 'Enter') sendMsg(); });
+    </script>
+</body>
+</html>
