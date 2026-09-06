@@ -38,7 +38,7 @@
         .zoo-cams h2 { color: #8bc34a; margin-bottom: 10px; }
         .zoo-cams p { color: #bdc3c7; margin-bottom: 40px; }
         .cams-dashboard { display: flex; max-width: 1200px; margin: 0 auto; background: #243924; border-radius: 10px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3); text-align: left; border: 1px solid #4caf50; }
-        .cams-sidebar { width: 300px; background: #243924; padding: 20px 0; overflow-y: auto; border-right: 1px solid #4caf50; max-height: 550px; }
+        .cams-sidebar { width: 320px; background: #243924; padding: 20px 0; overflow-y: auto; border-right: 1px solid #4caf50; max-height: 550px; }
         .cams-sidebar h4 { color: #8bc34a; padding: 10px 20px; text-transform: uppercase; font-size: 0.9rem; border-bottom: 1px solid #4caf50; margin-bottom: 10px; }
         .animal-btn { display: flex; align-items: center; width: 100%; text-align: left; background: none; border: none; color: #ecf0f1; padding: 12px 20px; cursor: pointer; font-size: 1rem; transition: background 0.2s; border-bottom: 1px solid #1a2e22; }
         .animal-btn:hover { background: #1a2e22; }
@@ -132,7 +132,7 @@
             <p>Countries & Territories</p>
         </div>
         <div class="stat-item">
-            <h2>8</h2>
+            <h2>12</h2>
             <p>Live Wildlife Cameras</p>
         </div>
     </div>
@@ -178,27 +178,34 @@
 
     <div class="zoo-cams" id="cam">
         <h2>Global Live Wildlife</h2>
-        <p>Observe animals live from Monterey Bay Aquarium and Explore.org's verified nature network.</p>
+        <p>Observe animals live from explore.org's verified nature network, sorted by continent.</p>
         <div class="cams-dashboard">
             <div class="cams-sidebar">
-                <h4>Monterey Bay Aquarium</h4>
-                <button class="animal-btn active" onclick="switchCam('Sea Otters', 'j_5bzK5pJ6k')"><span>🦦 Sea Otters</span><div class="biome-tag tag-marine">Marine</div></button>
-                <button class="animal-btn" onclick="switchCam('Kelp Forest', 'b3pPS-CjSf4')"><span>🐠 Kelp Forest</span><div class="biome-tag tag-marine">Marine</div></button>
-                <button class="animal-btn" onclick="switchCam('Open Sea', 'P9lJvZmO0tY')"><span>🦈 Open Sea</span><div class="biome-tag tag-marine">Marine</div></button>
-                
-                <h4>Explore.org Wildlife</h4>
+                <h4>Africa</h4>
+                <button class="animal-btn active" onclick="switchCam('African Elephants', '8A_Bo6mPTl4')"><span>🐘 African Elephants</span><div class="biome-tag tag-savanna">Savanna</div></button>
+                <button class="animal-btn" onclick="switchCam('Savanna Watering Hole', 'w1b5V5nM8kE')"><span>🦒 Watering Hole</span><div class="biome-tag tag-savanna">Savanna</div></button>
+                <button class="animal-btn" onclick="switchCam('Savanna Wildlife', 'qUJvY8J5qEo')"><span>🐆 Savanna Wildlife</span><div class="biome-tag tag-savanna">Savanna</div></button>
+
+                <h4>North America</h4>
                 <button class="animal-btn" onclick="switchCam('Brown Bears (Katmai)', 'm5_sUoNz1CA')"><span>🐻 Brown Bears</span><div class="biome-tag tag-forest">Forest</div></button>
-                <button class="animal-btn" onclick="switchCam('African Elephants', '8A_Bo6mPTl4')"><span>🐘 African Elephants</span><div class="biome-tag tag-savanna">Savanna</div></button>
+                <button class="animal-btn" onclick="switchCam('Bald Eagles (Decorah)', 'eV4D5KBPsK8')"><span>🦅 Bald Eagles</span><div class="biome-tag tag-forest">Forest</div></button>
+                <button class="animal-btn" onclick="switchCam('Hummingbirds', 'b3pPS-CjSf4')"><span>🐦 Hummingbirds</span><div class="biome-tag tag-forest">Forest</div></button>
+
+                <h4>Asia</h4>
                 <button class="animal-btn" onclick="switchCam('Giant Pandas', 'r9fvY8J5qEo')"><span>🐼 Giant Pandas</span><div class="biome-tag tag-rainforest">Bamboo Forest</div></button>
-                <button class="animal-btn" onclick="switchCam('Hummingbirds', 'eV4D5KBPsK8')"><span>🐦 Hummingbirds</span><div class="biome-tag tag-forest">Forest</div></button>
-                <button class="animal-btn" onclick="switchCam('Tiger Cubs', '4_GZUNpQZjw')"><span>🐅 Tiger Cubs</span><div class="biome-tag tag-savanna">Forest</div></button>
+                <button class="animal-btn" onclick="switchCam('Siberian Tigers', '4_GZUNpQZjw')"><span>🐅 Siberian Tigers</span><div class="biome-tag tag-forest">Forest</div></button>
+
+                <h4>The Oceans</h4>
+                <button class="animal-btn" onclick="switchCam('Monterey Bay Kelp Forest', 'P9lJvZmO0tY')"><span>🐠 Kelp Forest</span><div class="biome-tag tag-marine">Marine</div></button>
+                <button class="animal-btn" onclick="switchCam('Monterey Bay Open Sea', 'j_5bzK5pJ6k')"><span>🦈 Open Sea</span><div class="biome-tag tag-marine">Marine</div></button>
+                <button class="animal-btn" onclick="switchCam('Sea Otters', '9v8w7U6t5s4')"><span>🦦 Sea Otters</span><div class="biome-tag tag-marine">Marine</div></button>
             </div>
             <div class="video-main">
                 <div class="video-header">
-                    <h3 id="cam-title">Now Watching: Sea Otters</h3>
+                    <h3 id="cam-title">Now Watching: African Elephants</h3>
                 </div>
                 <div class="video-wrapper">
-                    <iframe id="live-cam-iframe" src="https://www.youtube.com/embed/j_5bzK5pJ6k?autoplay=1&mute=1" title="Live Wildlife Cam" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe id="live-cam-iframe" src="https://www.youtube.com/embed/8A_Bo6mPTl4?autoplay=1&mute=1" title="Live Wildlife Cam" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
