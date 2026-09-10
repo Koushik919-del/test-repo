@@ -1,224 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marvel WebOS</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap" rel="stylesheet">
-    <style>
-        /* Doom Protocol Styles */
-        #doom-overlay { 
-            position: absolute; 
-            top: 30px; 
-            left: 0; 
-            width: 100%; 
-            height: calc(100% - 78px); 
-            display: none; 
-            justify-content: center; 
-            align-items: center; 
-            pointer-events: none; 
-            z-index: 10; 
-        }
-        .doom-text { 
-            font-family: 'Pirata One', cursive; 
-            font-size: 7rem; 
-            color: rgba(0, 255, 0, 0.2); 
-            text-align: center; 
-            transform: scale(0.8); 
-            animation: doom-glow 3s infinite alternate; 
-            letter-spacing: 4px; 
-        }
-        @keyframes doom-glow { 
-            0% { text-shadow: 0 0 10px rgba(0,255,0,0.1); } 
-            100% { text-shadow: 0 0 40px rgba(0,255,0,0.5); } 
-        }
-        #doom-timer { 
-            position: absolute; 
-            bottom: 60px; 
-            right: 20px; 
-            background: rgba(0,0,0,0.7); 
-            color: #0f0; 
-            padding: 5px 10px; 
-            border-radius: 4px; 
-            font-family: 'Courier New', monospace; 
-            font-size: 12px; 
-            z-index: 9998; 
-            border: 1px solid #333; 
-        }
-    </style>
-</head>
-<body>
-
-    <div id="news-ticker">
-        <div class="news-label">BREAKING NEWS</div>
-        <div class="news-ticker-body">
-            <div class="news-scroll" id="news-scroll-text">
-                DEPARTMENT OF DAMAGE CONTROL IS FOUND TO BE EVIL. ILLEGAL TESTING AGAINST WOMEN. SPIDER-MAN SAVES THE DAY! &nbsp;&nbsp;&bull;&nbsp;&nbsp; 
-                SCIENTISTS SAY MUTANTS ON THE RISE. &nbsp;&bull;&nbsp; 
-                THE NEW CAPTAIN AMERICA SUES THE NEW AVENGERZ OVER COPYRIGHT ISSUES. &nbsp;&bull;&nbsp; 
-                IS BRUCE BANNER SAFE TO BE AROUND AFTER HIS NEW HULK OUT IN A DODC BUILDING? SHOULD HE GO TO A DIFFERENT PLANET? &nbsp;&bull;&nbsp; 
-                HOW MANY HULKS ARE THERE? HULK-HATER FORMER PRESIDENT ROSS EXPOSED AS RED HULK! &nbsp;&bull;&nbsp; 
-                AVENGERS TOWER PURCHASED BY ANONYMOUS BUYER. &nbsp;&bull;&nbsp; 
-                MYSTERIO SPOTTED IN LONDON. IS HE BACK? &nbsp;&bull;&nbsp;
-            </div>
-        </div>
-    </div>
-
-    <div id="desktop">
-        <div id="doom-overlay">
-            <div class="doom-text">VON DOOM<br>INDUSTRIES</div>
-        </div>
-
-        <div class="desktop-icon" style="top: 20px; left: 20px;" ondblclick="openWindow('win-bugle')"><i>📰</i><span>Daily Bugle</span></div>
-        <div class="desktop-icon" style="top: 20px; left: 120px;" ondblclick="openWindow('win-jarvis')"><i>🤖</i><span>J.A.R.V.I.S</span></div>
-        <div class="desktop-icon" style="top: 20px; left: 220px;" ondblclick="openWindow('win-clock')"><i>⏰</i><span>Clock</span></div>
-        
-        <div class="desktop-icon" id="spidey-icon" style="top: 120px; left: 20px;" ondblclick="openWindow('win-browser')"><i>🕸️</i><span>Spidey-Tracker</span></div>
-        <div class="desktop-icon" style="top: 120px; left: 120px;" ondblclick="openWindow('win-spaceships')"><i>🚀</i><span>Spaceships</span></div>
-        <div class="desktop-icon" style="top: 120px; left: 220px;" ondblclick="openWindow('win-shield')"><i>🛡️</i><span>SHIELD DB</span></div>
-        
-        <div class="desktop-icon" style="top: 220px; left: 20px;" ondblclick="openWindow('win-game')"><i>🎮</i><span>Web-Shooter</span></div>
-        <div class="desktop-icon" style="top: 220px; left: 120px;" ondblclick="openWindow('win-accords')"><i>📜</i><span>Accords</span></div>
-
-        <div id="doom-timer">Doom Protocol: 02:00</div>
-
-        <div id="taskbar">
-            <div class="taskbar-icon" onclick="openWindow('win-bugle')">📰</div>
-            <div class="taskbar-icon" onclick="openWindow('win-jarvis')">🤖</div>
-            <div class="taskbar-icon" onclick="openWindow('win-clock')">⏰</div>
-            <div class="taskbar-icon" id="spidey-taskbar-icon" onclick="openWindow('win-browser')">🕸️</div>
-            <div class="taskbar-icon" onclick="openWindow('win-spaceships')">🚀</div>
-            <div class="taskbar-icon" onclick="openWindow('win-shield')">🛡️</div>
-            <div class="taskbar-icon" onclick="openWindow('win-game')">🎮</div>
-            <div class="taskbar-icon" onclick="openWindow('win-accords')">📜</div>
-            <div class="taskbar-time" id="clock-taskbar">--:--</div>
-        </div>
-
-        <div class="window" id="win-welcome" style="width: 450px; height: 300px;">
-            <div class="title-bar" onmousedown="dragWindow(event, 'win-welcome')"><span>WebOS</span><div class="title-bar-btns"><button onclick="closeWindow('win-welcome')"></button></div></div>
-            <div class="window-content welcome-content">
-                <div class="welcome-logo">🦸‍♂️</div>
-                <div class="welcome-title">Marvel WebOS</div>
-                <div class="welcome-text">Welcome to Marvel WebOS. A feature-limited operating system to answer the unanswerable question of 'What if Spider-Man was a public menace?'<br><br>Created by Koushik Tummepalli.</div>
-                <button class="welcome-btn" onclick="closeWindow('win-welcome')">Get Started</button>
-            </div>
-        </div>
-
-        <div class="window" id="win-bugle" style="width: 600px; height: 500px;">
-            <div class="title-bar" onmousedown="dragWindow(event, 'win-bugle')"><span>The Daily Bugle</span><div class="title-bar-btns"><button onclick="closeWindow('win-bugle')"></button></div></div>
-            <div class="window-content">
-                <div class="bugle-header"><h1>The Daily Bugle</h1><p>"Truth. Justice. And Putting Spider-Man Behind Bars."</p></div>
-                <div class="bugle-article"><h3>How Many Hulks Are There?! Hulk-Hater Ross Exposed As Red Hulk!</h3><div class="meta">By J. Jonah Jameson | Photography by Eddie Brock</div><p>First we had the green one. Then the grey one. Now, sources reveal that Thaddeus "Thunderbolt" Ross—the former President and the biggest Hulk-hater on the planet—has been hiding a massive secret. Ross has mutated into the infamous Red Hulk! The man who spent decades hunting Banner for being a monster was a monster himself the entire time.</p></div>
-                <div class="bugle-article"><h3>Is Bruce Banner Safe To Be Around? Maybe He Should Visit Another Planet!</h3><div class="meta">By J. Jonah Jameson | Photography by Eddie Brock</div><p>After his terrifying new Hulk out inside a Department of Damage Control facility, we have to ask: is Bruce Banner a liability to society? The building was completely leveled, and dozens of agents were hospitalized. Perhaps it's time we stop letting him walk the streets freely and consider isolating him on an entirely different planet, away from any human contact!</p></div>
-                <div class="bugle-article"><h3>The New Captain America Sues The New Avengerz Over Copyright Issues!</h3><div class="meta">By J. Jonah Jameson | Photography by Eddie Brock</div><p>In a stunning legal battle, the new Captain America has filed a massive lawsuit against the superhero team known as "The New Avengerz." The star-spangled hero claims the group is illegally using copyrighted branding and tactical gear that closely resembles his own trademark likeness. The New Avengerz deny all charges, calling it "fair use."</p></div>
-                <div class="bugle-article"><h3>Is Mysterio Still Alive? The Truth May Shock You!</h3><div class="meta">By J. Jonah Jameson | Photography by Eddie Brock</div><p>Eye witnesses claim to have seen the smoke and mirrors of Quentin Beck in London last week. Despite his "death" at the hands of the webbed menace, sources suggest Mysterio might be pulling the strings from the shadows. Is he a hero gone, or a villain waiting to strike?</p></div>
-                <div class="bugle-article"><h3>Why Do People Still Live in NYC? The City is a Warzone!</h3><div class="meta">By J. Jonah Jameson | Photography by Eddie Brock</div><p>Between alien invasions, rogue vigilantes, and daily property damage, one has to ask: why does anyone still pay rent here? The Mayor needs to hold these so-called "heroes" accountable for the millions in structural damage caused to our beautiful city.</p></div>
-                <div class="bugle-article"><h3>Spider-Man is a Bad Guy! The Evidence is Clear!</h3><div class="meta">By J. Jonah Jameson | Photography by Eddie Brock</div><p>He wears a mask to hide his identity. He attacks law enforcement. He causes more destruction than the criminals he catches! It is time we stop calling him a hero and start calling him what he is: a public menace!</p></div>
-                <div class="bugle-article"><h3>Who Are These New Superpeople?</h3><div class="meta">By J. Jonah Jameson | Photography by Eddie Brock</div><p>First a man in an iron suit, then a guy with a shield, and now kids swinging around in pajamas! These unregistered, unaccountable superpeople are a threat to the American way of life. We demand transparency!</p></div>
-            </div>
-        </div>
-
-        <div class="window" id="win-jarvis" style="width: 380px; height: 550px;">
-            <div class="title-bar" onmousedown="dragWindow(event, 'win-jarvis')"><span>J.A.R.V.I.S. Interface</span><div class="title-bar-btns"><button onclick="closeWindow('win-jarvis')"></button></div></div>
-            <div class="window-content jarvis-window">
-                <div class="jarvis-header"><div class="jarvis-avatar">🤖</div><div><div class="jarvis-title">J.A.R.V.I.S.</div><div class="jarvis-subtitle">Stark Industries AI</div></div><div class="jarvis-status-dot"></div></div>
-                <div class="jarvis-messages" id="jarvis-messages"><div class="jarvis-msg-row assistant"><div class="jarvis-msg-label">J.A.R.V.I.S.</div><div class="jarvis-msg-bubble">System online. Welcome back, sir. How may I assist you today?</div></div></div>
-                <div class="jarvis-input-bar"><input type="text" class="jarvis-input" id="jarvis-input" placeholder="Ask JARVIS..." autocomplete="off"><button class="jarvis-send-btn" id="jarvis-send-btn" onclick="sendJarvisMsg()">Send</button></div>
-            </div>
-        </div>
-
-        <div class="window" id="win-clock" style="width: 300px; height: 400px;">
-            <div class="title-bar" onmousedown="dragWindow(event, 'win-clock')"><span>Clock</span><div class="title-bar-btns"><button onclick="closeWindow('win-clock')"></button></div></div>
-            <div class="window-content clock-window">
-                <div class="clock-time" id="clock-time">00:00</div>
-                <div class="clock-date" id="clock-date">---</div>
-                <div class="analog-clock" id="analog-clock">
-                    <div class="clock-hand hand-hour" id="hand-hour"></div>
-                    <div class="clock-hand hand-minute" id="hand-minute"></div>
-                    <div class="clock-hand hand-second" id="hand-second"></div>
-                    <div class="clock-center"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="window" id="win-browser" style="width: 400px; height: 200px;">
-            <div class="title-bar" onmousedown="dragWindow(event, 'win-browser')"><span>Spidey-Tracker</span><div class="title-bar-btns"><button onclick="closeWindow('win-browser')"></button></div></div>
-            <div class="window-content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-                <p style="margin-bottom: 15px; font-family: 'Patrick Hand', cursive; font-size: 18px;">Loading Spidey-Tracker web services...</p>
-                <button style="padding: 10px 20px; background: #cb2d3e; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-family: 'Bebas Neue', cursive; font-size: 18px;" onclick="window.open('https://spideytracker.com/', '_blank')">Open Spidey-Tracker</button>
-            </div>
-        </div>
-
-        <div class="window" id="win-spaceships" style="width: 500px; height: 600px;">
-            <div class="title-bar" onmousedown="dragWindow(event, 'win-spaceships')"><span>Spaceship Tracker</span><div class="title-bar-btns"><button onclick="closeWindow('win-spaceships')"></button></div></div>
-            <div class="window-content space-window">
-                <div class="space-header"><h2>Orbital Tracker</h2><p>Monitoring unidentified stellar vehicles...</p></div>
-                <div class="space-viewport">
-                    <div class="stars"></div>
-                    <div class="ship-container">
-                        <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/5/56/Fantastic_Four_Ship_%28Thunderbolts%29.png/revision/latest?cb=20250630172208" alt="Unidentified Stellar Vehicle" class="ship-img">
-                    </div>
-                </div>
-                <div class="ship-info">
-                    <h3>Unidentified Stellar Vehicle</h3>
-                    <p><strong>Appearance:</strong> The craft is completely white, reflecting almost all light. We don't know a lot about it, as it evades standard radar and satellite imaging.</p>
-                    <p><strong>Distinctive Marking:</strong> The only notable feature is a glowing, blue <span class="blue-4">4</span> painted on the hull. Origin and purpose unknown.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="window" id="win-shield" style="width: 500px; height: 450px;">
-            <div class="title-bar" onmousedown="dragWindow(event, 'win-shield')"><span>S.H.I.E.L.D. Database</span><div class="title-bar-btns"><button onclick="closeWindow('win-shield')"></button></div></div>
-            <div class="window-content shield-window">
-                <div class="shield-search">
-                    <input type="text" class="shield-input" id="shield-search" placeholder="Enter Subject Name (e.g., Thanos, Star-Lord)..." autocomplete="off">
-                    <button class="shield-btn" id="shield-btn" onclick="searchShield()">Search</button>
-                </div>
-                <div class="shield-result" id="shield-result">
-                    <p>> AWAITING INPUT...</p>
-                    <p>> CLEARANCE LEVEL 7 GRANTED.</p>
-                    <p>> PLEASE ENTER SUBJECT NAME TO QUERY MAINFRAME.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="window" id="win-accords" style="width: 500px; height: 500px;">
-            <div class="title-bar" onmousedown="dragWindow(event, 'win-accords')"><span>Sokovia Accords</span><div class="title-bar-btns"><button onclick="closeWindow('win-accords')"></button></div></div>
-            <div class="window-content accord-window">
-                <div class="accord-header"><h2>THE SOKOVIA ACCORDS</h2><p>Official UN Document 4-U93J</p></div>
-                <p>In accordance with the United Nations' concern regarding the unregulated actions of "enhanced individuals," the following protocols are hereby established as international law:</p>
-                <br>
-                <p>1. Any individual exhibiting extraterrestrial, enhanced, or superhuman abilities shall henceforth be considered a living weapon of mass destruction.</p>
-                <p>2. Said individuals may not operate within the borders of any sovereign nation without explicit authorization from that nation's governing body and the United Nations Panel.</p>
-                <p>3. The use of abilities for personal vendettas, unauthorized peacekeeping, or property alteration is strictly prohibited.</p>
-                <p>4. Failure to comply with these accords will result in immediate detainment at the Raft maximum-security facility.</p>
-                <br>
-                <p>These accords are not negotiable. The age of unchecked vigilantism is over.</p>
-                <div class="accord-signatures">
-                    <p>Signed: Tony Stark (Iron Man)</p>
-                    <p>Signed: James Rhodes (War Machine)</p>
-                    <p>Signed: Natasha Romanoff (Black Widow)</p>
-                    <p>Signed: Vision</p>
-                    <p style="color: #cb2d3e;">Declined: Steve Rogers (Captain America)</p>
-                    <p style="color: #cb2d3e;">Declined: Sam Wilson (Falcon)</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="window" id="win-game" style="width: 400px; height: 500px;">
-            <div class="title-bar" onmousedown="dragWindow(event, 'win-game')"><span>Web-Shooter</span><div class="title-bar-btns"><button onclick="closeWindow('win-game')"></button></div></div>
-            <div class="window-content" style="padding: 0; background: #000; display: flex; flex-direction: column;">
-                <div class="game-header"><span>Score: <span id="game-score">0</span></span><span>Use A / D to move, Space to shoot</span></div>
-                <canvas id="game-canvas"></canvas>
-            </div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+<script src="script.js"></script>
     <script>
-        var timeLeft = 120;
+        // Set Doom Protocol countdown to 10 seconds
+        var timeLeft = 10;
         var doomTimerEl = document.getElementById('doom-timer');
         var doomTriggered = false;
 
@@ -245,7 +28,8 @@
             var seconds = timeLeft % 60;
             doomTimerEl.innerText = "Doom Protocol: " + minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0');
             
-            if (timeLeft === 3) {
+            // Trigger glitch effect 2 seconds before Doom Protocol completes
+            if (timeLeft === 2) {
                 triggerGlitchEffect();
             }
 
@@ -290,7 +74,7 @@
             setTimeout(function() {
                 clearInterval(glitchInterval);
                 desktop.style.filter = originalFilter;
-            }, 2500);
+            }, 1800);
         }
         
         function playDoomAlarmSound() {
@@ -360,5 +144,3 @@
         
         setInterval(updateDoomTimer, 1000);
     </script>
-</body>
-</html>
