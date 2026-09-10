@@ -9,12 +9,44 @@
     <link href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap" rel="stylesheet">
     <style>
         /* Doom Protocol Styles */
-        #doom-overlay { position: absolute; top: 30px; left: 0; width: 100%; height: calc(100% - 78px); display: none; justify-content: center; align-items: center; pointer-events: none; z-index: 1; }
-        .doom-text { font-family: 'Pirata One', cursive; font-size: 7rem; color: rgba(0, 255, 0, 0.2); text-align: center; transform: scale(0.8); animation: doom-glow 3s infinite alternate; letter-spacing: 4px; }
-        @keyframes doom-glow { 0% { text-shadow: 0 0 10px rgba(0,255,0,0.1); } 100% { text-shadow: 0 0 40px rgba(0,255,0,0.5); } }
-        /* Video is hidden visually but keeps playing audio */
-        #doom-video { position: absolute; top: 0; left: 0; width: 1px; height: 1px; opacity: 0; z-index: -1; pointer-events: none; }
-        #doom-timer { position: absolute; bottom: 60px; right: 20px; background: rgba(0,0,0,0.7); color: #0f0; padding: 5px 10px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 12px; z-index: 9998; border: 1px solid #333; }
+        #doom-overlay { 
+            position: absolute; 
+            top: 30px; 
+            left: 0; 
+            width: 100%; 
+            height: calc(100% - 78px); 
+            display: none; 
+            justify-content: center; 
+            align-items: center; 
+            pointer-events: none; 
+            z-index: 10; 
+        }
+        .doom-text { 
+            font-family: 'Pirata One', cursive; 
+            font-size: 7rem; 
+            color: rgba(0, 255, 0, 0.2); 
+            text-align: center; 
+            transform: scale(0.8); 
+            animation: doom-glow 3s infinite alternate; 
+            letter-spacing: 4px; 
+        }
+        @keyframes doom-glow { 
+            0% { text-shadow: 0 0 10px rgba(0,255,0,0.1); } 
+            100% { text-shadow: 0 0 40px rgba(0,255,0,0.5); } 
+        }
+        #doom-timer { 
+            position: absolute; 
+            bottom: 60px; 
+            right: 20px; 
+            background: rgba(0,0,0,0.7); 
+            color: #0f0; 
+            padding: 5px 10px; 
+            border-radius: 4px; 
+            font-family: 'Courier New', monospace; 
+            font-size: 12px; 
+            z-index: 9998; 
+            border: 1px solid #333; 
+        }
     </style>
 </head>
 <body>
@@ -35,7 +67,6 @@
     </div>
 
     <div id="desktop">
-        <div id="doom-video"></div>
         <div id="doom-overlay">
             <div class="doom-text">VON DOOM<br>INDUSTRIES</div>
         </div>
@@ -187,10 +218,25 @@
 
     <script src="script.js"></script>
     <script>
-        // Doom Protocol Countdown Timer
-        var timeLeft = 120; // 2 minutes in seconds
+        var timeLeft = 120;
         var doomTimerEl = document.getElementById('doom-timer');
         var doomTriggered = false;
+
+        // Global Audio Context initialized safely
+        var audioCtx = null;
+
+        function initAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        // Unlock browser audio restrictions on the first interaction anywhere
+        window.addEventListener('click', initAudioContext, { once: true });
+        window.addEventListener('keydown', initAudioContext, { once: true });
 
         function updateDoomTimer() {
             if (doomTriggered) return;
@@ -199,7 +245,6 @@
             var seconds = timeLeft % 60;
             doomTimerEl.innerText = "Doom Protocol: " + minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0');
             
-            // Trigger glitch effect 3 seconds before Doom Protocol
             if (timeLeft === 3) {
                 triggerGlitchEffect();
             }
@@ -212,27 +257,27 @@
         }
 
         function triggerGlitchEffect() {
-            // Play a glitch noise using Web Audio API
-            var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            var oscillator = audioCtx.createOscillator();
-            var gainNode = audioCtx.createGain();
-            
-            oscillator.type = 'sawtooth';
-            // Create a static glitch sound
-            oscillator.frequency.setValueAtTime(100, audioCtx.currentTime);
-            oscillator.frequency.linearRampToValueAtTime(800, audioCtx.currentTime + 0.1);
-            oscillator.frequency.linearRampToValueAtTime(50, audioCtx.currentTime + 0.2);
-            
-            gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
-            gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.5);
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            
-            oscillator.start();
-            oscillator.stop(audioCtx.currentTime + 1.5);
+            initAudioContext();
 
-            // Visual Glitch
+            if (audioCtx) {
+                var oscillator = audioCtx.createOscillator();
+                var gainNode = audioCtx.createGain();
+                
+                oscillator.type = 'sawtooth';
+                oscillator.frequency.setValueAtTime(100, audioCtx.currentTime);
+                oscillator.frequency.linearRampToValueAtTime(800, audioCtx.currentTime + 0.1);
+                oscillator.frequency.linearRampToValueAtTime(50, audioCtx.currentTime + 0.2);
+                
+                gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.5);
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + 1.5);
+            }
+
             var desktop = document.getElementById('desktop');
             var originalFilter = desktop.style.filter;
             var glitchInterval = setInterval(function() {
@@ -248,25 +293,60 @@
             }, 2500);
         }
         
+        function playDoomAlarmSound() {
+            initAudioContext();
+            if (!audioCtx) return;
+
+            // Synthesis of a deep sci-fi pulsing alarm
+            var osc1 = audioCtx.createOscillator();
+            var osc2 = audioCtx.createOscillator();
+            var gain = audioCtx.createGain();
+
+            osc1.type = 'sawtooth';
+            osc2.type = 'square';
+
+            osc1.frequency.setValueAtTime(65.41, audioCtx.currentTime); // Low C note
+            osc2.frequency.setValueAtTime(130.81, audioCtx.currentTime); // Pitch layer
+
+            gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+
+            // Pulsing effect
+            var lfo = audioCtx.createOscillator();
+            var lfoGain = audioCtx.createGain();
+            lfo.frequency.setValueAtTime(1.5, audioCtx.currentTime); // 1.5 Hz pulse rate
+            lfoGain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+
+            lfo.connect(lfoGain);
+            lfoGain.connect(gain.gain);
+
+            osc1.connect(gain);
+            osc2.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc1.start();
+            osc2.start();
+            lfo.start();
+        }
+
         function triggerDoomProtocol() {
             doomTriggered = true;
             doomTimerEl.innerText = "DOOM PROTOCOL ACTIVE";
             doomTimerEl.style.color = "#0f0";
             doomTimerEl.style.borderColor = "#0f0";
             
-            // 1. Change News Ticker (Sped up slightly to 45s)
+            // 1. News Ticker Shift
             var newsScroll = document.getElementById('news-scroll-text');
             newsScroll.style.color = "#00ff00";
             newsScroll.style.animationDuration = "45s"; 
             var doomNewsText = "ALL HAIL DR. DOOM &nbsp;&bull;&nbsp; ALL HAIL DR. DOOM &nbsp;&bull;&nbsp; ALL HAIL DR. DOOM &nbsp;&bull;&nbsp; ALL HAIL DR. DOOM &nbsp;&bull;&nbsp; ALL HAIL DR. DOOM &nbsp;&bull;&nbsp; ALL HAIL DR. DOOM &nbsp;&bull;&nbsp;";
             newsScroll.innerHTML = doomNewsText.repeat(3);
             
-            // 2. Change Background to Green & Show Logo
+            // 2. Visual Takeover
             var desktop = document.getElementById('desktop');
             desktop.style.background = "linear-gradient(135deg, #052b05 0%, #0a520a 100%)";
             document.getElementById('doom-overlay').style.display = 'flex';
             
-            // 3. Replace Spidey-Tracker with Symbiote Tracker
+            // 3. Icon Swaps
             var spideyIcon = document.getElementById('spidey-icon');
             spideyIcon.querySelector('i').innerText = '🦠';
             spideyIcon.querySelector('span').innerText = 'Symbiote Tracker';
@@ -274,9 +354,8 @@
             var spideyTaskbar = document.getElementById('spidey-taskbar-icon');
             spideyTaskbar.innerText = '🦠';
             
-            // 4. Play Avengers Doomsday audio in background (Unmuted)
-            var doomVideo = document.getElementById('doom-video');
-            doomVideo.innerHTML = '<iframe width="1" height="1" src="https://www.youtube.com/embed/X1aFkAkFASk?autoplay=1&loop=1&playlist=X1aFkAkFASk&controls=0&modestbranding=1&showinfo=0&rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="pointer-events: none;"></iframe>';
+            // 4. Reliable Audio Activation
+            playDoomAlarmSound();
         }
         
         setInterval(updateDoomTimer, 1000);
