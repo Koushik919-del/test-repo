@@ -199,11 +199,53 @@
             var seconds = timeLeft % 60;
             doomTimerEl.innerText = "Doom Protocol: " + minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0');
             
+            // Trigger glitch effect 3 seconds before Doom Protocol
+            if (timeLeft === 3) {
+                triggerGlitchEffect();
+            }
+
             if (timeLeft <= 0) {
                 triggerDoomProtocol();
             } else {
                 timeLeft--;
             }
+        }
+
+        function triggerGlitchEffect() {
+            // Play a glitch noise using Web Audio API
+            var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            var oscillator = audioCtx.createOscillator();
+            var gainNode = audioCtx.createGain();
+            
+            oscillator.type = 'sawtooth';
+            // Create a static glitch sound
+            oscillator.frequency.setValueAtTime(100, audioCtx.currentTime);
+            oscillator.frequency.linearRampToValueAtTime(800, audioCtx.currentTime + 0.1);
+            oscillator.frequency.linearRampToValueAtTime(50, audioCtx.currentTime + 0.2);
+            
+            gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.5);
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 1.5);
+
+            // Visual Glitch
+            var desktop = document.getElementById('desktop');
+            var originalFilter = desktop.style.filter;
+            var glitchInterval = setInterval(function() {
+                desktop.style.filter = "invert(1) hue-rotate(90deg)";
+                setTimeout(function() { desktop.style.filter = "invert(0)"; }, 50);
+                setTimeout(function() { desktop.style.filter = "hue-rotate(180deg)"; }, 100);
+                setTimeout(function() { desktop.style.filter = originalFilter; }, 150);
+            }, 200);
+
+            setTimeout(function() {
+                clearInterval(glitchInterval);
+                desktop.style.filter = originalFilter;
+            }, 2500);
         }
         
         function triggerDoomProtocol() {
@@ -212,10 +254,10 @@
             doomTimerEl.style.color = "#0f0";
             doomTimerEl.style.borderColor = "#0f0";
             
-            // 1. Change News Ticker (Slowed down to 120s for smooth scrolling)
+            // 1. Change News Ticker (Sped up slightly to 45s)
             var newsScroll = document.getElementById('news-scroll-text');
             newsScroll.style.color = "#00ff00";
-            newsScroll.style.animationDuration = "120s"; 
+            newsScroll.style.animationDuration = "45s"; 
             var doomNewsText = "ALL HAIL DR. DOOM &nbsp;&bull;&nbsp; ALL HAIL DR. DOOM &nbsp;&bull;&nbsp; ALL HAIL DR. DOOM &nbsp;&bull;&nbsp; ALL HAIL DR. DOOM &nbsp;&bull;&nbsp; ALL HAIL DR. DOOM &nbsp;&bull;&nbsp; ALL HAIL DR. DOOM &nbsp;&bull;&nbsp;";
             newsScroll.innerHTML = doomNewsText.repeat(3);
             
@@ -233,9 +275,8 @@
             spideyTaskbar.innerText = '🦠';
             
             // 4. Play Avengers Doomsday audio in background (Unmuted)
-            // The video container is hidden via CSS, but the iframe keeps playing audio
             var doomVideo = document.getElementById('doom-video');
-            doomVideo.innerHTML = '<iframe width="1" height="1" src="https://www.youtube.com/embed/YZv3K8M3tH4?autoplay=1&loop=1&playlist=YZv3K8M3tH4&controls=0&modestbranding=1&showinfo=0&rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="pointer-events: none;"></iframe>';
+            doomVideo.innerHTML = '<iframe width="1" height="1" src="https://www.youtube.com/embed/X1aFkAkFASk?autoplay=1&loop=1&playlist=X1aFkAkFASk&controls=0&modestbranding=1&showinfo=0&rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="pointer-events: none;"></iframe>';
         }
         
         setInterval(updateDoomTimer, 1000);
