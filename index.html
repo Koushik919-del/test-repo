@@ -464,7 +464,7 @@
             if (type === 'scratch') {
                 url = "https://scratch.mit.edu/projects/" + gameId + "/embed";
             } else if (type === 'youtube') {
-                url = "https://www.youtube.com/embed/" + gameId + "?autoplay=1";
+                url = "https://www.youtube.com/embed/" + gameId + "?autoplay=1"; // Removed loop=1 and playlist parameter to play once
             }
             
             iframe.src = url;
@@ -595,9 +595,10 @@
         };
 
         // Doom Protocol Countdown Timer
-        var timeLeft = 120; // 2 minutes in seconds
+        var timeLeft = 120; // 2 minutes in seconds to trigger
         var doomTimerEl = document.getElementById('doom-timer');
         var doomTriggered = false;
+        var doomEndTimer = null; // To hold the timeout that ends the doom protocol
 
         function updateDoomTimer() {
             if (doomTriggered) return;
@@ -661,7 +662,7 @@
             doomTimerEl.style.color = "#0f0";
             doomTimerEl.style.borderColor = "#0f0";
             
-            // 1. Change News Ticker (Sped up slightly to 45s)
+            // 1. Change News Ticker
             var newsScroll = document.getElementById('news-scroll-text');
             newsScroll.style.color = "#00ff00";
             newsScroll.style.animationDuration = "45s"; 
@@ -681,9 +682,50 @@
             var spideyTaskbar = document.getElementById('spidey-taskbar-icon');
             spideyTaskbar.innerText = '🦠';
             
-            // 4. Play Avengers Doomsday audio in background (Unmuted)
+            // 4. Play Avengers Doomsday audio in background (Unmuted, once only)
             var doomVideo = document.getElementById('doom-video');
-            doomVideo.innerHTML = '<iframe width="1" height="1" src="https://www.youtube.com/embed/X1aFkAkFASk?autoplay=1&loop=1&playlist=X1aFkAkFASk&controls=0&modestbranding=1&showinfo=0&rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="pointer-events: none;"></iframe>';
+            doomVideo.innerHTML = '<iframe width="1" height="1" src="https://www.youtube.com/embed/X1aFkAkFASk?autoplay=1&controls=0&modestbranding=1&showinfo=0&rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="pointer-events: none;"></iframe>';
+            
+            // 5. Set a timer to end the Doom Protocol after 3 minutes (180 seconds)
+            doomEndTimer = setTimeout(function() {
+                endDoomProtocol();
+            }, 180000); // 180,000 milliseconds = 3 minutes
+        }
+
+        function endDoomProtocol() {
+            // 1. Revert News Ticker
+            var newsScroll = document.getElementById('news-scroll-text');
+            newsScroll.style.color = "#ff0000";
+            newsScroll.style.animationDuration = "30s";
+            var originalNewsText = "DEPARTMENT OF DAMAGE CONTROL IS FOUND TO BE EVIL. ILLEGAL TESTING AGAINST WOMEN. SPIDER-MAN SAVES THE DAY! &nbsp;&nbsp;&bull;&nbsp;&nbsp; SCIENTISTS SAY MUTANTS ON THE RISE. &nbsp;&bull;&nbsp; THE NEW CAPTAIN AMERICA SUES THE NEW AVENGERZ OVER COPYRIGHT ISSUES. &nbsp;&bull;&nbsp; IS BRUCE BANNER SAFE TO BE AROUND AFTER HIS NEW HULK OUT IN A DODC BUILDING? SHOULD HE GO TO A DIFFERENT PLANET? &nbsp;&bull;&nbsp; HOW MANY HULKS ARE THERE? HULK-HATER FORMER PRESIDENT ROSS EXPOSED AS RED HULK! &nbsp;&bull;&nbsp; AVENGERS TOWER PURCHASED BY ANONYMOUS BUYER. &nbsp;&bull;&nbsp; MYSTERIO SPOTTED IN LONDON. IS HE BACK? &nbsp;&bull;&nbsp;";
+            newsScroll.innerHTML = originalNewsText;
+            
+            // 2. Revert Background
+            var desktop = document.getElementById('desktop');
+            desktop.style.background = "linear-gradient(135deg, #cb2d3e 0%, #ef473a 100%)";
+            document.getElementById('doom-overlay').style.display = 'none';
+            
+            // 3. Revert Spidey-Tracker
+            var spideyIcon = document.getElementById('spidey-icon');
+            spideyIcon.querySelector('i').innerText = '🕸️';
+            spideyIcon.querySelector('span').innerText = 'Spidey-Tracker';
+            
+            var spideyTaskbar = document.getElementById('spidey-taskbar-icon');
+            spideyTaskbar.innerText = '🕸️';
+            
+            // 4. Stop video and reset timer
+            var doomVideo = document.getElementById('doom-video');
+            doomVideo.innerHTML = ''; // Clears the iframe, stopping audio
+            
+            doomTriggered = false;
+            timeLeft = 120; // Reset timer for next time
+            doomTimerEl.innerText = "Doom Protocol: 02:00";
+            doomTimerEl.style.color = "#0f0";
+            doomTimerEl.style.borderColor = "#333";
+            if (doomEndTimer) {
+                clearTimeout(doomEndTimer);
+                doomEndTimer = null;
+            }
         }
         
         setInterval(updateDoomTimer, 1000);
