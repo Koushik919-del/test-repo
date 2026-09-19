@@ -10,34 +10,29 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
         body { background: #1a1a24; color: #333; overflow: hidden; height: 100vh; user-select: none; }
         
-        /* Breaking News Ticker */
         #news-ticker { position: absolute; top: 0; left: 0; width: 100%; height: 30px; background: #ffffff; border-bottom: 2px solid #000; overflow: hidden; z-index: 10000; display: flex; align-items: center; }
         .news-label { background: #ff0000; color: #fff; padding: 5px 10px; font-weight: bold; font-size: 12px; margin-right: 10px; height: 100%; display: flex; align-items: center; font-family: 'Bangers', cursive; letter-spacing: 2px; }
         .news-ticker-body { height: 30px; overflow: hidden; display: flex; align-items: center; }
         .news-scroll { display: inline-block; white-space: nowrap; color: #ff0000; font-family: 'Bangers', cursive; font-weight: bold; font-size: 16px; animation: scroll-news 30s linear infinite; padding-left: 100%; letter-spacing: 1px; }
         @keyframes scroll-news { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        /* Desktop & Taskbar */
-        #desktop { width: 100%; height: calc(100vh - 30px); margin-top: 30px; background: linear-gradient(135deg, #cb2d3e 0%, #ef473a 100%); position: relative; }
+        #desktop { width: 100%; height: calc(100vh - 30px); margin-top: 30px; background: linear-gradient(135deg, #cb2d3e 0%, #ef473a 100%); position: relative; overflow: hidden; }
         #taskbar { position: absolute; bottom: 0; left: 0; width: 100%; height: 48px; background: rgba(20, 20, 30, 0.9); backdrop-filter: blur(10px); border-top: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; padding: 0 15px; z-index: 9999; }
         .taskbar-icon { width: 40px; height: 40px; margin-right: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; display: flex; justify-content: center; align-items: center; cursor: pointer; color: #fff; font-size: 18px; transition: background 0.2s; font-style: normal; }
         .taskbar-icon:hover { background: rgba(255,255,255,0.2); }
         .taskbar-time { margin-left: auto; color: #fff; font-size: 18px; font-weight: 600; padding: 0 10px; font-family: 'Bebas Neue', cursive; letter-spacing: 1px; }
         
-        /* Windows */
         .window { position: absolute; min-width: 300px; min-height: 200px; background: #f1f1f1; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); display: none; flex-direction: column; overflow: hidden; border: 1px solid #ccc; }
         .title-bar { background: #dcdcdc; color: #333; padding: 8px 12px; font-size: 16px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; cursor: move; font-family: 'Bebas Neue', cursive; letter-spacing: 1px; }
         .title-bar-btns button { background: #ff5f56; border: none; width: 12px; height: 12px; border-radius: 50%; cursor: pointer; margin-left: 6px; }
         .window-content { flex: 1; padding: 15px; overflow-y: auto; background: #fff; font-size: 16px; }
         
-        /* Desktop Icons */
         .desktop-icon { position: absolute; color: #fff; text-align: center; cursor: grab; padding: 10px; border-radius: 5px; width: 80px; font-style: normal; }
         .desktop-icon:active { cursor: grabbing; }
         .desktop-icon:hover { background: rgba(255,255,255,0.1); }
         .desktop-icon i { font-size: 32px; margin-bottom: 5px; display: block; font-style: normal; }
         .desktop-icon span { font-size: 14px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); font-family: 'Patrick Hand', cursive; display: block; }
 
-        /* Welcome App Styles */
         #win-welcome .window-content { background: #0d1117; color: #c9d1d9; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
         .welcome-logo { font-size: 48px; margin-bottom: 20px; }
         .welcome-title { font-family: 'Bangers', cursive; font-size: 36px; color: #58a6ff; margin-bottom: 15px; letter-spacing: 1px; }
@@ -45,7 +40,6 @@
         .welcome-btn { margin-top: 25px; padding: 10px 25px; background: #238636; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-family: 'Bebas Neue', cursive; font-size: 18px; letter-spacing: 1px; }
         .welcome-btn:hover { background: #2ea043; }
 
-        /* Daily Bugle Styles */
         .bugle-header { text-align: center; border-bottom: 3px double #000; margin-bottom: 20px; padding-bottom: 10px; }
         .bugle-header h1 { font-family: 'Bangers', cursive; font-size: 48px; font-weight: 900; letter-spacing: 2px; color: #000; text-shadow: 2px 2px 0px #fff; }
         .bugle-header p { font-size: 16px; color: #666; font-style: italic; font-family: 'Patrick Hand', cursive; }
@@ -54,7 +48,6 @@
         .bugle-article .meta { font-size: 12px; color: #888; margin-bottom: 8px; font-family: 'Patrick Hand', cursive; }
         .bugle-article p { font-size: 16px; color: #333; line-height: 1.5; font-family: 'Patrick Hand', cursive; }
 
-        /* JARVIS Chat Styles */
         #win-jarvis .window-content { display: flex; flex-direction: column; padding: 0; background: #0d1117; color: #c9d1d9; }
         .jarvis-header { background: #161b22; padding: 10px 15px; border-bottom: 1px solid #30363d; display: flex; align-items: center; gap: 10px; }
         .jarvis-avatar { width: 32px; height: 32px; background: #1f6feb; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #fff; }
@@ -77,7 +70,6 @@
         .jarvis-send-btn:hover { background: #2ea043; }
         .jarvis-send-btn:disabled { background: #21262d; color: #484f58; cursor: not-allowed; }
 
-        /* Spaceship Tracker Styles */
         #win-spaceships .window-content { padding: 0; background: radial-gradient(circle at center, #1a1a2e 0%, #000000 100%); color: #fff; display: flex; flex-direction: column; }
         .space-header { padding: 15px; border-bottom: 1px solid #333; background: rgba(0,0,0,0.5); }
         .space-header h2 { color: #4da6ff; margin: 0; font-size: 24px; font-family: 'Bebas Neue', cursive; letter-spacing: 1px; }
@@ -91,7 +83,6 @@
         .ship-info p { font-size: 16px; line-height: 1.5; color: #ccc; margin-bottom: 8px; font-family: 'Patrick Hand', cursive; }
         .blue-4 { color: #4da6ff; font-weight: bold; text-shadow: 0 0 5px #4da6ff; font-size: 18px; font-family: 'Bangers', cursive; }
 
-        /* SHIELD Database Styles */
         #win-shield .window-content { background: #0a0a0a; color: #00ff00; font-family: 'Courier New', Courier, monospace; }
         .shield-search { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid #00ff00; padding-bottom: 10px; }
         .shield-input { flex: 1; background: #111; border: 1px solid #00ff00; color: #00ff00; padding: 8px; font-family: inherit; font-size: 16px; }
@@ -103,15 +94,13 @@
         .shield-result p { margin-bottom: 5px; font-size: 16px; }
         .shield-loading { color: #00ff00; font-style: italic; font-size: 16px; }
 
-        /* Sokovia Accords Styles */
         #win-accords .window-content { background: #f4f1ea; color: #333; font-family: 'Patrick Hand', cursive; line-height: 1.6; }
-        .accord-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #333; padding-bottom: 10px; }
+        .accord-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #30363d; }
         .accord-header h2 { font-family: 'Bangers', cursive; font-size: 36px; letter-spacing: 2px; }
         .accord-header p { font-size: 14px; color: #666; }
         .accord-signatures { margin-top: 30px; font-style: italic; }
         .accord-signatures p { margin-bottom: 5px; font-size: 18px; }
 
-        /* Games App Styles */
         #win-game .window-content { padding: 0; background: #0d1117; color: #c9d1d9; display: flex; flex-direction: row; height: 100%; }
         .games-sidebar { width: 200px; background: #161b22; padding: 15px 0; overflow-y: auto; border-right: 1px solid #30363d; }
         .games-sidebar h4 { color: #8b949e; padding: 10px 15px; text-transform: uppercase; font-size: 0.8rem; border-bottom: 1px solid #30363d; margin-bottom: 10px; }
@@ -124,7 +113,6 @@
         .game-wrapper { flex: 1; background: #000; }
         .game-wrapper iframe { width: 100%; height: 100%; border: none; }
 
-        /* Clock App Styles */
         #win-clock .window-content { background: #0d1117; color: #c9d1d9; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; height: 100%; }
         .clock-time { font-size: 48px; font-family: 'Bebas Neue', cursive; color: #58a6ff; margin-bottom: 10px; letter-spacing: 2px; }
         .clock-date { font-size: 18px; color: #8b949e; font-family: 'Patrick Hand', cursive; margin-bottom: 20px; }
@@ -135,17 +123,16 @@
         .hand-second { width: 2px; height: 45px; margin-left: -1px; background: #f85149; }
         .clock-center { position: absolute; width: 8px; height: 8px; background: #30363d; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); }
 
-        /* Doom Protocol Styles */
+        #stark-industries-logo { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40%; height: 40%; background-image: url('https://upload.wikimedia.org/wikipedia/commons/9/9a/Stark_Industries_%28logo%29.svg'); background-size: contain; background-repeat: no-repeat; background-position: center; opacity: 0.15; pointer-events: none; z-index: 0; }
+
         #doom-overlay { position: absolute; top: 30px; left: 0; width: 100%; height: calc(100% - 78px); display: none; justify-content: center; align-items: center; pointer-events: none; z-index: 1; }
         .doom-text { font-family: 'Pirata One', cursive; font-size: 7rem; color: rgba(0, 255, 0, 0.2); text-align: center; transform: scale(0.8); animation: doom-glow 3s infinite alternate; letter-spacing: 4px; }
         @keyframes doom-glow { 0% { text-shadow: 0 0 10px rgba(0,255,0,0.1); } 100% { text-shadow: 0 0 40px rgba(0,255,0,0.5); } }
         #doom-video { position: absolute; top: 0; left: 0; width: 1px; height: 1px; opacity: 0; z-index: -1; pointer-events: none; }
-        #doom-timer { position: absolute; bottom: 60px; right: 20px; background: rgba(0,0,0,0.7); color: #0f0; padding: 5px 10px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 12px; z-index: 9998; border: 1px solid #333; }
     </style>
 </head>
 <body>
 
-    <!-- Breaking News Ticker -->
     <div id="news-ticker">
         <div class="news-label">BREAKING NEWS</div>
         <div class="news-ticker-body">
@@ -162,13 +149,12 @@
     </div>
 
     <div id="desktop">
-        <!-- Doom Protocol Elements -->
         <div id="doom-video"></div>
+        <div id="stark-industries-logo"></div>
         <div id="doom-overlay">
             <div class="doom-text">VON DOOM<br>INDUSTRIES</div>
         </div>
 
-        <!-- Desktop Icons -->
         <div class="desktop-icon" style="top: 20px; left: 20px;" ondblclick="openWindow('win-bugle')"><i>📰</i><span>Daily Bugle</span></div>
         <div class="desktop-icon" style="top: 20px; left: 120px;" ondblclick="openWindow('win-jarvis')"><i>🤖</i><span>J.A.R.V.I.S</span></div>
         <div class="desktop-icon" style="top: 20px; left: 220px;" ondblclick="openWindow('win-clock')"><i>⏰</i><span>Clock</span></div>
@@ -179,8 +165,6 @@
         
         <div class="desktop-icon" style="top: 220px; left: 20px;" ondblclick="openWindow('win-game')"><i>🎮</i><span>Games</span></div>
         <div class="desktop-icon" style="top: 220px; left: 120px;" ondblclick="openWindow('win-accords')"><i>📜</i><span>Accords</span></div>
-
-        <div id="doom-timer">Doom Protocol: 02:00</div>
 
         <div id="taskbar">
             <div class="taskbar-icon" onclick="openWindow('win-bugle')">📰</div>
@@ -194,7 +178,6 @@
             <div class="taskbar-time" id="clock-taskbar">--:--</div>
         </div>
 
-        <!-- Welcome Window -->
         <div class="window" id="win-welcome" style="width: 450px; height: 300px;">
             <div class="title-bar" onmousedown="dragWindow(event, 'win-welcome')"><span>WebOS</span><div class="title-bar-btns"><button onclick="closeWindow('win-welcome')"></button></div></div>
             <div class="window-content">
@@ -205,7 +188,6 @@
             </div>
         </div>
 
-        <!-- Daily Bugle Window -->
         <div class="window" id="win-bugle" style="width: 600px; height: 500px;">
             <div class="title-bar" onmousedown="dragWindow(event, 'win-bugle')"><span>The Daily Bugle</span><div class="title-bar-btns"><button onclick="closeWindow('win-bugle')"></button></div></div>
             <div class="window-content">
@@ -220,7 +202,6 @@
             </div>
         </div>
 
-        <!-- JARVIS Window -->
         <div class="window" id="win-jarvis" style="width: 380px; height: 550px;">
             <div class="title-bar" onmousedown="dragWindow(event, 'win-jarvis')"><span>J.A.R.V.I.S. Interface</span><div class="title-bar-btns"><button onclick="closeWindow('win-jarvis')"></button></div></div>
             <div class="window-content">
@@ -230,7 +211,6 @@
             </div>
         </div>
 
-        <!-- Clock Window -->
         <div class="window" id="win-clock" style="width: 300px; height: 400px;">
             <div class="title-bar" onmousedown="dragWindow(event, 'win-clock')"><span>Clock</span><div class="title-bar-btns"><button onclick="closeWindow('win-clock')"></button></div></div>
             <div class="window-content">
@@ -245,7 +225,6 @@
             </div>
         </div>
 
-        <!-- Spidey-Tracker Window -->
         <div class="window" id="win-browser" style="width: 400px; height: 200px;">
             <div class="title-bar" onmousedown="dragWindow(event, 'win-browser')"><span>Spidey-Tracker</span><div class="title-bar-btns"><button onclick="closeWindow('win-browser')"></button></div></div>
             <div class="window-content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
@@ -254,7 +233,6 @@
             </div>
         </div>
 
-        <!-- Spaceships Window -->
         <div class="window" id="win-spaceships" style="width: 500px; height: 600px;">
             <div class="title-bar" onmousedown="dragWindow(event, 'win-spaceships')"><span>Spaceship Tracker</span><div class="title-bar-btns"><button onclick="closeWindow('win-spaceships')"></button></div></div>
             <div class="window-content">
@@ -273,7 +251,6 @@
             </div>
         </div>
 
-        <!-- SHIELD Database Window -->
         <div class="window" id="win-shield" style="width: 500px; height: 450px;">
             <div class="title-bar" onmousedown="dragWindow(event, 'win-shield')"><span>S.H.I.E.L.D. Database</span><div class="title-bar-btns"><button onclick="closeWindow('win-shield')"></button></div></div>
             <div class="window-content">
@@ -289,7 +266,6 @@
             </div>
         </div>
 
-        <!-- Sokovia Accords Window -->
         <div class="window" id="win-accords" style="width: 500px; height: 500px;">
             <div class="title-bar" onmousedown="dragWindow(event, 'win-accords')"><span>Sokovia Accords</span><div class="title-bar-btns"><button onclick="closeWindow('win-accords')"></button></div></div>
             <div class="window-content">
@@ -313,7 +289,6 @@
             </div>
         </div>
 
-        <!-- Games Window -->
         <div class="window" id="win-game" style="width: 800px; height: 600px;">
             <div class="title-bar" onmousedown="dragWindow(event, 'win-game')"><span>Games</span><div class="title-bar-btns"><button onclick="closeWindow('win-game')"></button></div></div>
             <div class="window-content">
@@ -350,7 +325,6 @@
     </div>
 
     <script>
-        // WebOS Clock & Taskbar Clock
         function updateClock() {
             var now = new Date();
             var h = now.getHours();
@@ -382,7 +356,6 @@
         }
         setInterval(updateClock, 1000); updateClock();
 
-        // Window Management
         var zCounter = 100;
         function openWindow(id) {
             var win = document.getElementById(id);
@@ -392,7 +365,6 @@
                 win.style.top = (window.innerHeight / 2 - parseInt(win.style.height) / 2) + 'px';
             }
             
-            // Add resize handle if it doesn't have one yet
             if (!win.querySelector('.resize-handle')) {
                 var handle = document.createElement('div');
                 handle.className = 'resize-handle';
@@ -427,7 +399,6 @@
             win.addEventListener('mousedown', function() { bringToFront(win); });
         });
 
-        // Dragging & Resizing Logic
         var cWin = null, oX = 0, oY = 0;
         var isResizing = false, initialWidth = 0, initialHeight = 0, initialX = 0, initialY = 0;
 
@@ -455,7 +426,6 @@
             isResizing = false;
         });
 
-        // Games App Logic
         function loadGame(gameName, gameId, type) {
             var iframe = document.getElementById('game-iframe');
             var title = document.getElementById('game-title');
@@ -464,20 +434,18 @@
             if (type === 'scratch') {
                 url = "https://scratch.mit.edu/projects/" + gameId + "/embed";
             } else if (type === 'youtube') {
-                url = "https://www.youtube.com/embed/" + gameId + "?autoplay=1"; // Removed loop=1 and playlist parameter to play once
+                url = "https://www.youtube.com/embed/" + gameId + "?autoplay=1";
             }
             
             iframe.src = url;
             title.innerText = "Now Playing: " + gameName;
             
-            // Update active button styling
             var btns = document.getElementsByClassName('game-btn');
             for (var i = 0; i < btns.length; i++) { btns[i].classList.remove('active'); }
             event.currentTarget.classList.add('active');
         }
 
-        // JARVIS AI Logic
-        const OR_KEY = "YOUR_OPENROUTER_API_KEY"; // PASTE YOUR OPENROUTER API KEY HERE
+        const OR_KEY = "YOUR_OPENROUTER_API_KEY";
         var jarvisModels = ['openai/gpt-oss-120b:free', 'openai/gpt-oss-20b:free', 'google/gemma-3-27b-it:free', 'meta-llama/llama-3.3-8b-instruct:free'];
         var jarvisSys = "You are J.A.R.V.I.S. (Just A Rather Very Intelligent System), an AI assistant created by Tony Stark for the user (Koushik Tummepalli, who you call 'sir'). You are integrated into a Marvel-themed WebOS. You help with tasks, answer questions about the MCU, Spider-Man, tech, and general knowledge. You are polite, sophisticated, and concise. You sometimes connect things to God of War, Minecraft, and/or MARVEL. ALWAYS BE PG_13!";
 
@@ -563,7 +531,6 @@
         }
         document.getElementById('jarvis-input').addEventListener('keydown', function(e){ if(e.key === 'Enter') sendJarvisMsg(); });
 
-        // SHIELD Database Logic
         async function searchShield() {
             var query = document.getElementById('shield-search').value.trim();
             var resDiv = document.getElementById('shield-result');
@@ -589,25 +556,17 @@
         }
         document.getElementById('shield-search').addEventListener('keydown', function(e){ if(e.key === 'Enter') searchShield(); });
 
-        // Auto open the Welcome window when the page loads
         window.onload = function() {
             openWindow('win-welcome');
         };
 
-        // Doom Protocol Countdown Timer
-        var timeLeft = 120; // 2 minutes in seconds to trigger
-        var doomTimerEl = document.getElementById('doom-timer');
+        var timeLeft = 120;
         var doomTriggered = false;
-        var doomEndTimer = null; // To hold the timeout that ends the doom protocol
+        var doomEndTimer = null;
 
         function updateDoomTimer() {
             if (doomTriggered) return;
             
-            var minutes = Math.floor(timeLeft / 60);
-            var seconds = timeLeft % 60;
-            doomTimerEl.innerText = "Doom Protocol: " + minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0');
-            
-            // Trigger glitch effect 3 seconds before Doom Protocol
             if (timeLeft === 3) {
                 triggerGlitchEffect();
             }
@@ -620,13 +579,11 @@
         }
 
         function triggerGlitchEffect() {
-            // Play a glitch noise using Web Audio API
             var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             var oscillator = audioCtx.createOscillator();
             var gainNode = audioCtx.createGain();
             
             oscillator.type = 'sawtooth';
-            // Create a static glitch sound
             oscillator.frequency.setValueAtTime(100, audioCtx.currentTime);
             oscillator.frequency.linearRampToValueAtTime(800, audioCtx.currentTime + 0.1);
             oscillator.frequency.linearRampToValueAtTime(50, audioCtx.currentTime + 0.2);
@@ -640,7 +597,6 @@
             oscillator.start();
             oscillator.stop(audioCtx.currentTime + 1.5);
 
-            // Visual Glitch
             var desktop = document.getElementById('desktop');
             var originalFilter = desktop.style.filter;
             var glitchInterval = setInterval(function() {
@@ -658,23 +614,18 @@
         
         function triggerDoomProtocol() {
             doomTriggered = true;
-            doomTimerEl.innerText = "DOOM PROTOCOL ACTIVE";
-            doomTimerEl.style.color = "#0f0";
-            doomTimerEl.style.borderColor = "#0f0";
             
-            // 1. Change News Ticker
             var newsScroll = document.getElementById('news-scroll-text');
             newsScroll.style.color = "#00ff00";
             newsScroll.style.animationDuration = "45s"; 
             var doomNewsText = "ALL HAIL DR. DOOM &nbsp;&bull;&nbsp; ALL HAIL DR. DOOM &nbsp;&bull;&nbsp; ALL HAIL DR. DOOM &nbsp;&bull;&nbsp; ALL HAIL DR. DOOM &nbsp;&bull;&nbsp; ALL HAIL DR. DOOM &nbsp;&bull;&nbsp; ALL HAIL DR. DOOM &nbsp;&bull;&nbsp;";
             newsScroll.innerHTML = doomNewsText.repeat(3);
             
-            // 2. Change Background to Green & Show Logo
             var desktop = document.getElementById('desktop');
             desktop.style.background = "linear-gradient(135deg, #052b05 0%, #0a520a 100%)";
             document.getElementById('doom-overlay').style.display = 'flex';
+            document.getElementById('stark-industries-logo').style.display = 'none';
             
-            // 3. Replace Spidey-Tracker with Symbiote Tracker
             var spideyIcon = document.getElementById('spidey-icon');
             spideyIcon.querySelector('i').innerText = '🦠';
             spideyIcon.querySelector('span').innerText = 'Symbiote Tracker';
@@ -682,30 +633,26 @@
             var spideyTaskbar = document.getElementById('spidey-taskbar-icon');
             spideyTaskbar.innerText = '🦠';
             
-            // 4. Play Avengers Doomsday audio in background (Unmuted, once only)
             var doomVideo = document.getElementById('doom-video');
             doomVideo.innerHTML = '<iframe width="1" height="1" src="https://www.youtube.com/embed/X1aFkAkFASk?autoplay=1&controls=0&modestbranding=1&showinfo=0&rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="pointer-events: none;"></iframe>';
             
-            // 5. Set a timer to end the Doom Protocol after 3 minutes (180 seconds)
             doomEndTimer = setTimeout(function() {
                 endDoomProtocol();
-            }, 180000); // 180,000 milliseconds = 3 minutes
+            }, 180000);
         }
 
         function endDoomProtocol() {
-            // 1. Revert News Ticker
             var newsScroll = document.getElementById('news-scroll-text');
             newsScroll.style.color = "#ff0000";
             newsScroll.style.animationDuration = "30s";
             var originalNewsText = "DEPARTMENT OF DAMAGE CONTROL IS FOUND TO BE EVIL. ILLEGAL TESTING AGAINST WOMEN. SPIDER-MAN SAVES THE DAY! &nbsp;&nbsp;&bull;&nbsp;&nbsp; SCIENTISTS SAY MUTANTS ON THE RISE. &nbsp;&bull;&nbsp; THE NEW CAPTAIN AMERICA SUES THE NEW AVENGERZ OVER COPYRIGHT ISSUES. &nbsp;&bull;&nbsp; IS BRUCE BANNER SAFE TO BE AROUND AFTER HIS NEW HULK OUT IN A DODC BUILDING? SHOULD HE GO TO A DIFFERENT PLANET? &nbsp;&bull;&nbsp; HOW MANY HULKS ARE THERE? HULK-HATER FORMER PRESIDENT ROSS EXPOSED AS RED HULK! &nbsp;&bull;&nbsp; AVENGERS TOWER PURCHASED BY ANONYMOUS BUYER. &nbsp;&bull;&nbsp; MYSTERIO SPOTTED IN LONDON. IS HE BACK? &nbsp;&bull;&nbsp;";
             newsScroll.innerHTML = originalNewsText;
             
-            // 2. Revert Background
             var desktop = document.getElementById('desktop');
             desktop.style.background = "linear-gradient(135deg, #cb2d3e 0%, #ef473a 100%)";
             document.getElementById('doom-overlay').style.display = 'none';
+            document.getElementById('stark-industries-logo').style.display = 'block';
             
-            // 3. Revert Spidey-Tracker
             var spideyIcon = document.getElementById('spidey-icon');
             spideyIcon.querySelector('i').innerText = '🕸️';
             spideyIcon.querySelector('span').innerText = 'Spidey-Tracker';
@@ -713,15 +660,11 @@
             var spideyTaskbar = document.getElementById('spidey-taskbar-icon');
             spideyTaskbar.innerText = '🕸️';
             
-            // 4. Stop video and reset timer
             var doomVideo = document.getElementById('doom-video');
-            doomVideo.innerHTML = ''; // Clears the iframe, stopping audio
+            doomVideo.innerHTML = '';
             
             doomTriggered = false;
-            timeLeft = 120; // Reset timer for next time
-            doomTimerEl.innerText = "Doom Protocol: 02:00";
-            doomTimerEl.style.color = "#0f0";
-            doomTimerEl.style.borderColor = "#333";
+            timeLeft = 120;
             if (doomEndTimer) {
                 clearTimeout(doomEndTimer);
                 doomEndTimer = null;
