@@ -105,16 +105,24 @@
 
         /* Sokovia Accords Styles */
         #win-accords .window-content { background: #f4f1ea; color: #333; font-family: 'Patrick Hand', cursive; line-height: 1.6; }
-        .accord-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #333; padding-bottom: 10px; }
+        .accord-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #30363d; }
         .accord-header h2 { font-family: 'Bangers', cursive; font-size: 36px; letter-spacing: 2px; }
         .accord-header p { font-size: 14px; color: #666; }
         .accord-signatures { margin-top: 30px; font-style: italic; }
         .accord-signatures p { margin-bottom: 5px; font-size: 18px; }
 
-        /* Web-Shooter Game Styles */
-        #win-game .window-content { padding: 0; background: #000; display: flex; flex-direction: column; }
-        #game-canvas { width: 100%; flex: 1; background: #1a1a1a; display: block; }
-        .game-header { padding: 5px 10px; background: #111; color: #fff; font-size: 16px; display: flex; justify-content: space-between; font-family: 'Bebas Neue', cursive; }
+        /* Games App Styles */
+        #win-game .window-content { padding: 0; background: #0d1117; color: #c9d1d9; display: flex; flex-direction: row; height: 100%; }
+        .games-sidebar { width: 200px; background: #161b22; padding: 15px 0; overflow-y: auto; border-right: 1px solid #30363d; }
+        .games-sidebar h4 { color: #8b949e; padding: 10px 15px; text-transform: uppercase; font-size: 0.8rem; border-bottom: 1px solid #30363d; margin-bottom: 10px; }
+        .game-btn { display: block; width: 100%; text-align: left; background: none; border: none; color: #c9d1d9; padding: 10px 15px; cursor: pointer; font-size: 0.9rem; transition: background 0.2s; border-bottom: 1px solid #21262d; }
+        .game-btn:hover { background: #21262d; color: #fff; }
+        .game-btn.active { background: #1f6feb; color: #fff; font-weight: bold; }
+        .games-main { flex: 1; display: flex; flex-direction: column; }
+        .game-header { padding: 10px 15px; background: #161b22; border-bottom: 1px solid #30363d; }
+        .game-header h3 { color: #58a6ff; margin: 0; font-family: 'Bebas Neue', cursive; font-size: 18px; }
+        .game-wrapper { flex: 1; background: #000; }
+        .game-wrapper iframe { width: 100%; height: 100%; border: none; }
 
         /* Clock App Styles */
         #win-clock .window-content { background: #0d1117; color: #c9d1d9; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; height: 100%; }
@@ -169,7 +177,7 @@
         <div class="desktop-icon" style="top: 120px; left: 120px;" ondblclick="openWindow('win-spaceships')"><i>🚀</i><span>Spaceships</span></div>
         <div class="desktop-icon" style="top: 120px; left: 220px;" ondblclick="openWindow('win-shield')"><i>🛡️</i><span>SHIELD DB</span></div>
         
-        <div class="desktop-icon" style="top: 220px; left: 20px;" ondblclick="openWindow('win-game')"><i>🎮</i><span>Web-Shooter</span></div>
+        <div class="desktop-icon" style="top: 220px; left: 20px;" ondblclick="openWindow('win-game')"><i>🎮</i><span>Games</span></div>
         <div class="desktop-icon" style="top: 220px; left: 120px;" ondblclick="openWindow('win-accords')"><i>📜</i><span>Accords</span></div>
 
         <div id="doom-timer">Doom Protocol: 02:00</div>
@@ -305,12 +313,38 @@
             </div>
         </div>
 
-        <!-- Web-Shooter Game Window -->
-        <div class="window" id="win-game" style="width: 400px; height: 500px;">
-            <div class="title-bar" onmousedown="dragWindow(event, 'win-game')"><span>Web-Shooter</span><div class="title-bar-btns"><button onclick="closeWindow('win-game')"></button></div></div>
+        <!-- Games Window -->
+        <div class="window" id="win-game" style="width: 800px; height: 600px;">
+            <div class="title-bar" onmousedown="dragWindow(event, 'win-game')"><span>Games</span><div class="title-bar-btns"><button onclick="closeWindow('win-game')"></button></div></div>
             <div class="window-content">
-                <div class="game-header"><span>Score: <span id="game-score">0</span></span><span>Use A / D to move, Space to shoot</span></div>
-                <canvas id="game-canvas"></canvas>
+                <div class="games-sidebar">
+                    <h4>Scratch Games</h4>
+                    <button class="game-btn" onclick="loadGame('Scratch Game 1', '151025381', 'scratch')">Scratch Game 1</button>
+                    <button class="game-btn" onclick="loadGame('Scratch Game 2', '158172882', 'scratch')">Scratch Game 2</button>
+                    <button class="game-btn" onclick="loadGame('Scratch Game 3', '166226094', 'scratch')">Scratch Game 3</button>
+                    <button class="game-btn" onclick="loadGame('Scratch Game 4', '170008810', 'scratch')">Scratch Game 4</button>
+                    <button class="game-btn" onclick="loadGame('Scratch Game 5', '1367617085', 'scratch')">Scratch Game 5</button>
+                    <button class="game-btn" onclick="loadGame('Scratch Game 6', '927496970', 'scratch')">Scratch Game 6</button>
+                    <button class="game-btn" onclick="loadGame('Scratch Game 7', '873022902', 'scratch')">Scratch Game 7</button>
+                    <h4>YouTube Games</h4>
+                    <button class="game-btn" onclick="loadGame('YT Game 1', 'q4GdJVvdxss', 'youtube')">YT Game 1</button>
+                    <button class="game-btn" onclick="loadGame('YT Game 2', 'U-1cn1yOKYc', 'youtube')">YT Game 2</button>
+                    <button class="game-btn" onclick="loadGame('YT Game 3', 'bgqGdIoa52s', 'youtube')">YT Game 3</button>
+                    <button class="game-btn" onclick="loadGame('YT Game 4', '1RlTT-f_cIw', 'youtube')">YT Game 4</button>
+                    <button class="game-btn" onclick="loadGame('YT Game 5', 'R5cIg3nMhaU', 'youtube')">YT Game 5</button>
+                    <button class="game-btn" onclick="loadGame('YT Game 6', 'Lb2wwEx6DVw', 'youtube')">YT Game 6</button>
+                    <button class="game-btn" onclick="loadGame('YT Game 7', 'basLDO2bj2k', 'youtube')">YT Game 7</button>
+                    <button class="game-btn" onclick="loadGame('YT Game 8', 'hzoWfRb2ZYI', 'youtube')">YT Game 8</button>
+                    <button class="game-btn" onclick="loadGame('YT Game 9', '0YZU_Fqz2KM', 'youtube')">YT Game 9</button>
+                </div>
+                <div class="games-main">
+                    <div class="game-header">
+                        <h3 id="game-title">Select a game from the left</h3>
+                    </div>
+                    <div class="game-wrapper">
+                        <iframe id="game-iframe" src="" allowfullscreen></iframe>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -373,7 +407,7 @@
                 win.appendChild(handle);
                 
                 handle.addEventListener('mousedown', function(e) {
-                    e.stopPropagation(); // Prevent dragging the window
+                    e.stopPropagation();
                     isResizing = true;
                     currentWin = win;
                     initialWidth = parseInt(win.style.width) || win.offsetWidth;
@@ -420,6 +454,27 @@
             cWin = null; 
             isResizing = false;
         });
+
+        // Games App Logic
+        function loadGame(gameName, gameId, type) {
+            var iframe = document.getElementById('game-iframe');
+            var title = document.getElementById('game-title');
+            var url = "";
+            
+            if (type === 'scratch') {
+                url = "https://scratch.mit.edu/projects/" + gameId + "/embed";
+            } else if (type === 'youtube') {
+                url = "https://www.youtube.com/embed/" + gameId + "?autoplay=1";
+            }
+            
+            iframe.src = url;
+            title.innerText = "Now Playing: " + gameName;
+            
+            // Update active button styling
+            var btns = document.getElementsByClassName('game-btn');
+            for (var i = 0; i < btns.length; i++) { btns[i].classList.remove('active'); }
+            event.currentTarget.classList.add('active');
+        }
 
         // JARVIS AI Logic
         const OR_KEY = "YOUR_OPENROUTER_API_KEY"; // PASTE YOUR OPENROUTER API KEY HERE
@@ -533,71 +588,6 @@
             });
         }
         document.getElementById('shield-search').addEventListener('keydown', function(e){ if(e.key === 'Enter') searchShield(); });
-
-        // Web-Shooter Game Logic
-        var gCanvas = document.getElementById('game-canvas');
-        var gCtx = gCanvas.getContext('2d');
-        var gW = 380, gH = 420;
-        gCanvas.width = gW; gCanvas.height = gH;
-        var player = { x: gW/2, y: gH-30, w: 20, h: 20, speed: 4 };
-        var bullets = [], bombs = [], keys = {}, score = 0;
-
-        window.addEventListener('keydown', function(e) {
-            if (document.getElementById('win-game').style.display === 'flex') {
-                keys[e.key.toLowerCase()] = true;
-                if (e.key === ' ') { e.preventDefault(); bullets.push({ x: player.x + 10, y: player.y, w: 2, h: 10 }); }
-            }
-        });
-        window.addEventListener('keyup', function(e) { keys[e.key.toLowerCase()] = false; });
-
-        function spawnBomb() { bombs.push({ x: Math.random() * (gW - 20), y: 0, w: 15, h: 15, speed: Math.random() * 2 + 1 }); }
-        setInterval(spawnBomb, 1500);
-
-        function gameLoop() {
-            if (document.getElementById('win-game').style.display !== 'flex') { requestAnimationFrame(gameLoop); return; }
-            
-            // Sync canvas size with window size
-            if (gCanvas.width !== gCanvas.offsetWidth || gCanvas.height !== gCanvas.offsetHeight) {
-                gCanvas.width = gCanvas.offsetWidth;
-                gCanvas.height = gCanvas.offsetHeight;
-                gW = gCanvas.width; gH = gCanvas.height;
-            }
-
-            gCtx.clearRect(0, 0, gW, gH);
-            if (keys['a'] && player.x > 0) player.x -= player.speed;
-            if (keys['d'] && player.x < gW - player.w) player.x += player.speed;
-            
-            gCtx.fillStyle = '#ff0000';
-            gCtx.fillRect(player.x, player.y, player.w, player.h);
-            gCtx.fillStyle = '#fff';
-            gCtx.fillRect(player.x + 5, player.y + 5, 10, 10);
-            
-            gCtx.fillStyle = '#fff';
-            for (var i = bullets.length - 1; i >= 0; i--) {
-                bullets[i].y -= 6;
-                gCtx.fillRect(bullets[i].x, bullets[i].y, bullets[i].w, bullets[i].h);
-                if (bullets[i].y < 0) bullets.splice(i, 1);
-            }
-            
-            gCtx.fillStyle = '#00ff00';
-            for (var j = bombs.length - 1; j >= 0; j--) {
-                bombs[j].y += bombs[j].speed;
-                gCtx.beginPath(); gCtx.arc(bombs[j].x + 7.5, bombs[j].y + 7.5, 7.5, 0, Math.PI*2); gCtx.fill();
-                
-                if (bombs[j].x < player.x + player.w && bombs[j].x + bombs[j].w > player.x && bombs[j].y < player.y + player.h && bombs[j].y + bombs[j].h > player.y) {
-                    score = 0; bombs = []; document.getElementById('game-score').innerText = score;
-                }
-                
-                for (var k = bullets.length - 1; k >= 0; k--) {
-                    if (bullets[k].x < bombs[j].x + bombs[j].w && bullets[k].x + bullets[k].w > bombs[j].x && bullets[k].y < bombs[j].y + bombs[j].h && bullets[k].y + bullets[k].h > bombs[j].y) {
-                        bombs.splice(j, 1); bullets.splice(k, 1); score += 10; document.getElementById('game-score').innerText = score; break;
-                    }
-                }
-                if (bombs[j] && bombs[j].y > gH) bombs.splice(j, 1);
-            }
-            requestAnimationFrame(gameLoop);
-        }
-        gameLoop();
 
         // Auto open the Welcome window when the page loads
         window.onload = function() {
