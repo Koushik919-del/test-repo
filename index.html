@@ -123,7 +123,7 @@
         .hand-second { width: 2px; height: 45px; margin-left: -1px; background: #f85149; }
         .clock-center { position: absolute; width: 8px; height: 8px; background: #30363d; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); }
 
-        #stark-industries-logo { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 350px; height: 350px; background-image: url('https://i.pinimg.com/736x/09/ce/5e/09ce5e602af7668b98c320ccf4699d78.jpg'); background-size: contain; background-repeat: no-repeat; background-position: center; opacity: 0.15; pointer-events: none; z-index: 0; }
+        #stark-industries-logo { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 350px; height: 350px; background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEbhDw3eZU67cEGb8gNxn3pvRKXUhQ1Z6L-zM7QX8WLQ&s=10'); background-size: contain; background-repeat: no-repeat; background-position: center; opacity: 0.15; pointer-events: none; z-index: 0; }
 
         #doom-overlay { position: absolute; top: 30px; left: 0; width: 100%; height: calc(100% - 78px); display: none; justify-content: center; align-items: center; pointer-events: none; z-index: 1; }
         .doom-text { font-family: 'Pirata One', cursive; font-size: 7rem; color: rgba(0, 255, 0, 0.2); text-align: center; transform: scale(0.8); animation: doom-glow 3s infinite alternate; letter-spacing: 4px; }
@@ -529,4 +529,7 @@
                 inp.disabled = false; btn.disabled = false; inp.focus();
             });
         }
-        document.getElementById('jarvis-input').addEventListener('keydown', function(e){ if(e.key === 'Enter') sendJarvisMsg(); });
+        document.getElementById('jarvis-input').addEventListener('keydown', function(e){ if(e.key === 'Enter') sendJarvisMsg(); });}
+    </script>
+</body>
+</html>
