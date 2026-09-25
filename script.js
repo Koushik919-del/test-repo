@@ -37,8 +37,34 @@ function openWindow(id) {
         win.style.left = (window.innerWidth / 2 - parseInt(win.style.width) / 2) + 'px';
         win.style.top = (window.innerHeight / 2 - parseInt(win.style.height) / 2) + 'px';
     }
+    
+    if (!win.querySelector('.resize-handle')) {
+        var handle = document.createElement('div');
+        handle.className = 'resize-handle';
+        handle.style.position = 'absolute';
+        handle.style.bottom = '0';
+        handle.style.right = '0';
+        handle.style.width = '15px';
+        handle.style.height = '15px';
+        handle.style.cursor = 'nwse-resize';
+        handle.style.background = 'linear-gradient(135deg, transparent 50%, #888 50%)';
+        handle.style.zIndex = '10';
+        win.appendChild(handle);
+        
+        handle.addEventListener('mousedown', function(e) {
+            e.stopPropagation();
+            isResizing = true;
+            currentWin = win;
+            initialWidth = parseInt(win.style.width) || win.offsetWidth;
+            initialHeight = parseInt(win.style.height) || win.offsetHeight;
+            initialX = e.clientX;
+            initialY = e.clientY;
+        });
+    }
+    
     bringToFront(win);
 }
+
 function closeWindow(id) { document.getElementById(id).style.display = 'none'; }
 function bringToFront(el) { zCounter++; el.style.zIndex = zCounter; }
 
@@ -47,198 +73,133 @@ document.querySelectorAll('.window').forEach(function(win) {
 });
 
 var cWin = null, oX = 0, oY = 0;
+var isResizing = false, initialWidth = 0, initialHeight = 0, initialX = 0, initialY = 0;
+
 function dragWindow(e, id) {
     cWin = document.getElementById(id);
     oX = e.clientX - cWin.offsetLeft;
     oY = e.clientY - cWin.offsetTop;
+    isResizing = false;
 }
+
 document.addEventListener('mousemove', function(e) {
-    if (cWin) {
+    if (isResizing && cWin) {
+        var newWidth = Math.max(250, initialWidth + (e.clientX - initialX));
+        var newHeight = Math.max(150, initialHeight + (e.clientY - initialY));
+        cWin.style.width = newWidth + 'px';
+        cWin.style.height = newHeight + 'px';
+    } else if (cWin && !isResizing) {
         cWin.style.left = (e.clientX - oX) + 'px';
         cWin.style.top = (e.clientY - oY) + 'px';
     }
 });
-document.addEventListener('mouseup', function() { cWin = null; });
 
-var OR_KEY = "YOUR_OPENROUTER_API_KEY";
-var AI_MODELS = ['openai/gpt-oss-120b:free', 'openai/gpt-oss-20b:free', 'google/gemma-3-27b-it:free', 'meta-llama/llama-3.3-8b-instruct:free'];
+document.addEventListener('mouseup', function() { 
+    cWin = null; 
+    isResizing = false;
+});
 
-function callAI(messages, cb) {
-    var lastErr = 'Request failed';
-    var modelIndex = 0;
-    function tryNext() {
-        if (modelIndex >= AI_MODELS.length) { cb(null, lastErr); return; }
-        var model = AI_MODELS[modelIndex]; modelIndex++;
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', "https://openrouter.ai/api/v1/chat/completions", true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.setRequestHeader('Authorization', 'Bearer ' + OR_KEY);
-        xhr.setRequestHeader('HTTP-Referer', window.location.href);
-        xhr.setRequestHeader('X-Title', 'WebOS');
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                try {
-                    var data = JSON.parse(xhr.responseText);
-                    if (data.choices && data.choices[0] && data.choices[0].message) { cb(data.choices[0].message.content, null); return; }
-                } catch (e) {}
-            }
-            tryNext();
-        };
-        xhr.onerror = function() { tryNext(); };
-        xhr.send(JSON.stringify({ model: model, messages: messages }));
+function loadGame(gameName, gameId, type) {
+    var iframe = document.getElementById('game-iframe');
+    var title = document.getElementById('game-title');
+    var url = "";
+    
+    if (type === 'scratch') {
+        url = "https://scratch.mit.edu/projects/" + gameId + "/embed";
+    } else if (type === 'youtube') {
+        url = "https://www.youtube.com/embed/" + gameId + "?autoplay=1";
     }
-    tryNext();
+    
+    iframe.src = url;
+    title.innerText = "Now Playing: " + gameName;
+    
+    var btns = document.getElementsByClassName('game-btn');
+    for (var i = 0; i < btns.length; i++) { btns[i].classList.remove('active'); }
+    event.currentTarget.classList.add('active');
 }
 
-var jHistory = [];
-var jSys = "You are J.A.R.V.I.S. (Just A Rather Very Intelligent System), an AI assistant created by Tony Stark for the user (Koushik Tummepalli, who you call 'sir'). You are integrated into a Marvel-themed WebOS. You help with tasks, answer questions about the MCU, Spider-Man, tech, and general knowledge. You are polite, sophisticated, and concise. You sometimes connect things to God of War, Minecraft, and/or MARVEL. ALWAYS BE PG_13!";
+const OR_KEY = "YOUR_OPENROUTER_API_KEY";
+var jarvisModels = ['openai/gpt-oss-120b:free', 'openai/gpt-oss-20b:free', 'google/gemma-3-27b-it:free', 'meta-llama/llama-3.3-8b-instruct:free'];
+var jarvisSys = "You are J.A.R.V.I.S. (Just A Rather Very Intelligent System), an AI assistant created by Tony Stark for the user (Koushik Tummepalli, who you call 'sir'). You are integrated into a Marvel-themed WebOS. You help with tasks, answer questions about the MCU, Spider-Man, tech, and general knowledge. You are polite, sophisticated, and concise. You sometimes connect things to God of War, Minecraft, and/or MARVEL. ALWAYS BE PG_13!";
 
-function scrollJ() { var m = document.getElementById('jarvis-messages'); m.scrollTop = m.scrollHeight; }
-function addJBub(role, text) {
+async function callJarvisAI(messages, cb) {
+    var lastErr = 'Request failed';
+    for (var i = 0; i < jarvisModels.length; i++) {
+        var model = jarvisModels[i];
+        var res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + OR_KEY, 'HTTP-Referer': window.location.href, 'X-Title': 'JARVIS WebOS' },
+            body: JSON.stringify({ model: model, messages: messages })
+        });
+        var data = await res.json().catch(function(){ return {}; });
+        if (res.ok && data.choices && data.choices[0] && data.choices[0].message) {
+            cb(data.choices[0].message.content, null); return;
+        }
+        lastErr = (data && data.error && (data.error.message || data.error.code)) || res.statusText || lastErr;
+    }
+    cb(null, lastErr);
+}
+
+var jarvisHistory = [];
+function scrollJarvis() { var m = document.getElementById('jarvis-messages'); m.scrollTop = m.scrollHeight; }
+function addJarvisBubble(role, text) {
     var mDiv = document.getElementById('jarvis-messages');
     var row = document.createElement('div');
-    row.className = role === 'user' ? 'jarvis-msg-row user' : 'jarvis-msg-row assistant';
-    var lbl = document.createElement('div');
-    lbl.className = 'jarvis-msg-label';
-    lbl.innerText = role === 'user' ? 'You' : 'J.A.R.V.I.S.';
-    var bub = document.createElement('div');
-    bub.className = 'jarvis-msg-bubble';
-    bub.innerText = text;
-    row.appendChild(lbl); row.appendChild(bub);
+    row.className = 'jarvis-msg-row ' + role;
+    var label = document.createElement('div');
+    label.className = 'jarvis-msg-label';
+    label.innerText = role === 'user' ? 'You' : 'J.A.R.V.I.S.';
+    var bubble = document.createElement('div');
+    bubble.className = 'jarvis-msg-bubble';
+    bubble.innerText = text;
+    row.appendChild(label); row.appendChild(bubble);
     mDiv.appendChild(row);
-    scrollJ();
+    scrollJarvis();
 }
-function setJTyping(on) {
+function setJarvisTyping(on) {
     var mDiv = document.getElementById('jarvis-messages');
-    var ex = document.getElementById('jarvis-typing');
-    if (on && !ex) {
-        var t = document.createElement('div');
-        t.id = 'jarvis-typing'; t.className = 'jarvis-typing';
-        t.innerText = 'J.A.R.V.I.S. is processing...';
-        mDiv.appendChild(t); scrollJ();
-    } else if (!on && ex) { ex.remove(); }
+    var existing = document.getElementById('jarvis-typing');
+    if (on && !existing) {
+        var typing = document.createElement('div');
+        typing.id = 'jarvis-typing'; typing.className = 'jarvis-typing';
+        typing.innerText = 'J.A.R.V.I.S. is processing...';
+        mDiv.appendChild(typing); scrollJarvis();
+    } else if (!on && existing) { existing.remove(); }
 }
 
-function sendJarvisMsg() {
+async function sendJarvisMsg() {
     var inp = document.getElementById('jarvis-input');
     var btn = document.getElementById('jarvis-send-btn');
     var text = inp.value.trim();
     if (!text) return;
-
     inp.value = ''; inp.disabled = true; btn.disabled = true;
-    addJBub('user', text);
+    addJarvisBubble('user', text);
 
-    var messages = [{role: 'system', content: jSys}];
-    for (var i = 0; i < jHistory.length; i++) {
-        messages.push({role: jHistory[i].role, content: jHistory[i].content});
+    var messages = [{role: 'system', content: jarvisSys}];
+    for (var i = 0; i < jarvisHistory.length; i++) {
+        messages.push({role: jarvisHistory[i].role, content: jarvisHistory[i].content});
     }
     messages.push({role: 'user', content: text});
-
-    setJTyping(true);
+    
+    setJarvisTyping(true);
 
     if (!OR_KEY || OR_KEY === "YOUR_OPENROUTER_API_KEY") {
-        setJTyping(false);
-        addJBub('assistant', 'I require an OpenRouter API key to connect to the mainframe, sir.');
+        setJarvisTyping(false);
+        addJarvisBubble('assistant', 'I require an OpenRouter API key to connect to the mainframe, sir.');
         inp.disabled = false; btn.disabled = false; inp.focus();
         return;
     }
 
-    callAI(messages, function(reply, err) {
-        setJTyping(false);
+    callJarvisAI(messages, function(reply, err) {
+        setJarvisTyping(false);
         if (err) {
-            addJBub('assistant', 'My apologies, sir. The network seems to be experiencing some interference.');
+            addJarvisBubble('assistant', 'My apologies, sir. The network seems to be experiencing some interference.');
         } else {
-            addJBub('assistant', reply);
-            jHistory.push({role: 'user', content: text});
-            jHistory.push({role: 'assistant', content: reply});
+            addJarvisBubble('assistant', reply);
+            jarvisHistory.push({role: 'user', content: text});
+            jarvisHistory.push({role: 'assistant', content: reply});
         }
         inp.disabled = false; btn.disabled = false; inp.focus();
     });
 }
 document.getElementById('jarvis-input').addEventListener('keydown', function(e){ if(e.key === 'Enter') sendJarvisMsg(); });
-
-function searchShield() {
-    var query = document.getElementById('shield-search').value.trim();
-    var resDiv = document.getElementById('shield-result');
-    var btn = document.getElementById('shield-btn');
-    var inp = document.getElementById('shield-search');
-    if (!query) return;
-
-    btn.disabled = true; inp.disabled = true;
-    resDiv.innerHTML = '<p class="shield-loading">> CONNECTING TO MAINFRAME...</p><p class="shield-loading">> QUERYING ARCHIVES FOR: ' + query + '...</p><p class="shield-loading">> GENERATING LEVEL 7 FILE...</p>';
-
-    var sysPrompt = "You are the S.H.I.E.L.D. AI System. The user is an agent with Level 7 clearance. Generate a highly detailed, classified S.H.I.E.L.D. file for the requested Marvel character. Format the response EXACTLY like this:\n\n> FILE FOUND. ACCESS GRANTED.\n\n<h3>Subject Name (Alias)</h3>\n<strong>Threat Level:</strong> [Low/Medium/High/Extreme/Apocalyptic]\n<strong>Last Known Location:</strong> [Location]\n<strong>Abilities:</strong> [Brief list of powers/gear]\n<strong>Note:</strong> [A 2-3 sentence in-universe note from Nick Fury or Maria Hill].\n\nKeep it strictly in the MCU Sacred Timeline canon.";
-
-    var msgs = [ { role: 'system', content: sysPrompt }, { role: 'user', content: 'Fetch file for: ' + query } ];
-
-    callAI(msgs, function(reply, err) {
-        if (err) {
-            resDiv.innerHTML = '> ERROR: MAINFRAME OFFLINE.';
-        } else {
-            resDiv.innerHTML = reply;
-        }
-        btn.disabled = false; inp.disabled = false;
-    });
-}
-document.getElementById('shield-search').addEventListener('keydown', function(e){ if(e.key === 'Enter') searchShield(); });
-
-var gCanvas = document.getElementById('game-canvas');
-var gCtx = gCanvas.getContext('2d');
-var gW = 380, gH = 420;
-gCanvas.width = gW; gCanvas.height = gH;
-var player = { x: gW/2, y: gH-30, w: 20, h: 20, speed: 4 };
-var bullets = [], bombs = [], keys = {}, score = 0;
-
-window.addEventListener('keydown', function(e) {
-    if (document.getElementById('win-game').style.display === 'flex') {
-        keys[e.key.toLowerCase()] = true;
-        if (e.key === ' ') { e.preventDefault(); bullets.push({ x: player.x + 10, y: player.y, w: 2, h: 10 }); }
-    }
-});
-window.addEventListener('keyup', function(e) { keys[e.key.toLowerCase()] = false; });
-
-function spawnBomb() { bombs.push({ x: Math.random() * (gW - 20), y: 0, w: 15, h: 15, speed: Math.random() * 2 + 1 }); }
-setInterval(spawnBomb, 1500);
-
-function gameLoop() {
-    if (document.getElementById('win-game').style.display !== 'flex') { requestAnimationFrame(gameLoop); return; }
-    
-    gCtx.clearRect(0, 0, gW, gH);
-    if (keys['a'] && player.x > 0) player.x -= player.speed;
-    if (keys['d'] && player.x < gW - player.w) player.x += player.speed;
-    
-    gCtx.fillStyle = '#ff0000';
-    gCtx.fillRect(player.x, player.y, player.w, player.h);
-    gCtx.fillStyle = '#fff';
-    gCtx.fillRect(player.x + 5, player.y + 5, 10, 10);
-    
-    gCtx.fillStyle = '#fff';
-    for (var i = bullets.length - 1; i >= 0; i--) {
-        bullets[i].y -= 6;
-        gCtx.fillRect(bullets[i].x, bullets[i].y, bullets[i].w, bullets[i].h);
-        if (bullets[i].y < 0) bullets.splice(i, 1);
-    }
-    
-    gCtx.fillStyle = '#00ff00';
-    for (var j = bombs.length - 1; j >= 0; j--) {
-        bombs[j].y += bombs[j].speed;
-        gCtx.beginPath(); gCtx.arc(bombs[j].x + 7.5, bombs[j].y + 7.5, 7.5, 0, Math.PI*2); gCtx.fill();
-        
-        if (bombs[j].x < player.x + player.w && bombs[j].x + bombs[j].w > player.x && bombs[j].y < player.y + player.h && bombs[j].y + bombs[j].h > player.y) {
-            score = 0; bombs = []; document.getElementById('game-score').innerText = score;
-        }
-        
-        for (var k = bullets.length - 1; k >= 0; k--) {
-            if (bullets[k].x < bombs[j].x + bombs[j].w && bullets[k].x + bullets[k].w > bombs[j].x && bullets[k].y < bombs[j].y + bombs[j].h && bullets[k].y + bullets[k].h > bombs[j].y) {
-                bombs.splice(j, 1); bullets.splice(k, 1); score += 10; document.getElementById('game-score').innerText = score; break;
-            }
-        }
-        if (bombs[j] && bombs[j].y > gH) bombs.splice(j, 1);
-    }
-    requestAnimationFrame(gameLoop);
-}
-gameLoop();
-
-window.onload = function() {
-    openWindow('win-welcome');
-};
