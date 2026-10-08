@@ -24,10 +24,6 @@ function triggerTimeSlip(windowId) {
     setTimeout(function() {
         desktop.classList.remove('shaking');
         overlay.classList.remove('active');
-        
-        // Optional: You can trigger another app to open right here!
-        // openWindow('dailybugle');
-        
     }, 2000);
 }
 
