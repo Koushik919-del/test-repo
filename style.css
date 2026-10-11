@@ -26,24 +26,26 @@ body { background: #1a1a24; color: #333; overflow: hidden; height: 100vh; user-s
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    text-shadow: 0 0 20px rgba(0, 255, 0, 0.5); /* Stable green glow */
+    text-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
     letter-spacing: 4px;
     pointer-events: none;
     z-index: 1;
     width: 100%;
 }
 
-/* Desktop Icons */
-.icon { position: absolute; color: #fff; text-align: center; cursor: grab; padding: 10px; border-radius: 5px; width: 90px; }
+/* Desktop Icons (FIXED with Flexbox to prevent overlapping) */
+.icon { position: absolute; color: #fff; text-align: center; cursor: grab; padding: 10px; border-radius: 5px; width: 90px; display: flex; flex-direction: column; align-items: center; }
 .icon:active { cursor: grabbing; }
 .icon:hover { background: rgba(255,255,255,0.1); }
-.icon i { font-size: 32px; margin-bottom: 5px; display: block; font-style: normal; }
-.icon span { font-size: 14px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); font-family: 'Patrick Hand', cursive; display: block; }
+.icon i { margin-bottom: 5px; display: flex; justify-content: center; align-items: center; width: 40px; height: 40px; font-style: normal; }
+.icon i img { width: 40px !important; height: 40px !important; object-fit: contain; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5)); }
+.icon span { font-size: 14px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); font-family: 'Patrick Hand', cursive; display: block; width: 100%; }
 
-/* Taskbar */
+/* Taskbar (FIXED with Flexbox to prevent overlapping) */
 #bottombar { position: absolute; bottom: 0; left: 0; width: 100%; height: 48px; background: rgba(20, 20, 30, 0.9); backdrop-filter: blur(10px); border-top: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; padding: 0 15px; z-index: 9999; transition: background 0.5s, border-top 0.5s, box-shadow 0.5s; }
-.barpic { width: 40px; height: 40px; margin-right: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; display: flex; justify-content: center; align-items: center; cursor: pointer; color: #fff; font-size: 18px; transition: background 0.2s; font-style: normal; }
+.barpic { width: 40px; height: 40px; margin-right: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: background 0.2s; }
 .barpic:hover { background: rgba(255,255,255,0.2); }
+.barpic img { width: 24px !important; height: 24px !important; object-fit: contain; }
 .time { margin-left: auto; color: #fff; font-size: 18px; font-weight: 600; padding: 0 10px; font-family: 'Bebas Neue', cursive; letter-spacing: 1px; }
 
 /* Windows */
@@ -71,7 +73,8 @@ body { background: #1a1a24; color: #333; overflow: hidden; height: 100vh; user-s
 /* F.R.I.D.A.Y. / Doombot */
 #friday .window-content { display: flex; flex-direction: column; padding: 0; background: #0d1117; color: #c9d1d9; }
 .jarvis-header { background: #161b22; padding: 10px 15px; border-bottom: 1px solid #30363d; display: flex; align-items: center; gap: 10px; }
-.jarvis-avatar { width: 32px; height: 32px; background: #1f6feb; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #fff; transition: background 0.5s; }
+.jarvis-avatar { width: 32px; height: 32px; background: #1f6feb; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #fff; transition: background 0.5s; overflow: hidden; }
+.jarvis-avatar img { width: 20px !important; height: 20px !important; object-fit: contain; }
 .jarvis-title { color: #f0f6fc; font-weight: 700; font-size: 16px; font-family: 'Bebas Neue', cursive; letter-spacing: 1px; transition: color 0.5s; }
 .jarvis-subtitle { color: #8b949e; font-size: 12px; font-family: 'Patrick Hand', cursive; }
 .jarvis-status-dot { width: 8px; height: 8px; background: #3fb950; border-radius: 50%; margin-left: auto; transition: background 0.5s; }
@@ -148,7 +151,7 @@ body { background: #1a1a24; color: #333; overflow: hidden; height: 100vh; user-s
 /* VON DOOM HACK STATES (Green & Grey) */
 /* ========================================== */
 body.doomed #desktop {
-    background: radial-gradient(circle at center, #1a2e1a 0%, #2a2a2a 100%) !important; /* Dark green to dark grey */
+    background: radial-gradient(circle at center, #1a2e1a 0%, #2a2a2a 100%) !important;
 }
 body.doomed #stark-pic {
     opacity: 0 !important;
@@ -157,33 +160,33 @@ body.doomed .doom-text {
     display: block !important;
 }
 body.doomed #bottombar {
-    background: rgba(35, 35, 35, 0.9) !important; /* Dark grey */
-    border-top: 1px solid #00ff00 !important; /* Green */
-    box-shadow: 0 0 15px #00ff00; /* Green glow */
+    background: rgba(35, 35, 35, 0.9) !important;
+    border-top: 1px solid #00ff00 !important;
+    box-shadow: 0 0 15px #00ff00;
 }
 body.doomed .news-name {
-    background: #00ff00 !important; /* Green */
-    color: #333 !important; /* Dark grey text instead of black */
+    background: #00ff00 !important;
+    color: #333 !important;
 }
 body.doomed #news-scroll-thingy {
-    background: #1a1a1a !important; /* Dark grey */
-    border-bottom: 2px solid #00ff00 !important; /* Green */
+    background: #1a1a1a !important;
+    border-bottom: 2px solid #00ff00 !important;
 }
 body.doomed .news-scroll {
-    color: #00ff00 !important; /* Green */
+    color: #00ff00 !important;
     animation-duration: 30s !important;
 }
 
 /* Doombot AI Visual Hijack */
 body.doomed .jarvis-avatar {
-    background: #00ff00 !important; /* Green */
-    color: #333 !important; /* Dark grey */
+    background: #00ff00 !important;
+    color: #333 !important;
 }
 body.doomed .jarvis-title {
-    color: #00ff00 !important; /* Green */
+    color: #00ff00 !important;
 }
 body.doomed .jarvis-status-dot {
-    background: #888888 !important; /* Grey instead of red */
+    background: #888888 !important;
 }
 
 /* Screen shake on the desktop while slipping */
