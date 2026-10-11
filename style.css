@@ -4,7 +4,7 @@
 body { background: #1a1a24; color: #333; overflow: hidden; height: 100vh; user-select: none; }
 
 /* News Ticker */
-#news-scroll-thingy { position: absolute; top: 0; left: 0; width: 100%; height: 30px; background: #ffffff; border-bottom: 2px solid #000; overflow: hidden; z-index: 10000; display: flex; align-items: center; transition: background 0.5s, border-bottom 0.5s; }
+#news-scroll-thingy { position: absolute; top: 0; left: 0; width: 100%; height: 30px; background: #ffffff; border-bottom: 2px solid #1a1a1a; overflow: hidden; z-index: 10000; display: flex; align-items: center; transition: background 0.5s, border-bottom 0.5s; }
 .news-name { background: #ff0000; color: #fff; padding: 5px 10px; font-weight: bold; font-size: 12px; margin-right: 10px; height: 100%; display: flex; align-items: center; font-family: 'Bangers', cursive; letter-spacing: 2px; transition: background 0.5s, color 0.5s; }
 .thenews { height: 30px; overflow: hidden; display: flex; align-items: center; }
 .news-scroll { display: inline-block; white-space: nowrap; color: #ff0000; font-family: 'Bangers', cursive; font-weight: bold; font-size: 16px; animation: scroll-news 100s linear infinite; padding-left: 100%; letter-spacing: 1px; transition: color 0.5s; }
@@ -14,7 +14,7 @@ body { background: #1a1a24; color: #333; overflow: hidden; height: 100vh; user-s
 #desktop { width: 100%; height: calc(100vh - 30px); margin-top: 30px; background: linear-gradient(135deg, #cb2d3e 0%, #ef473a 100%); position: relative; overflow: hidden; transition: background 0.5s; }
 #stark-pic { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 350px; height: 350px; background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEbhDw3eZU67cEGb8gNxn3pvRKXUhQ1Z6L-zM7QX8WLQ&s=10'); background-size: contain; background-repeat: no-repeat; background-position: center; opacity: 0.15; pointer-events: none; z-index: 0; transition: opacity 0.5s; }
 
-/* Von Doom Text (Now completely stable, no flashing) */
+/* Von Doom Text (Stable, no flashing) */
 #doomgltich { position: absolute; top: 30px; left: 0; width: 100%; height: calc(100% - 78px); display: none; justify-content: center; align-items: center; pointer-events: none; z-index: 1; }
 .doom-text {
     display: none; 
@@ -26,7 +26,7 @@ body { background: #1a1a24; color: #333; overflow: hidden; height: 100vh; user-s
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    text-shadow: 0 0 20px rgba(0, 255, 0, 0.5); /* Stable glow */
+    text-shadow: 0 0 20px rgba(0, 255, 0, 0.5); /* Stable green glow */
     letter-spacing: 4px;
     pointer-events: none;
     z-index: 1;
@@ -60,8 +60,8 @@ body { background: #1a1a24; color: #333; overflow: hidden; height: 100vh; user-s
 .welenter:hover { background: #2ea043; }
 
 /* Daily Bugle */
-.bugle-header { text-align: center; border-bottom: 3px double #000; margin-bottom: 20px; padding-bottom: 10px; }
-.bugle-header h1 { font-family: 'Bangers', cursive; font-size: 48px; font-weight: 900; letter-spacing: 2px; color: #000; text-shadow: 2px 2px 0px #fff; }
+.bugle-header { text-align: center; border-bottom: 3px double #1a1a1a; margin-bottom: 20px; padding-bottom: 10px; }
+.bugle-header h1 { font-family: 'Bangers', cursive; font-size: 48px; font-weight: 900; letter-spacing: 2px; color: #1a1a1a; text-shadow: 2px 2px 0px #fff; }
 .bugle-header p { font-size: 16px; color: #666; font-style: italic; font-family: 'Patrick Hand', cursive; }
 .bugle-article { margin-bottom: 25px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
 .bugle-article h3 { font-family: 'Bebas Neue', cursive; font-size: 24px; margin-bottom: 5px; letter-spacing: 1px; }
@@ -101,25 +101,25 @@ body { background: #1a1a24; color: #333; overflow: hidden; height: 100vh; user-s
 .clock-center { position: absolute; width: 8px; height: 8px; background: #30363d; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); }
 
 /* S.H.I.E.L.D. */
-#sheild .window-content { background: #0a0a0a; color: #00ff00; font-family: 'Courier New', Courier, monospace; }
+#sheild .window-content { background: #1a1a1a; color: #00ff00; font-family: 'Courier New', Courier, monospace; }
 .shield-search { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid #00ff00; padding-bottom: 10px; }
-.shield-input { flex: 1; background: #111; border: 1px solid #00ff00; color: #00ff00; padding: 8px; font-family: inherit; font-size: 16px; }
+.shield-input { flex: 1; background: #2a2a2a; border: 1px solid #00ff00; color: #00ff00; padding: 8px; font-family: inherit; font-size: 16px; }
 .shield-input::placeholder { color: #005500; }
-.shield-btn { background: #00ff00; color: #000; border: none; padding: 8px 15px; cursor: pointer; font-weight: bold; font-family: 'Bebas Neue', cursive; font-size: 18px; }
+.shield-btn { background: #00ff00; color: #333; border: none; padding: 8px 15px; cursor: pointer; font-weight: bold; font-family: 'Bebas Neue', cursive; font-size: 18px; }
 .shield-result { line-height: 1.6; }
 .shield-result h3 { color: #fff; margin-bottom: 5px; font-family: 'Bebas Neue', cursive; font-size: 22px; }
 .shield-result p { margin-bottom: 5px; font-size: 16px; }
 
 /* Veronica Scans */
-#thefour .window-content { padding: 0; background: radial-gradient(circle at center, #1a1a2e 0%, #000000 100%); color: #fff; display: flex; flex-direction: column; }
-.space-header { padding: 15px; border-bottom: 1px solid #333; background: rgba(0,0,0,0.5); }
+#thefour .window-content { padding: 0; background: radial-gradient(circle at center, #2a2a2a 0%, #1a1a1a 100%); color: #fff; display: flex; flex-direction: column; }
+.space-header { padding: 15px; border-bottom: 1px solid #333; background: rgba(20,20,20,0.5); }
 .space-header h2 { color: #4da6ff; margin: 0; font-size: 24px; font-family: 'Bebas Neue', cursive; letter-spacing: 1px; }
 .space-header p { color: #888; margin: 0; font-size: 14px; font-family: 'Patrick Hand', cursive; }
 .space-viewport { flex: 1; position: relative; display: flex; justify-content: center; align-items: center; overflow: hidden; min-height: 200px; }
 .stars { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px), radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px); background-size: 200px 200px, 150px 150px; background-position: 0 0, 40px 60px; opacity: 0.5; pointer-events: none; }
 .ship-container { position: relative; z-index: 2; text-align: center; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
 .ship-img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 0 5px rgba(255,255,255,0.5)); }
-.ship-info { padding: 20px; background: rgba(20, 30, 40, 0.9); border-top: 1px solid #4da6ff; z-index: 2; }
+.ship-info { padding: 20px; background: rgba(30, 30, 30, 0.9); border-top: 1px solid #4da6ff; z-index: 2; }
 .ship-info h3 { color: #4da6ff; margin-bottom: 10px; font-family: 'Bebas Neue', cursive; font-size: 22px; }
 .ship-info p { font-size: 16px; line-height: 1.5; color: #ccc; margin-bottom: 8px; font-family: 'Patrick Hand', cursive; }
 .blue-4 { color: #4da6ff; font-weight: bold; text-shadow: 0 0 5px #4da6ff; font-size: 18px; font-family: 'Bangers', cursive; }
@@ -133,7 +133,7 @@ body { background: #1a1a24; color: #333; overflow: hidden; height: 100vh; user-s
 .games-main { flex: 1; display: flex; flex-direction: column; }
 .game-header { padding: 10px 15px; background: #161b22; border-bottom: 1px solid #30363d; }
 .game-header h3 { color: #58a6ff; margin: 0; font-family: 'Bebas Neue', cursive; font-size: 18px; }
-.game-wrapper { flex: 1; background: #000; }
+.game-wrapper { flex: 1; background: #1a1a1a; }
 .game-wrapper iframe { width: 100%; height: 100%; border: none; }
 
 /* Accords */
@@ -145,10 +145,10 @@ body { background: #1a1a24; color: #333; overflow: hidden; height: 100vh; user-s
 .accord-signatures p { margin-bottom: 5px; font-size: 18px; }
 
 /* ========================================== */
-/* VON DOOM HACK STATES (Triggers after 10s) */
+/* VON DOOM HACK STATES (Green & Grey) */
 /* ========================================== */
 body.doomed #desktop {
-    background: radial-gradient(circle at center, #0a1a0a 0%, #000000 100%) !important;
+    background: radial-gradient(circle at center, #1a2e1a 0%, #2a2a2a 100%) !important; /* Dark green to dark grey */
 }
 body.doomed #stark-pic {
     opacity: 0 !important;
@@ -157,33 +157,33 @@ body.doomed .doom-text {
     display: block !important;
 }
 body.doomed #bottombar {
-    background: rgba(0, 20, 0, 0.9) !important;
-    border-top: 1px solid #00ff00 !important;
-    box-shadow: 0 0 15px #00ff00;
+    background: rgba(35, 35, 35, 0.9) !important; /* Dark grey */
+    border-top: 1px solid #00ff00 !important; /* Green */
+    box-shadow: 0 0 15px #00ff00; /* Green glow */
 }
 body.doomed .news-name {
-    background: #00ff00 !important;
-    color: #000 !important;
+    background: #00ff00 !important; /* Green */
+    color: #333 !important; /* Dark grey text instead of black */
 }
 body.doomed #news-scroll-thingy {
-    background: #000 !important;
-    border-bottom: 2px solid #00ff00 !important;
+    background: #1a1a1a !important; /* Dark grey */
+    border-bottom: 2px solid #00ff00 !important; /* Green */
 }
 body.doomed .news-scroll {
-    color: #00ff00 !important;
+    color: #00ff00 !important; /* Green */
     animation-duration: 30s !important;
 }
 
 /* Doombot AI Visual Hijack */
 body.doomed .jarvis-avatar {
-    background: #00ff00 !important;
-    color: #000 !important;
+    background: #00ff00 !important; /* Green */
+    color: #333 !important; /* Dark grey */
 }
 body.doomed .jarvis-title {
-    color: #00ff00 !important;
+    color: #00ff00 !important; /* Green */
 }
 body.doomed .jarvis-status-dot {
-    background: #ff0000 !important;
+    background: #888888 !important; /* Grey instead of red */
 }
 
 /* Screen shake on the desktop while slipping */
