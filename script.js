@@ -42,23 +42,39 @@ setTimeout(function() {
     // 1. Add the 'doomed' class to the body to trigger all CSS changes
     document.body.classList.add('doomed');
 
-    // 2. Change the News Ticker to Doom's propaganda
+    // 2. Add Screen Shake Glitch to the desktop
+    var desktop = document.getElementById('desktop');
+    if(desktop) {
+        desktop.classList.add('shaking');
+        // Stop shaking after 2 seconds
+        setTimeout(function() {
+            desktop.classList.remove('shaking');
+        }, 2000);
+    }
+
+    // 3. Change the News Ticker to Doom's propaganda
     var newsScroll = document.getElementById('thenewsitems');
     if(newsScroll) {
         newsScroll.innerHTML = "I WAS A GOD. &nbsp;&bull;&nbsp; THIS WORLD IS MINE TO RULE, AND MINE ALONE. &nbsp;&bull;&nbsp; I FOUND IT... BENEATH ME. &nbsp;&bull;&nbsp; PAIN? THAT IS FOR LESSER MEN... &nbsp;&bull;&nbsp; CHILD, MY LOVE IS INFINITE. MY PATIENCE IS NOT. &nbsp;&bull;&nbsp; BIG UPS TO MY BOY SPIDER-MAN &nbsp;&bull;&nbsp;";
     }
 
-    // 3. Hijack F.R.I.D.A.Y. and turn her into Doombot AI
+    // 4. Hijack F.R.I.D.A.Y. and turn her into Doombot-AI everywhere
+    var fridayTitleBar = document.querySelector('#friday .title-bar span');
+    if(fridayTitleBar) fridayTitleBar.innerText = 'Doombot-AI Interface';
+    
     var aiTitle = document.querySelector('#friday .jarvis-title');
-    if(aiTitle) aiTitle.innerText = 'DOOMBOT AI';
+    if(aiTitle) aiTitle.innerText = 'DOOMBOT-AI';
     
     var aiSubtitle = document.querySelector('#friday .jarvis-subtitle');
-    if(aiSubtitle) aiSubtitle.innerText = 'Von Doom Industries';
+    if(aiSubtitle) aiSubtitle.innerText = 'Cynthia Entertainment';
     
     var firstMsgLabel = document.querySelector('#jarvis-messages .jarvis-msg-row.assistant .jarvis-msg-label');
-    if(firstMsgLabel) firstMsgLabel.innerText = 'DOOMBOT AI';
+    if(firstMsgLabel) firstMsgLabel.innerText = 'DOOMBOT-AI';
 
-    // 4. Hijack the Games Section with Doom Broadcasts
+    // 5. Hijack the Games Section into Cynthia Entertainment everywhere
+    var gamesTitleBar = document.querySelector('#games .title-bar span');
+    if(gamesTitleBar) gamesTitleBar.innerText = 'Cynthia Entertainment';
+    
     var gamesSidebar = document.querySelector('.games-sidebar');
     if(gamesSidebar) {
         gamesSidebar.innerHTML = '<h4>DOOM NETWORK</h4>' +
@@ -71,7 +87,20 @@ setTimeout(function() {
     var gameTitle = document.getElementById('game-title');
     if(gameTitle) gameTitle.innerText = "DOOM NETWORK ACCESS";
 
-    // 5. Play a harsh, ominous hack sound
+    // 6. Update Desktop Icons text
+    document.querySelectorAll('.icon').forEach(function(icon) {
+        var oc = icon.getAttribute('onclick');
+        var span = icon.querySelector('span');
+        if (!span) return;
+        
+        if (oc && oc.indexOf("friday") !== -1) {
+            span.innerText = 'DOOMBOT-AI';
+        } else if (oc && oc.indexOf("games") !== -1) {
+            span.innerText = 'Cynthia Ent.';
+        }
+    });
+
+    // 7. Play a harsh, ominous hack sound
     playDoomHackSound();
 
 }, 10000); // 10,000 milliseconds = 10 seconds
@@ -176,7 +205,7 @@ function loadGame(gameName, gameId, type) {
     title.innerText = "Now Playing: " + gameName;
 }
 
-// F.R.I.D.A.Y. / Doombot AI Logic
+// F.R.I.D.A.Y. / Doombot-AI Logic
 function sendJarvisMsg() {
     var inp = document.getElementById('jarvis-input');
     var btn = document.getElementById('jarvis-send-btn');
@@ -198,10 +227,10 @@ function sendJarvisMsg() {
         var reply = "Processing request, sir. The TVA sensors are currently blocking my mainframe access, but I am logging your query: '" + text + "'.";
         var label = "F.R.I.D.A.Y.";
         
-        // If hacked, Doombot AI takes over
+        // If hacked, Doombot-AI takes over
         if (document.body.classList.contains('doomed')) {
             reply = doomQuotes[Math.floor(Math.random() * doomQuotes.length)];
-            label = "DOOMBOT AI";
+            label = "DOOMBOT-AI";
         }
         
         var aiRow = document.createElement('div');
@@ -231,7 +260,7 @@ function searchShield() {
         // If hacked, Doom takes over
         if (document.body.classList.contains('doomed')) {
             var doomQuote = doomQuotes[Math.floor(Math.random() * doomQuotes.length)];
-            data = "<p>> " + query.toUpperCase() + "?</p><br><h3>DOOMBOT AI SAYS:</h3><p>" + doomQuote + "</p>";
+            data = "<p>> " + query.toUpperCase() + "?</p><br><h3>DOOMBOT-AI SAYS:</h3><p>" + doomQuote + "</p>";
         } else if (query.includes("thanos")) {
             data = "<h3>THANOS</h3><p>STATUS: DECEASED</p><p>THREAT LEVEL: APPREHENDED (2018-2023)</p><p>ORIGIN: TITAN</p>";
         } else if (query.includes("spider-man") || query.includes("spiderman")) {
