@@ -45,7 +45,7 @@
     <div class="icon" style="top: 140px; left: 20px;" onclick="openWindow('tracker')"><i><img src="https://z-cdn-media.chatglm.cn/files/c2c372ce-b78b-4cce-b980-612840b108da.jpg?auth_key=1891817943-51061b40d63040479df750fcdc3ec0a4-0-18bb834f44b69afa1eef7463588d7246" alt="Spidey Tracker"></i><span>Spidey Tracker</span></div>
     <div class="icon" style="top: 140px; left: 130px;" onclick="openWindow('sheild')"><i><img src="https://z-cdn-media.chatglm.cn/files/41b339d1-eedf-4508-a8ad-abc27bfec56f.jpg?auth_key=1891866717-b1676de1fc87443696efefbe0ad2bb04-0-2e882ce4d106cdea86ccfc3ad7d00bd6" alt="SHIELD"></i><span>SHEILD DATABASE</span></div>
     <div class="icon" style="top: 140px; left: 240px;" onclick="openWindow('thefour')"><i><img src="https://z-cdn-media.chatglm.cn/files/f7adc14e-d1ae-41e9-8021-6c4ea2ae7bfe.png?auth_key=1891866956-709871d31ea048e4a80e602ebdd89136-0-f7105a85fb1c9072f260700707fef24c" alt="Veronica"></i><span>Veronica Scans</span></div>
-    <div class="icon" style="top: 260px; left: 20px;" onclick="openWindow('games')"><i><img referrerpolicy="no-referrer" src="https://z-cdn-media.chatglm.cn/files/f2cd5ee8-716c-4005-bafa-c7bc752132b1.jpg?auth_key=1891867045-afc78bb5413c4243bcf97142cc2d7a5f-0-0cfbb38c5aeea3c5a88fa37a90b03aa8" alt="Cynthia Entertainment"></i><span>Insomniac Games</span></div>
+    <div class="icon" style="top: 260px; left: 20px;" onclick="openWindow('games')"><i><img id="games-icon-img" referrerpolicy="no-referrer" src="https://z-cdn-media.chatglm.cn/files/2f3d2fe1-e9a1-403c-8d77-a28e27ecfbf1.png?auth_key=1891819418-26fdbb5a43b4404cb0194b5d7a52d930-0-640db7da43bd44036761e4df6e239cca" alt="Insomniac Games"></i><span id="games-icon-text">Insomniac Games</span></div>
     <div class="icon" style="top: 260px; left: 130px;" onclick="openWindow('accords')"><i><img src="https://z-cdn-media.chatglm.cn/files/34c38369-5248-4ca5-92e2-0ede3f703d97.jpg?auth_key=1891866717-a80b8e549bc44224aa33373742860ac1-0-961dbd79cd76d5137b0ece4e682f4d82" alt="Accords"></i><span>Sokovia Accords</span></div>
 
     <!-- Taskbar (Using Emojis) -->
@@ -198,5 +198,20 @@
     <!-- Scripts -->
     <script src="script.js"></script>
     <script src="timeslip.js"></script>
+    
+    <!-- Doom Protocol Icon Swapper -->
+    <script>
+        function triggerDoomProtocol() {
+            const gamesIcon = document.getElementById('games-icon-img');
+            const gamesText = document.getElementById('games-icon-text');
+            if (gamesIcon) {
+                gamesIcon.src = "https://z-cdn-media.chatglm.cn/files/f2cd5ee8-716c-4005-bafa-c7bc752132b1.jpg?auth_key=1891867045-afc78bb5413c4243bcf97142cc2d7a5f-0-0cfbb38c5aeea3c5a88fa37a90b03aa8";
+                gamesIcon.alt = "Cynthia Entertainment";
+            }
+            if (gamesText) {
+                gamesText.innerText = "Cynthia Entertainment";
+            }
+        }
+    </script>
 </body>
 </html>
