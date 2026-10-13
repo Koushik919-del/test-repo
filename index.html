@@ -199,7 +199,7 @@
     <script src="script.js"></script>
     <script src="timeslip.js"></script>
     
-    <!-- Doom Protocol Icon Swapper -->
+    <!-- Doom Protocol Scheduler -->
     <script>
         function triggerDoomProtocol() {
             const gamesIcon = document.getElementById('games-icon-img');
@@ -212,6 +212,44 @@
                 gamesText.innerText = "Cynthia Entertainment";
             }
         }
+
+        function endDoomProtocol() {
+            const gamesIcon = document.getElementById('games-icon-img');
+            const gamesText = document.getElementById('games-icon-text');
+            if (gamesIcon) {
+                gamesIcon.src = "https://z-cdn-media.chatglm.cn/files/2f3d2fe1-e9a1-403c-8d77-a28e27ecfbf1.png?auth_key=1891819418-26fdbb5a43b4404cb0194b5d7a52d930-0-640db7da43bd44036761e4df6e239cca";
+                gamesIcon.alt = "Insomniac Games";
+            }
+            if (gamesText) {
+                gamesText.innerText = "Insomniac Games";
+            }
+        }
+
+        // Time constants in milliseconds
+        const TWO_MINUTES = 2 * 60 * 1000;   // 120,000 ms
+        const FIVE_MINUTES = 5 * 60 * 1000;  // 300,000 ms
+        const FIFTEEN_MINUTES = 15 * 60 * 1000; // 900,000 ms
+
+        // 1. Wait 2 minutes on initial page load, then start the first Doom Protocol
+        setTimeout(() => {
+            triggerDoomProtocol();
+            
+            // End it after 5 minutes
+            setTimeout(() => {
+                endDoomProtocol();
+            }, FIVE_MINUTES);
+        }, TWO_MINUTES);
+
+        // 2. Set up the recurring 15-minute cycle
+        // This will fire at 15 minutes, 30 minutes, 45 minutes, etc.
+        setInterval(() => {
+            triggerDoomProtocol();
+            
+            // End it after 5 minutes
+            setTimeout(() => {
+                endDoomProtocol();
+            }, FIVE_MINUTES);
+        }, FIFTEEN_MINUTES);
     </script>
 </body>
 </html>
