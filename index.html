@@ -61,6 +61,9 @@
         <div class="time" id="bartime">--:--</div>
     </div>
 
+    <!-- Hidden iframe for Doomsday Trailer Audio -->
+    <iframe id="doomsday-audio-player" style="display: none;" allow="autoplay"></iframe>
+
     <!-- Welcome Window -->
     <div class="window" id="welcome" style="width: 450px; height: 300px;">
         <div class="title-bar" onmousedown="dragWIndow(event, 'welcome')"><span>MARVEL OS</span><div class="titlebarbtns"><button onclick="closeWindow('welcome')"></button></div></div>
@@ -199,8 +202,61 @@
     <script src="script.js"></script>
     <script src="timeslip.js"></script>
     
-    <!-- Doom Protocol Scheduler -->
+    <!-- Doom Protocol Scheduler & Audio Logic -->
     <script>
+        // --- STATE VARIABLES ---
+        var hasTrailerPlayed = false;
+        var isWaitingForGame = false;
+        var gameVideoPlaying = false;
+        var waitTimer = null;
+
+        // Avengers Doomsday Special Look Trailer ID
+        const DOOMSDAY_TRAILER_ID = "X1aFkAkFASk"; 
+
+        // --- TRAILER LOGIC ---
+        function playDoomsdayTrailer() {
+            if (hasTrailerPlayed) return;
+            hasTrailerPlayed = true;
+            isWaitingForGame = false;
+            
+            const player = document.getElementById('doomsday-audio-player');
+            // Autoplay=1 and controls=0. We can't see it because the iframe is hidden in the HTML.
+            player.src = `https://www.youtube.com/embed/${DOOMSDAY_TRAILER_ID}?autoplay=1&controls=0&modestbranding=1&rel=0`;
+            
+            console.log("Doomsday Trailer audio is now playing in the background.");
+        }
+
+        function checkAndPlayTrailer() {
+            if (hasTrailerPlayed) return;
+            if (isWaitingForGame && !gameVideoPlaying) {
+                playDoomsdayTrailer();
+                if (waitTimer) clearTimeout(waitTimer);
+            }
+        }
+
+        // --- WRAP EXISTING FUNCTIONS TO TRACK GAME STATE ---
+        // Wrap loadGame so we know when a user starts playing a game
+        if (typeof window.loadGame === 'function') {
+            const originalLoadGame = window.loadGame;
+            window.loadGame = function() {
+                originalLoadGame.apply(this, arguments);
+                gameVideoPlaying = true;
+            };
+        }
+
+        // Wrap closeWindow so we know when a user finishes/closes the game
+        if (typeof window.closeWindow === 'function') {
+            const originalCloseWindow = window.closeWindow;
+            window.closeWindow = function(id) {
+                originalCloseWindow.apply(this, arguments);
+                if (id === 'games') {
+                    gameVideoPlaying = false;
+                    checkAndPlayTrailer(); // If we were waiting, play the trailer now
+                }
+            };
+        }
+
+        // --- DOOM PROTOCOL VISUALS ---
         function triggerDoomProtocol() {
             const gamesIcon = document.getElementById('games-icon-img');
             const gamesText = document.getElementById('games-icon-text');
@@ -210,6 +266,26 @@
             }
             if (gamesText) {
                 gamesText.innerText = "Cynthia Entertainment";
+            }
+
+            // --- TRAILER TRIGGER LOGIC ---
+            if (!hasTrailerPlayed) {
+                if (!gameVideoPlaying) {
+                    // If they aren't playing a game, play immediately
+                    playDoomsdayTrailer();
+                } else {
+                    // If they ARE playing a game, wait for them to finish
+                    isWaitingForGame = true;
+                    console.log("Waiting for user to finish game to play trailer...");
+                    
+                    // Force play after 5 minutes (300,000 ms) even if they are still playing
+                    waitTimer = setTimeout(() => {
+                        if (!hasTrailerPlayed) {
+                            console.log("5 minutes exceeded. Overriding game to play trailer.");
+                            playDoomsdayTrailer();
+                        }
+                    }, 5 * 60 * 1000);
+                }
             }
         }
 
@@ -225,12 +301,12 @@
             }
         }
 
-        // Time constants in milliseconds
-        const TWO_MINUTES = 2 * 60 * 1000;   // 120,000 ms
-        const FIVE_MINUTES = 5 * 60 * 1000;  // 300,000 ms
-        const FIFTEEN_MINUTES = 15 * 60 * 1000; // 900,000 ms
+        // --- TIME SCHEDULER ---
+        const ONE_MINUTE = 1 * 60 * 1000;     // 60,000 ms (Initial Wait)
+        const FIVE_MINUTES = 5 * 60 * 1000;   // 300,000 ms (Protocol Duration)
+        const FIFTEEN_MINUTES = 15 * 60 * 1000; // 900,000 ms (Cycle Duration)
 
-        // 1. Wait 2 minutes on initial page load, then start the first Doom Protocol
+        // 1. Wait 1 minute on initial page load, then start the first Doom Protocol
         setTimeout(() => {
             triggerDoomProtocol();
             
@@ -238,10 +314,9 @@
             setTimeout(() => {
                 endDoomProtocol();
             }, FIVE_MINUTES);
-        }, TWO_MINUTES);
+        }, ONE_MINUTE);
 
         // 2. Set up the recurring 15-minute cycle
-        // This will fire at 15 minutes, 30 minutes, 45 minutes, etc.
         setInterval(() => {
             triggerDoomProtocol();
             
