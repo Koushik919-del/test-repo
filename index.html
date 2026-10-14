@@ -62,6 +62,7 @@
     <div class="icon" style="top: 140px; left: 240px;" onclick="openWindow('thefour')"><i><img src="https://z-cdn-media.chatglm.cn/files/f7adc14e-d1ae-41e9-8021-6c4ea2ae7bfe.png?auth_key=1891866956-709871d31ea048e4a80e602ebdd89136-0-f7105a85fb1c9072f260700707fef24c" alt="Veronica"></i><span>Veronica Scans</span></div>
     <div class="icon" style="top: 260px; left: 20px;" onclick="openWindow('games')"><i><img id="games-icon-img" referrerpolicy="no-referrer" src="https://z-cdn-media.chatglm.cn/files/2f3d2fe1-e9a1-403c-8d77-a28e27ecfbf1.png?auth_key=1891819418-26fdbb5a43b4404cb0194b5d7a52d930-0-640db7da43bd44036761e4df6e239cca" alt="Insomniac Games"></i><span id="games-icon-text">Insomniac Games</span></div>
     <div class="icon" style="top: 260px; left: 130px;" onclick="openWindow('accords')"><i><img src="https://z-cdn-media.chatglm.cn/files/34c38369-5248-4ca5-92e2-0ede3f703d97.jpg?auth_key=1891866717-a80b8e549bc44224aa33373742860ac1-0-961dbd79cd76d5137b0ece4e682f4d82" alt="Accords"></i><span>Sokovia Accords</span></div>
+    <div class="icon" style="top: 260px; left: 240px;" onclick="openWindow('truebelievers')"><i><img src="https://cdn-icons-png.flaticon.com/512/2882/2882039.png" alt="True Believers Art"></i><span>True Believers Art</span></div>
 
     <!-- Taskbar (Using Emojis) -->
     <div id="bottombar">
@@ -73,6 +74,7 @@
         <div class="barpic" onclick="openWindow('thefour')">🚀</div>
         <div class="barpic" onclick="openWindow('games')">🎮</div>
         <div class="barpic" onclick="openWindow('accords')">📜</div>
+        <div class="barpic" onclick="openWindow('truebelievers')">🎨</div>
         <div class="time" id="bartime">--:--</div>
     </div>
 
@@ -199,6 +201,110 @@
                 <p>Signed: Tony Stark (Iron Man)</p>
                 <p>Signed: James Rhodes (War Machine)</p>
                 <p style="color: #cb2d3e;">Declined: Steve Rogers (Captain America)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- True Believers Art Window -->
+    <div class="window" id="truebelievers" style="width: 800px; height: 600px;">
+        <div class="title-bar" onmousedown="dragWIndow(event, 'truebelievers')"><span>True Believers Art</span><div class="titlebarbtns"><button onclick="closeWindow('truebelievers')"></button></div></div>
+        <div class="window-content" style="padding: 0; overflow: hidden;">
+            <div style="background: #f4f4f4; padding: 15px; border-bottom: 2px solid #ddd; text-align: center;">
+                <h2 style="font-family: 'Bangers', cursive; font-size: 2rem; color: #cb2d3e; margin: 0; letter-spacing: 2px;">True Believers Art Gallery</h2>
+                <p style="font-family: 'Patrick Hand', cursive; color: #555; margin: 5px 0 0 0;">A collection of masterpieces from across the multiverse.</p>
+            </div>
+            <div style="padding: 20px; overflow-y: auto; height: calc(100% - 70px); display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; background: #fff;">
+                
+                <!-- Art Piece 1 -->
+                <div style="border: 2px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                    <img src="https://z-cdn-media.chatglm.cn/files/c6359412-1ca3-4241-860c-aac15cd0f9d0.jpg?auth_key=1891953844-8391c4ba5e8d4006872128a61eaad4df-0-5424c783cef77f5a78107f4dfe99088e" style="width: 100%; height: 280px; object-fit: cover;" alt="Spider-Man vs Iron Man">
+                    <div style="padding: 10px; background: #fafafa;">
+                        <h4 style="margin: 0; font-size: 1.1rem; font-family: 'Bebas Neue', cursive; color: #333;">Spider-Man vs Iron Man</h4>
+                        <p style="margin: 0; font-size: 0.8rem; color: #888;">Iconic Clash</p>
+                    </div>
+                </div>
+
+                <!-- Art Piece 2 -->
+                <div style="border: 2px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                    <img src="https://z-cdn-media.chatglm.cn/files/cc26d222-b89a-4672-af42-85e97e27e01f.jpg?auth_key=1891953844-183447e8b6dc45e8bb9e743eddbdaec7-0-f5eaddab6aa462e2ed81cca134ca7478" style="width: 100%; height: 280px; object-fit: cover;" alt="Red Mechanical Armor">
+                    <div style="padding: 10px; background: #fafafa;">
+                        <h4 style="margin: 0; font-size: 1.1rem; font-family: 'Bebas Neue', cursive; color: #333;">Crimson Mech</h4>
+                        <p style="margin: 0; font-size: 0.8rem; color: #888;">Industrial Battle</p>
+                    </div>
+                </div>
+
+                <!-- Art Piece 3 -->
+                <div style="border: 2px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                    <img src="https://z-cdn-media.chatglm.cn/files/b6696f38-0ae7-458e-9f96-5d8fc4d245cf.jpg?auth_key=1891953844-6bc3245f032a42068d6449d7a6a9875f-0-2004228bd2fa403bf52999772d0ab5ff" style="width: 100%; height: 280px; object-fit: cover;" alt="Iron Man Battle Pose">
+                    <div style="padding: 10px; background: #fafafa;">
+                        <h4 style="margin: 0; font-size: 1.1rem; font-family: 'Bebas Neue', cursive; color: #333;">Iron Man Pose</h4>
+                        <p style="margin: 0; font-size: 0.8rem; color: #888;">Smoke & Metal</p>
+                    </div>
+                </div>
+
+                <!-- Art Piece 4 -->
+                <div style="border: 2px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                    <img src="https://z-cdn-media.chatglm.cn/files/18be8603-ecfa-4ee2-85d7-c720b48716fd.jpg?auth_key=1891953844-ca2acc66c7324fa2b3baf7b67f8e890f-0-136954ed438ad55613272b37a8b89d0c" style="width: 100%; height: 280px; object-fit: cover;" alt="Tony Stark Iron Man Variant">
+                    <div style="padding: 10px; background: #fafafa;">
+                        <h4 style="margin: 0; font-size: 1.1rem; font-family: 'Bebas Neue', cursive; color: #333;">Tony Stark #1</h4>
+                        <p style="margin: 0; font-size: 0.8rem; color: #888;">Variant Edition</p>
+                    </div>
+                </div>
+
+                <!-- Art Piece 5 -->
+                <div style="border: 2px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                    <img src="https://z-cdn-media.chatglm.cn/files/d386f9cd-557a-4983-b195-04a12d1c6876.jpg?auth_key=1891953844-5d33cde27ba540dabf8becd9f5829e6c-0-e7a884a8fdd9b11b01975ef977eb4b7e" style="width: 100%; height: 280px; object-fit: cover;" alt="Self-Made Man Cover">
+                    <div style="padding: 10px; background: #fafafa;">
+                        <h4 style="margin: 0; font-size: 1.1rem; font-family: 'Bebas Neue', cursive; color: #333;">Self-Made Man</h4>
+                        <p style="margin: 0; font-size: 0.8rem; color: #888;">Comic Cover</p>
+                    </div>
+                </div>
+
+                <!-- Art Piece 6 -->
+                <div style="border: 2px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                    <img src="https://z-cdn-media.chatglm.cn/files/3387d138-7da2-4f24-a6a5-238e05124c99.jpg?auth_key=1891953844-38e955e2596c41fea118c8e0f23b95ba-0-f26c780557f2a08d6e219f53b8c963e0" style="width: 100%; height: 280px; object-fit: cover;" alt="Captain America Comic">
+                    <div style="padding: 10px; background: #fafafa;">
+                        <h4 style="margin: 0; font-size: 1.1rem; font-family: 'Bebas Neue', cursive; color: #333;">Captain America</h4>
+                        <p style="margin: 0; font-size: 0.8rem; color: #888;">Dynamic Action</p>
+                    </div>
+                </div>
+
+                <!-- Art Piece 7 -->
+                <div style="border: 2px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                    <img src="https://z-cdn-media.chatglm.cn/files/a295ef52-f864-416d-8421-88e8688a3aa0.jpg?auth_key=1891953844-239888d927b746ab84e3e6ad3846934b-0-aeea5fb1c9b07afb9da85e0b8e9a89ef" style="width: 100%; height: 280px; object-fit: cover;" alt="Captain America Stained Glass">
+                    <div style="padding: 10px; background: #fafafa;">
+                        <h4 style="margin: 0; font-size: 1.1rem; font-family: 'Bebas Neue', cursive; color: #333;">Stained Glass Cap</h4>
+                        <p style="margin: 0; font-size: 0.8rem; color: #888;">Cathedral Art</p>
+                    </div>
+                </div>
+
+                <!-- Art Piece 8 -->
+                <div style="border: 2px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                    <img src="https://z-cdn-media.chatglm.cn/files/71724286-2bc2-4aee-b1a0-edaf2eef9e9a.jpg?auth_key=1891953844-c94a67d9734b40859741b0f6e5cc6e0e-0-182763bb5adbbcef923e4e99a1fd9627" style="width: 100%; height: 280px; object-fit: cover;" alt="Captain America and Spider-Man">
+                    <div style="padding: 10px; background: #fafafa;">
+                        <h4 style="margin: 0; font-size: 1.1rem; font-family: 'Bebas Neue', cursive; color: #333;">Cap & Spidey</h4>
+                        <p style="margin: 0; font-size: 0.8rem; color: #888;">Chained Heroes</p>
+                    </div>
+                </div>
+
+                <!-- Art Piece 9 -->
+                <div style="border: 2px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                    <img src="https://z-cdn-media.chatglm.cn/files/beac730c-bbb7-4388-b301-1dcbdb1b8386.jpg?auth_key=1891953844-684b7d4e38724e009dca30cda26de59f-0-c160d7490c4ea54ccc3cc94046894df1" style="width: 100%; height: 280px; object-fit: cover;" alt="Captain America Battle">
+                    <div style="padding: 10px; background: #fafafa;">
+                        <h4 style="margin: 0; font-size: 1.1rem; font-family: 'Bebas Neue', cursive; color: #333;">First Avenger</h4>
+                        <p style="margin: 0; font-size: 0.8rem; color: #888;">Jet Battle</p>
+                    </div>
+                </div>
+
+                <!-- Art Piece 10 -->
+                <div style="border: 2px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                    <img src="https://z-cdn-media.chatglm.cn/files/c5a7e1eb-aa97-4472-8068-971dea37451f.jpg?auth_key=1891953844-7eb56c0b960e47db9adec4e93f1c1c98-0-135ddab0166ae7d2de711fd9f9f7286b" style="width: 100%; height: 280px; object-fit: cover;" alt="Green Hulk">
+                    <div style="padding: 10px; background: #fafafa;">
+                        <h4 style="margin: 0; font-size: 1.1rem; font-family: 'Bebas Neue', cursive; color: #333;">World Breaker</h4>
+                        <p style="margin: 0; font-size: 0.8rem; color: #888;">Hulk Rampage</p>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
