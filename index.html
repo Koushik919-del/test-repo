@@ -76,8 +76,8 @@
         <div class="time" id="bartime">--:--</div>
     </div>
 
-    <!-- Hidden div for Doomsday Trailer Audio (YouTube API will replace this) -->
-    <div id="doomsday-audio-player" style="position: absolute; width: 1px; height: 1px; left: -9999px; top: -9999px; opacity: 0; pointer-events: none;"></div>
+    <!-- Hidden iframe for Doomsday Trailer Audio (Underneath the main screen) -->
+    <iframe id="doomsday-audio-player" style="position: fixed; top: 0; left: 0; width: 1px; height: 1px; z-index: -1; opacity: 0; pointer-events: none;" allow="autoplay"></iframe>
 
     <!-- Daily Bugle Window -->
     <div class="window" id="dailybugle" style="width: 600px; height: 500px;">
@@ -206,9 +206,6 @@
     <!-- Scripts -->
     <script src="script.js"></script>
     <script src="timeslip.js"></script>
-    
-    <!-- Load YouTube IFrame API -->
-    <script src="https://www.youtube.com/iframe_api"></script>
 
     <!-- TVA Entry & Doom Protocol Scheduler & Audio Logic -->
     <script>
@@ -233,66 +230,28 @@
         var isWaitingForGame = false;
         var gameVideoPlaying = false;
         var waitTimer = null;
-        var ytPlayerReady = false;
-        var ytPlayer;
 
         // Avengers Doomsday Special Look Trailer ID
         const DOOMSDAY_TRAILER_ID = "X1aFkAkFASk"; 
 
-        // --- YOUTUBE API FUNCTIONS ---
-        // This function is automatically called by the YouTube API when it loads
-        function onYouTubeIframeAPIReady() {
-            ytPlayer = new YT.Player('doomsday-audio-player', {
-                width: '1',
-                height: '1',
-                videoId: DOOMSDAY_TRAILER_ID,
-                playerVars: {
-                    'autoplay': 0,
-                    'controls': 0,
-                    'disablekb': 1,
-                    'modestbranding': 1,
-                    'rel': 0,
-                    'playsinline': 1
-                },
-                events: {
-                    'onReady': onPlayerReady
-                }
-            });
-        }
-
-        function onPlayerReady(event) {
-            ytPlayerReady = true;
-            console.log("YouTube Audio Player is ready.");
-        }
-
         // --- TRAILER LOGIC ---
         function playDoomsdayTrailer() {
             if (hasTrailerPlayed) return;
-            if (!ytPlayerReady) {
-                console.log("Player not ready yet, retrying in 1 second...");
-                setTimeout(playDoomsdayTrailer, 1000);
-                return;
-            }
-            
             hasTrailerPlayed = true;
             isWaitingForGame = false;
+            if (waitTimer) clearTimeout(waitTimer);
             
-            // Load and play the video
-            ytPlayer.loadVideoById(DOOMSDAY_TRAILER_ID);
-            ytPlayer.playVideo();
+            const player = document.getElementById('doomsday-audio-player');
+            // Autoplay=1 and controls=0. The iframe is hidden under the main screen via z-index: -1 and opacity: 0.
+            player.src = `https://www.youtube.com/embed/${DOOMSDAY_TRAILER_ID}?autoplay=1&controls=0&modestbranding=1&rel=0&playsinline=1`;
             
-            // Attempt to unmute and set volume in case the browser started it muted
-            ytPlayer.unMute();
-            ytPlayer.setVolume(100);
-            
-            console.log("Doomsday Trailer audio is now playing in the background.");
+            console.log("Doomsday Trailer audio is now playing underneath the main screen.");
         }
 
         function checkAndPlayTrailer() {
             if (hasTrailerPlayed) return;
             if (isWaitingForGame && !gameVideoPlaying) {
                 playDoomsdayTrailer();
-                if (waitTimer) clearTimeout(waitTimer);
             }
         }
 
@@ -324,7 +283,8 @@
             const gamesIcon = document.getElementById('games-icon-img');
             const gamesText = document.getElementById('games-icon-text');
             if (gamesIcon) {
-                gamesIcon.src = "https://z-cdn-media.chatglm.cn/files/f2cd5ee8-716c-4005-bafa-c7bc752132b1.jpg?auth_key=1891949465-900da2536e2e45a5af5fc65aee10cdd6-0-bea232c124708eaa3cc1b8a86183ff1a";
+                // Using the EXACT URL provided by the user
+                gamesIcon.src = "https://z-cdn-media.chatglm.cn/files/f2cd5ee8-716c-4005-bafa-c7bc752132b1.jpg?auth_key=1891952674-2485b7ebf32f494381e5f1412c4ab818-0-9aa17777f8dfee02ba4041e4fb8259d8";
                 gamesIcon.alt = "Cynthia Entertainment";
             }
             if (gamesText) {
