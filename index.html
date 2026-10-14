@@ -318,8 +318,9 @@
             };
         }
 
-        // --- DOOM PROTOCOL VISUALS ---
+        // --- DOOM PROTOCOL VISUALS & TRAILER TRIGGER ---
         function triggerDoomProtocol() {
+            // 1. Change Logo and Text immediately
             const gamesIcon = document.getElementById('games-icon-img');
             const gamesText = document.getElementById('games-icon-text');
             if (gamesIcon) {
@@ -330,11 +331,15 @@
                 gamesText.innerText = "Cynthia Entertainment";
             }
 
-            // --- TRAILER TRIGGER LOGIC ---
+            // 2. Trailer Trigger Logic (5 seconds after protocol starts)
             if (!hasTrailerPlayed) {
                 if (!gameVideoPlaying) {
-                    // If they aren't playing a game, play immediately
-                    playDoomsdayTrailer();
+                    // If they aren't playing a game, wait 5 seconds then play
+                    setTimeout(() => {
+                        if (!hasTrailerPlayed) {
+                            playDoomsdayTrailer();
+                        }
+                    }, 5000); // 5-second delay
                 } else {
                     // If they ARE playing a game, wait for them to finish
                     isWaitingForGame = true;
