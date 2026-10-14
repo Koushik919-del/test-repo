@@ -61,8 +61,8 @@
         <div class="time" id="bartime">--:--</div>
     </div>
 
-    <!-- Hidden iframe for Doomsday Trailer Audio -->
-    <iframe id="doomsday-audio-player" style="display: none;" allow="autoplay"></iframe>
+    <!-- Hidden div for Doomsday Trailer Audio (YouTube API will replace this) -->
+    <div id="doomsday-audio-player" style="position: absolute; width: 1px; height: 1px; left: -9999px; top: -9999px; opacity: 0; pointer-events: none;"></div>
 
     <!-- Welcome Window -->
     <div class="window" id="welcome" style="width: 450px; height: 300px;">
@@ -202,6 +202,9 @@
     <script src="script.js"></script>
     <script src="timeslip.js"></script>
     
+    <!-- Load YouTube IFrame API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
     <!-- Doom Protocol Scheduler & Audio Logic -->
     <script>
         // --- STATE VARIABLES ---
@@ -209,19 +212,57 @@
         var isWaitingForGame = false;
         var gameVideoPlaying = false;
         var waitTimer = null;
+        var ytPlayerReady = false;
+        var ytPlayer;
 
         // Avengers Doomsday Special Look Trailer ID
         const DOOMSDAY_TRAILER_ID = "X1aFkAkFASk"; 
 
+        // --- YOUTUBE API FUNCTIONS ---
+        // This function is automatically called by the YouTube API when it loads
+        function onYouTubeIframeAPIReady() {
+            ytPlayer = new YT.Player('doomsday-audio-player', {
+                width: '1',
+                height: '1',
+                videoId: DOOMSDAY_TRAILER_ID,
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'disablekb': 1,
+                    'modestbranding': 1,
+                    'rel': 0,
+                    'playsinline': 1
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            ytPlayerReady = true;
+            console.log("YouTube Audio Player is ready.");
+        }
+
         // --- TRAILER LOGIC ---
         function playDoomsdayTrailer() {
             if (hasTrailerPlayed) return;
+            if (!ytPlayerReady) {
+                console.log("Player not ready yet, retrying in 1 second...");
+                setTimeout(playDoomsdayTrailer, 1000);
+                return;
+            }
+            
             hasTrailerPlayed = true;
             isWaitingForGame = false;
             
-            const player = document.getElementById('doomsday-audio-player');
-            // Autoplay=1 and controls=0. We can't see it because the iframe is hidden in the HTML.
-            player.src = `https://www.youtube.com/embed/${DOOMSDAY_TRAILER_ID}?autoplay=1&controls=0&modestbranding=1&rel=0`;
+            // Load and play the video
+            ytPlayer.loadVideoById(DOOMSDAY_TRAILER_ID);
+            ytPlayer.playVideo();
+            
+            // Attempt to unmute and set volume in case the browser started it muted
+            ytPlayer.unMute();
+            ytPlayer.setVolume(100);
             
             console.log("Doomsday Trailer audio is now playing in the background.");
         }
