@@ -11,6 +11,21 @@
 </head>
 <body>
 
+    <!-- TVA Entry Screen (Boot Overlay) -->
+    <div id="tva-entry-screen" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #050505; z-index: 100000; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #e0e0e0; font-family: 'Bebas Neue', cursive; text-align: center; padding: 20px; box-sizing: border-box;">
+        <div style="border: 2px solid #ffcc00; padding: 40px; max-width: 600px; background: #111; box-shadow: 0 0 30px rgba(255, 204, 0, 0.15);">
+            <h1 style="font-size: 4rem; color: #ffcc00; margin: 0; letter-spacing: 4px;">T.V.A.</h1>
+            <h2 style="font-size: 1.8rem; margin: 10px 0 20px; color: #fff;">TIME VARIANCE AUTHORITY</h2>
+            <div style="font-family: 'Patrick Hand', cursive; font-size: 1.2rem; line-height: 1.5; color: #ccc; margin-bottom: 30px;">
+                Hello Agent. My name is confidential but maybe you can guess it. Working for the TVA like me, I see. Loki said that two big incursions are about to happen in a few months. One is a universe with all these X-Men which is crashing into a universe with a middle-aged Spider-Man in it. The other one is not really an incursion, but the Fantastic 4 from Earth-828 came to the Sacred Timeline. Our first priority save the sacred timeline. It is Earth-616 or Earth-199999. Pretty confusing, but just check out how the people are in the timeline, and just explore.
+            </div>
+            <button onclick="enterMarvelOS()" style="padding: 12px 30px; background: #b8000f; color: white; border: none; border-radius: 4px; cursor: pointer; font-family: 'Bebas Neue', cursive; font-size: 1.5rem; letter-spacing: 2px; transition: 0.3s;" onmouseover="this.style.background='#d40012'" onmouseout="this.style.background='#b8000f'">
+                TIME SLIP INTO TIMELINE
+            </button>
+            <p style="font-family: 'Patrick Hand', cursive; font-size: 0.9rem; color: #666; margin-top: 15px;">(and do not brag about the jetskis)</p>
+        </div>
+    </div>
+
     <!-- Time Slip Overlay -->
     <div id="time-slip-overlay">
         <div class="slip-core"></div>
@@ -63,16 +78,6 @@
 
     <!-- Hidden div for Doomsday Trailer Audio (YouTube API will replace this) -->
     <div id="doomsday-audio-player" style="position: absolute; width: 1px; height: 1px; left: -9999px; top: -9999px; opacity: 0; pointer-events: none;"></div>
-
-    <!-- Welcome Window -->
-    <div class="window" id="welcome" style="width: 450px; height: 300px;">
-        <div class="title-bar" onmousedown="dragWIndow(event, 'welcome')"><span>MARVEL OS</span><div class="titlebarbtns"><button onclick="closeWindow('welcome')"></button></div></div>
-        <div class="welstuff">
-            <div class="weltitle">Marvel OS</div>
-            <div class="weldescription">Hello Agent. My name is confidential but maybe you can guess it. Working for the TVA like me, I see. Loki said that two big incursions are about to happen in a few months. One is a universe with all these X-Men which is crashing into a universe with a middle-aged Spider-Man in it. The other one is not really an incursion, but the Fantastic 4 from Earth-828 came to the Sacred Timeline. Our first priority save the sacred timeline. It is Earth-616 or Earth-199999. Pretty confusing, but just check out how the people are in the timeline, and just explore. </div>
-            <button class="welenter" onclick="triggerTimeSlip('welcome')">Time Slip into the Timeline, and do not brag about the jetskis.</button>
-        </div>
-    </div>
 
     <!-- Daily Bugle Window -->
     <div class="window" id="dailybugle" style="width: 600px; height: 500px;">
@@ -205,8 +210,24 @@
     <!-- Load YouTube IFrame API -->
     <script src="https://www.youtube.com/iframe_api"></script>
 
-    <!-- Doom Protocol Scheduler & Audio Logic -->
+    <!-- TVA Entry & Doom Protocol Scheduler & Audio Logic -->
     <script>
+        // --- TVA ENTRY SCREEN LOGIC ---
+        function enterMarvelOS() {
+            const tvaScreen = document.getElementById('tva-entry-screen');
+            tvaScreen.style.transition = 'opacity 0.5s ease';
+            tvaScreen.style.opacity = '0';
+            
+            // Trigger the time slip visual if it exists in your timeslip.js
+            if (typeof triggerTimeSlip === 'function') {
+                triggerTimeSlip('tva-entry-screen');
+            }
+            
+            setTimeout(() => {
+                tvaScreen.style.display = 'none';
+            }, 500);
+        }
+
         // --- STATE VARIABLES ---
         var hasTrailerPlayed = false;
         var isWaitingForGame = false;
