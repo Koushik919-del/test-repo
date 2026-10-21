@@ -75,6 +75,10 @@
         <div class="barpic" onclick="openWindow('games')">🎮</div>
         <div class="barpic" onclick="openWindow('accords')">📜</div>
         <div class="barpic" onclick="openWindow('truebelievers')">🎨</div>
+        <!-- Zenpool App Icon (next to the time) -->
+        <div class="barpic zenpool-icon" id="zenpool-icon" onclick="openZenpool()" title="Zenpool">
+            <img src="https://z-cdn-media.chatglm.cn/files/00e05c02-a1b7-4507-ae49-9d6681e08d6b.png?auth_key=1892560207-3afbc4a8f5a44393b95d9f45213daf22-0-fd1f42b84d81ef682ad296ad1691056f" alt="Zenpool">
+        </div>
         <div class="time" id="bartime">--:--</div>
     </div>
 
@@ -329,6 +333,12 @@
             setTimeout(() => {
                 tvaScreen.style.display = 'none';
             }, 500);
+        }
+
+        // --- ZENPOOL APP (placeholder for now) ---
+        function openZenpool() {
+            // Coming soon — clicking the icon will do things here.
+            console.log("Zenpool icon clicked. App coming soon.");
         }
 
         // --- STATE VARIABLES ---
