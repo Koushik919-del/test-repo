@@ -14,6 +14,15 @@ body { background: #1a1a24; color: #333; overflow: hidden; height: 100vh; user-s
 #desktop { width: 100%; height: calc(100vh - 30px); margin-top: 30px; background: linear-gradient(135deg, #cb2d3e 0%, #ef473a 100%); position: relative; overflow: hidden; transition: background 0.5s; }
 #stark-pic { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 350px; height: 350px; background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEbhDw3eZU67cEGb8gNxn3pvRKXUhQ1Z6L-zM7QX8WLQ&s=10'); background-size: contain; background-repeat: no-repeat; background-position: center; opacity: 0.15; pointer-events: none; z-index: 0; transition: opacity 0.5s; }
 
+.zenpool-icon img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    border-radius: 50%;
+}
+.zenpool-icon {
+    cursor: pointer;
+}
 /* Von Doom Text (Stable, no flashing) */
 #doomgltich { position: absolute; top: 30px; left: 0; width: 100%; height: calc(100% - 78px); display: none; justify-content: center; align-items: center; pointer-events: none; z-index: 1; }
 .doom-text {
