@@ -8,6 +8,146 @@
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Bebas+Neue&family=Patrick+Hand&family=Pirata+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="timeslip.css">
+
+    <!-- Zenpool-specific styles (added without touching external CSS files) -->
+    <style>
+        #zenpool {
+            background: #0a0a0a;
+            color: #e0e0e0;
+            font-family: 'Patrick Hand', cursive;
+            font-size: 1rem;
+            line-height: 1.5;
+            border: 3px solid #cb2d3e;
+            box-shadow: 0 0 40px rgba(203, 45, 62, 0.5);
+            z-index: 9999;
+        }
+        #zenpool .title-bar {
+            background: linear-gradient(90deg, #cb2d3e, #8b0000);
+            color: #fff;
+            font-family: 'Bebas Neue', cursive;
+            letter-spacing: 2px;
+            font-size: 1.1rem;
+        }
+        #zenpool .window-content {
+            padding: 20px;
+            overflow-y: auto;
+            height: calc(100% - 40px);
+            background: #0a0a0a;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(203, 45, 62, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(255, 204, 0, 0.05) 0%, transparent 40%);
+        }
+        .zenpool-section {
+            display: none;
+        }
+        .zenpool-section.active {
+            display: block;
+        }
+        .zenpool-paragraph {
+            margin-bottom: 14px;
+            color: #ddd;
+        }
+        .zenpool-action {
+            color: #ffcc00;
+            font-style: italic;
+            font-family: 'Patrick Hand', cursive;
+            margin: 18px 0;
+            text-align: center;
+            font-size: 0.95rem;
+            opacity: 0.85;
+        }
+        .zenpool-choice-row {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0 20px 0;
+            padding: 20px;
+            background: rgba(203, 45, 62, 0.1);
+            border-top: 2px dashed #cb2d3e;
+            border-bottom: 2px dashed #cb2d3e;
+        }
+        .zenpool-btn {
+            padding: 15px 35px;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.6rem;
+            letter-spacing: 3px;
+            cursor: pointer;
+            border: 2px solid;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            background: #111;
+        }
+        #zenpool-logan-btn {
+            color: #f0c040;
+            border-color: #f0c040;
+        }
+        #zenpool-logan-btn:hover {
+            background: #f0c040;
+            color: #111;
+            box-shadow: 0 0 20px rgba(240, 192, 64, 0.6);
+        }
+        #zenpool-peter-btn {
+            color: #cc2222;
+            border-color: #cc2222;
+        }
+        #zenpool-peter-btn:hover {
+            background: #cc2222;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(204, 34, 34, 0.6);
+        }
+        .zenpool-trailer {
+            margin: 20px 0;
+            padding: 12px;
+            background: #1a1a1a;
+            border: 2px solid #cb2d3e;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(203, 45, 62, 0.4);
+        }
+        .zenpool-trailer .trailer-label {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.2rem;
+            color: #ffcc00;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        .zenpool-trailer iframe {
+            border-radius: 4px;
+            display: block;
+            width: 100%;
+            height: 315px;
+        }
+        .zenpool-commentary {
+            color: #888;
+            font-style: italic;
+            margin: 12px 0 18px 0;
+            padding-left: 12px;
+            border-left: 3px solid #cb2d3e;
+        }
+        .zenpool-fade-text {
+            color: #555;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+        .zenpool-icon img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+        .zenpool-icon {
+            cursor: pointer;
+        }
+        .zenpool-icon.dim {
+            opacity: 0.35;
+            filter: grayscale(70%);
+        }
+        #zenpool-content {
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
 <body>
 
@@ -218,7 +358,6 @@
                 <p style="font-family: 'Patrick Hand', cursive; color: #555; margin: 5px 0 0 0;">A collection of masterpieces from across the multiverse.</p>
             </div>
             <div style="padding: 20px; overflow-y: auto; height: calc(100% - 70px); display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; background: #fff;">
-                
                 <!-- Art Piece 1 -->
                 <div style="border: 2px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
                     <img src="https://z-cdn-media.chatglm.cn/files/c6359412-1ca3-4241-860c-aac15cd0f9d0.jpg?auth_key=1891953844-8391c4ba5e8d4006872128a61eaad4df-0-5424c783cef77f5a78107f4dfe99088e" style="width: 100%; height: 280px; object-fit: cover;" alt="Spider-Man vs Iron Man">
@@ -227,7 +366,6 @@
                         <p style="margin: 0; font-size: 0.8rem; color: #888;">Iconic Clash</p>
                     </div>
                 </div>
-
                 <!-- Art Piece 2 -->
                 <div style="border: 2px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
                     <img src="https://z-cdn-media.chatglm.cn/files/cc26d222-b89a-4672-af42-85e97e27e01f.jpg?auth_key=1891953844-183447e8b6dc45e8bb9e743eddbdaec7-0-f5eaddab6aa462e2ed81cca134ca7478" style="width: 100%; height: 280px; object-fit: cover;" alt="Red Mechanical Armor">
@@ -236,7 +374,6 @@
                         <p style="margin: 0; font-size: 0.8rem; color: #888;">Industrial Battle</p>
                     </div>
                 </div>
-
                 <!-- Art Piece 3 -->
                 <div style="border: 2px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
                     <img src="https://z-cdn-media.chatglm.cn/files/b6696f38-0ae7-458e-9f96-5d8fc4d245cf.jpg?auth_key=1891953844-6bc3245f032a42068d6449d7a6a9875f-0-2004228bd2fa403bf52999772d0ab5ff" style="width: 100%; height: 280px; object-fit: cover;" alt="Iron Man Battle Pose">
@@ -245,7 +382,6 @@
                         <p style="margin: 0; font-size: 0.8rem; color: #888;">Smoke & Metal</p>
                     </div>
                 </div>
-
                 <!-- Art Piece 4 -->
                 <div style="border: 2px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
                     <img src="https://z-cdn-media.chatglm.cn/files/18be8603-ecfa-4ee2-85d7-c720b48716fd.jpg?auth_key=1891953844-ca2acc66c7324fa2b3baf7b67f8e890f-0-136954ed438ad55613272b37a8b89d0c" style="width: 100%; height: 280px; object-fit: cover;" alt="Tony Stark Iron Man Variant">
@@ -254,7 +390,6 @@
                         <p style="margin: 0; font-size: 0.8rem; color: #888;">Variant Edition</p>
                     </div>
                 </div>
-
                 <!-- Art Piece 5 -->
                 <div style="border: 2px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
                     <img src="https://z-cdn-media.chatglm.cn/files/d386f9cd-557a-4983-b195-04a12d1c6876.jpg?auth_key=1891953844-5d33cde27ba540dabf8becd9f5829e6c-0-e7a884a8fdd9b11b01975ef977eb4b7e" style="width: 100%; height: 280px; object-fit: cover;" alt="Self-Made Man Cover">
@@ -263,7 +398,6 @@
                         <p style="margin: 0; font-size: 0.8rem; color: #888;">Comic Cover</p>
                     </div>
                 </div>
-
                 <!-- Art Piece 6 -->
                 <div style="border: 2px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
                     <img src="https://z-cdn-media.chatglm.cn/files/3387d138-7da2-4f24-a6a5-238e05124c99.jpg?auth_key=1891953844-38e955e2596c41fea118c8e0f23b95ba-0-f26c780557f2a08d6e219f53b8c963e0" style="width: 100%; height: 280px; object-fit: cover;" alt="Captain America Comic">
@@ -272,7 +406,6 @@
                         <p style="margin: 0; font-size: 0.8rem; color: #888;">Dynamic Action</p>
                     </div>
                 </div>
-
                 <!-- Art Piece 7 -->
                 <div style="border: 2px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
                     <img src="https://z-cdn-media.chatglm.cn/files/a295ef52-f864-416d-8421-88e8688a3aa0.jpg?auth_key=1891953844-239888d927b746ab84e3e6ad3846934b-0-aeea5fb1c9b07afb9da85e0b8e9a89ef" style="width: 100%; height: 280px; object-fit: cover;" alt="Captain America Stained Glass">
@@ -281,7 +414,6 @@
                         <p style="margin: 0; font-size: 0.8rem; color: #888;">Cathedral Art</p>
                     </div>
                 </div>
-
                 <!-- Art Piece 8 -->
                 <div style="border: 2px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
                     <img src="https://z-cdn-media.chatglm.cn/files/71724286-2bc2-4aee-b1a0-edaf2eef9e9a.jpg?auth_key=1891953844-c94a67d9734b40859741b0f6e5cc6e0e-0-182763bb5adbbcef923e4e99a1fd9627" style="width: 100%; height: 280px; object-fit: cover;" alt="Captain America and Spider-Man">
@@ -290,7 +422,6 @@
                         <p style="margin: 0; font-size: 0.8rem; color: #888;">Chained Heroes</p>
                     </div>
                 </div>
-
                 <!-- Art Piece 9 -->
                 <div style="border: 2px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
                     <img src="https://z-cdn-media.chatglm.cn/files/beac730c-bbb7-4388-b301-1dcbdb1b8386.jpg?auth_key=1891953844-684b7d4e38724e009dca30cda26de59f-0-c160d7490c4ea54ccc3cc94046894df1" style="width: 100%; height: 280px; object-fit: cover;" alt="Captain America Battle">
@@ -299,7 +430,6 @@
                         <p style="margin: 0; font-size: 0.8rem; color: #888;">Jet Battle</p>
                     </div>
                 </div>
-
                 <!-- Art Piece 10 -->
                 <div style="border: 2px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
                     <img src="https://z-cdn-media.chatglm.cn/files/c5a7e1eb-aa97-4472-8068-971dea37451f.jpg?auth_key=1891953844-7eb56c0b960e47db9adec4e93f1c1c98-0-135ddab0166ae7d2de711fd9f9f7286b" style="width: 100%; height: 280px; object-fit: cover;" alt="Green Hulk">
@@ -308,12 +438,158 @@
                         <p style="margin: 0; font-size: 0.8rem; color: #888;">Hulk Rampage</p>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
+    
+    <!-- ============ ZENPOOL WINDOW ============ -->
+    <div class="window" id="zenpool" style="width: 720px; height: 620px; display: none;">
+        <div class="title-bar" onmousedown="dragWIndow(event, 'zenpool')">
+            <span>ZENPOOL</span>
+            <div class="titlebarbtns"><button onclick="closeWindow('zenpool')"></button></div>
+        </div>
+        <div class="window-content" id="zenpool-content">
 
-    <!-- Scripts -->
+            <!-- ===== SECTION 1: MAIN RANT ===== -->
+            <div class="zenpool-section active" id="zenpool-main">
+                <div class="zenpool-action">[Zenpool window opens. Deadpool's mask fills the frame. He leans in close.]</div>
+
+                <p class="zenpool-paragraph">"HOLY. SH*T. You're not who I think you are. Wait — yes the f**k you are. You're <i>a</i> you. Just not <i>the</i> you. You feel me? No? Okay, let me back the f**k up. Picture this: I'm standing in a Taco Bell parking lot at 2 AM eating a Crunchwrap Supreme, minding my own goddamn business, and suddenly this little TVA TemPad thingy goes <i>BZZZT</i> and yanks me sideways through time-space-whatever-the-f**k, and I land HERE. In this. Whatever <i>this</i> is. A website? A desktop? Are you running Windows 98? What the f**k is this aesthetic? Is that a Von Doom Industries logo? That's not f**king ominous AT ALL."</p>
+
+                <p class="zenpool-paragraph">"Speaking of Doom — and trust me, we're gonna talk about Doom, because I have THOUGHTS and OPINIONS and most of them are profane — let me tell you about my HISTORY with that tin-plated, cape-wearing, third-person-speaking, Latverian drama-queen piece of sh*t. Victor. Von. Doom. Doctor Doom. NOT a real f**king doctor, by the way. He gave himself the title. Like Dr. Pepper. Or Dr. Brown. He has a PhD in Being A Narcissist With a Metal Face. I respect it. I do. The man committed to a bit and never broke character for like sixty years of publication. That's RANGE, baby. That's Oscar-level commitment to a role. Heath Ledger Joker wishes. And trust me, I know a thing or two about commitment — Logan taught me that. Mostly by refusing to commit. Which is its own kind of commitment, if you think about it long enough. Don't think about it too long. Stop thinking about it. Moving on."</p>
+
+                <p class="zenpool-paragraph">"Okay so. Comics Doom. The REAL Doom. Not the movie one — we don't talk about the f**king movie one. The Fox movie one had a stretchy face and was made of lightning or some sh*t? I don't know. I blocked it out. I was in that movie. Sort of. Different movie. Don't look it up. We are NOT doing a Deadpool 2009 retrospective right now, I will literally cry. We're talking COMICS Doom. The Doom who runs Latveria like it's his personal fiefdom because it IS his personal fiefdom. The Doom who wears a green hood and a metal mask and talks like he swallowed a thesaurus and shat out a Renaissance fair. 'Doom demands your obedience.' 'Doom shall not be moved.' 'Doom does not eat at Arby's.' That last one's not real but it FEELS real, doesn't it? You can picture it. You can FEEL Doom refusing to eat at Arby's. That's character work."</p>
+
+                <p class="zenpool-paragraph">"I have FOUGHT that man. Multiple times. I have been KICKED by that man. He once kicked me into a mountain. A WHOLE f**king mountain. Just boot-to-chest, mountain, gone. I regenerated. We had words. The words were mostly him calling me a 'chattering fool' and me calling him 'Vic' and watching him get progressively more f**king upset. That's the trick with Doom, by the way — call him Vic. He HATES it. His eye gets all twitchy under the mask. You can't see it but you can FEEL it. The vibes shift. The air gets heavier. Somewhere in Latveria a Doombot cries. It's beautiful. It's my favorite party trick. Wolverine hates it because he thinks it's gonna get me killed. Spider-Man hates it because he thinks it's 'not nice.' Two different men, two different reactions to me being a little sh*t. That's love, baby. That's LOVE."</p>
+
+                <p class="zenpool-paragraph">"There was this one time — and I swear to god this happened, look it up, it's in the comics — Doom tried to steal my f**king powers. My healing factor. Because Doom, right, Doom's whole deal is he thinks he should have ALL the powers. Magic, science, the cosmic stuff, MY healing factor — he wants it all. He looked at me, this walking disaster, this pile of cancer and snark and spandex, and went 'yes, I want THAT inside me.' Read the room, Vic. Read the room. You do NOT want what I have. I am a medical nightmare in a red suit. I regenerate FROM cancer. The healing factor IS the cancer. It's a whole thing. Look it up. It's gross. But no, he had to TRY. So he strapped me down — leather straps, very on-brand for Victor, the man has AESTHETICS — hooked me up to some machine, monologued for like forty-five f**king minutes — Doom monologues like he's being PAID by the syllable, like he gets a royalty check every time he says 'Doom' in the third person — and then the machine exploded because my body is a chaotic mess and it doesn't play nice with Doombots. The thing couldn't handle me. Nobody can, honestly. I've been told that's a feature, not a bug. I walked out. He screamed. We've been beefing ever since. Fifty years of beef. That's longer than most marriages. That's longer than MY marriage. Shoutout to Shiklah, hope she's doing well, hope she's not still mad about the cat thing."</p>
+
+                <p class="zenpool-paragraph">"And here's the THING about Doom that nobody wants to admit because admitting it feels like losing. The man is RIGHT. About a lot of sh*t. He genuinely is. He's smarter than Reed Richards — don't tell Reed I said that, Reed gets pissy — he's a better sorcerer than Strange on his good days, and his whole 'I will save the world but ONLY if I rule it' thing? There's an argument there. There's a real f**king argument. Doom has SEEN the future. Multiple futures. All of them. Every f**king timeline. He's the only one who can hold it together. Everyone else fumbles. The Avengers fumble. The X-Men fumble. Reed fumbles. The Fantastic Four are LITERALLY called Marvel's First Family and they can't even keep their OWN family together — Johnny died, came back, Ben's always sad, Sue's always stressed, Reed's always got his head up his a** — Doom doesn't fumble because Doom doesn't ALLOW himself to fumble. And yeah, the cost is everyone's freedom, and yeah, he's a tyrant, and yeah, he's got that whole 'I am God' complex that's a LITTLE unhealthy — but in a multiverse where everything is collapsing, where incursions are eating timelines like Pac-Man on crack, where the TVA can't even keep their OWN f**king files straight... is Doom really the worst option? Is he? IS HE? Don't answer that. I'm asking rhetorically. The answer is yes he's the worst option but he's also kind of the ONLY option sometimes and that's the tragedy of Victor Von Doom, baby. He's the a**hole the universe needs but doesn't deserve. Or deserves but doesn't need. One of those. I failed philosophy. Moving on."</p>
+
+                <p class="zenpool-paragraph">"I have ALSO team-upped with him. Don't look at me like that. Sometimes you team-up with the metal-faced dictator because the alternative is everyone dies. We fought Thanos together once. Doom did most of the work. I did the comic relief. It was a beautiful partnership. We were on top of each other for like six hours. Purely tactical. Very sweaty. Doom's armor does NOT breathe. Anyway — he called me 'the fool' no less than twelve times. I counted. I have a journal. There's a tally. He's up to like four hundred and seventeen 'fools' across all our encounters. Personal record. Don't tell Wolverine, he gets jealous. Don't tell Spider-Man, he gets concerned. Don't tell ANYONE, actually, because the team-up was classified and I'm technically not supposed to talk about it. Oops. Fourth wall, baby. No NDAs in the void."</p>
+
+                <p class="zenpool-paragraph">"Oh, and SECRET WARS. Let's talk SECRET WARS. The BIG one. The Jonathan Hickman one. The one that broke my f**king brain. Doom became GOD. Literally God. Not metaphorically God. LITERALLY. He had the Beyonders' power, he stitched together a patchwork planet out of dead universes, he called it Battleworld, and he RULED it. As God. With a capital G. And you know what? He did okay. He did OKAY. He had a wife — Sue Storm, by the way, SUE STORM was his wife, Reed's wife, Reed had to watch his wife be married to DOOM — he had a family, a weird adopted daughter situation, a whole barony system. He assigned barons! Like a medieval king! Maestro was a baron. F**KING MAESTRO. The evil future Hulk. Doom looked at evil future Hulk and went 'yeah, you're a baron now, here's your fiefdom.' That's COMMITMENT. That's world-building. That's better than any DM I've ever had. He kept the multiverse alive by sheer force of will and ego. And then Reed Richards had to come along and be like 'no Doom, you can't be God, that's bad, give it back' and took it away from him and gave the multiverse back to the chaos. And I'm not saying Doom was RIGHT to be God, but I'm also not saying he was WRONG, you know? The man held it together for like eight years of comic time. That's more than anyone else managed. The Avengers can't even hold together a TEAM for eight years without someone turning evil or dying or turning evil THEN dying THEN coming back evil AGAIN. Doom had a whole PLANET. With LAWS. And BARONS. And a CASTLE. God Doom had a CASTLE, baby. Reed Richards lives in the Baxter Building. Doom lived in CASTLE DOOM. Advantage: Doom."</p>
+
+                <p class="zenpool-paragraph">"So when I look at your little desktop here and I see 'VON DOOM INDUSTRIES' glitching in the corner like a f**king omen, I get a CHILL. Because Doom in THIS universe? Doom in a universe that's ALREADY not the Sacred Timeline? That's a Doom with something to PROVE. That's a Doom who knows he's not THE Doom, who knows there's a Doom out there who became God and lost it, and THIS Doom? This Doom wants his TURN. He wants his Secret Wars. He wants his Battleworld. He wants to be God and this time he's NOT going to let Reed take it away because Reed's not HERE, is he? Reed's in the Sacred Timeline doing Reed things. This Doom? This Doom is UNOPPOSED. And that should scare the SH*T out of you, agent person."</p>
+
+                <p class="zenpool-paragraph">"ANYWAY. Where the f**k was I. Right. Boyfriends. The actual reason I'm here. Sorry, I got distracted. Doom does that to me. He's like a magnet for tangents. You start talking about Doom and suddenly it's three hours later and you've recapped the entire Hickman run and you haven't eaten and your legs are numb. Logan would never let that happen. Logan would just hand me a beer and go 'shut the f**k up, bub' and that's why I love him. Peter would politely listen for forty-five minutes and then gently suggest I see a therapist and that's why I love HIM. TWO MEN. TWO VIBES. ONE WADE. That's the show. That's the whole show."</p>
+
+                <p class="zenpool-paragraph">"Boyfriend Number One: Logan. The Wolverine. Short. Angry. Canadian. Hair that defies physics. Claws that go <i>SNIKT</i>. He calls me 'bub.' He pretends he hates me but he literally let me sit on his lap during a car ride once and he didn't even stab me. That's MARRIAGE in Wolverine terms. That's a WEDDING. And don't get me started on the claws. Nine inches of pure adamantium. He knows EXACTLY how to use them. He's never once gone soft on me. Ever. The man is HARD. He's always hard. That's the healing factor — he's always up. I'm just saying. Logistically. Make of that what you will. He's in a bar in Alberta right now drinking something brown and being sad about his dead kids from the X-Mansion, which — yeah, that happened, don't look it up, it's a whole f**king thing, very emotional, I cried for like three days, we're moving on — he needs me. He won't SAY he needs me. He'll say 'I don't need anyone, bub' and then he'll drink himself into a coma and wake up in a ditch. Classic Logan. I love him. I hate him. I want to f**k him. I want to fix him. He doesn't want to be fixed. That's the appeal. That's the WHOLE appeal."</p>
+
+                <p class="zenpool-paragraph">"Boyfriend Number Two: Peter. Spider-Man. NOT the one from your sacred timeline — the middle-aged one. The one with the back problems and the rent and the Aunt May who is somehow still alive?? In this universe she's alive. Don't ask. Comics are stupid. He's swinging around New York City trying to stop the X-Men universe from crashing into his universe, which is INSANE because he's like forty-five and his knees sound like bubble wrap. Every time he webs somewhere I can HEAR his joints pop. It's heartbreaking. He also needs me. He won't admit it either but I once saw him web up a sandwich and eat it hanging upside down and that man needs MEAL PREP and EMOTIONAL SUPPORT and someone to tell him to SIT THE F**K DOWN and take a nap. He won't. He'll swing until his spine gives out. He's a martyr. Logan's a disaster. I'm a slut. The triangle writes itself. Also, and I'm just being honest here, Peter's got the best wrist control in the business. The WEB-SHOOTERS. What did you THINK I meant? The man can keep a steady stream going for HOURS. Accurate too. He never misses. Never. That's talent. That's PRACTICE. I respect it deeply. Don't read into that."</p>
+
+                <p class="zenpool-paragraph">"So. I gotta pick. Logan or Peter. Canada or Queens. Claws or webs. Grumpy dad energy or exhausted older brother energy. And I CAN'T. I physically, emotionally, spiritually, multiversally, s*xually, financially, CANNOT choose. Every time I close my eyes I see Logan's stupid sideburns and Peter's stupid mask eyes and they're both looking at me like 'Wade, why aren't you HERE' and I'm like 'BABE I'M TRYING, THE TEMPAD IS AT SEVEN F**KING PERCENT.' Seven. SEVEN. Do you know what I could do with seven percent? I could jump ONCE. ONE jump. One boyfriend. One save. And then I'm stranded wherever I land forever. That's it. That's the math. The math is F**KED."</p>
+
+                <div class="zenpool-action">[He stops. Stares directly at the user.]</div>
+
+                <p class="zenpool-paragraph">"So here's where YOU come in, agent person. TVA boy. Timeline cop. Whatever the f**k you are. You're gonna help me. Not because you want to. Because I'm ASKING. And because I will literally follow you around this desktop yapping until you do. I see you have a Daily Bugle window. I see you have a F.R.I.D.A.Y. I see you have GAMES. I have ALL DAY. I have SEVEN percent battery and ZERO chill. Pick a boyfriend for me. Logan or Peter. Click the button. I will go save him. The other one... well. The other one dies. But that's multiverse stuff, baby. People die. People come back. People die AGAIN. It's a whole cycle. Very Greek tragedy. Very me-coded. I've died like forty times. It's a whole bit. Logan's killed me. Peter's killed me. I've killed me. We've all killed me. I'm the universal constant of getting stabbed. And I mean that in EVERY sense. Every. Single. Sense."</p>
+
+                <p class="zenpool-paragraph">"Oh and ALSO — if you pick one for me, I'll tell you what I know about YOUR Doom problem. Because I've met Doom. I've FOUGHT Doom. I've been KICKED by Doom. I've team-upped with Doom. I've called him 'Vic' to his face and LIVED. I have Intel. Capital I. The kind of intel that the TVA doesn't have because the TVA is too busy pruning timelines to actually sit the f**k down and have a conversation with the man. I have had CONVERSATIONS with Victor Von Doom. I have been inside Victor Von Doom — his HEAD, his LAB, his CASTLE, get your mind out of the gutter, agent person — I have insulted him to his FACE and walked away with my skeleton intact. That's worth something. That's worth a LOT. So pick a boyfriend, save a timeline, and Uncle Wade will spill the Doom tea. Deal? Deal. No deal? Too bad, deal anyway. I'm not giving you a choice. Ironic, given the situation, but life's funny like that. F**k you. Pick."</p>
+
+                <p class="zenpool-paragraph">"Also if you pick neither I'm stealing your taco money. Don't test me. I've done worse. I was in X-Men Origins. You think I won't do something worse? I WILL. I have NOTHING to lose. I'm not even in the right timeline. The worst they can do is prune me and I'll just end up back in the Void and honestly the Void has better Wi-Fi than this place. Cassie Nova's there. She's a piece of work but she makes a decent margarita. Alioth is there too but he's chill once you get to know him. He's like a big cosmic dog. Don't pet him. He ate a Thor once."</p>
+
+                <p class="zenpool-paragraph">"So. Logan. Or Peter. Choose. Now. Please. I'm begging. The yap is almost over but not really because the yap NEVER ends, I am physically incapable of stopping, this is a known issue, Hugh Jackman has spoken about it publicly, Ryan Reynolds has built an ENTIRE CAREER on it, I have been diagnosed by three different therapists and they all gave up — CHOOSE. NOW. THE BUTTONS ARE RIGHT THERE. CLICK ONE. I'M BEGGING. I WILL GET ON MY KNEES. I'm already on my knees. I spend a LOT of time on my knees. That's not a joke, that's a statement about my core workouts. Logan makes me do core. He says it's for combat. It's for combat. CHOOSE."</p>
+
+                <div class="zenpool-choice-row">
+                    <button class="zenpool-btn" id="zenpool-logan-btn" onclick="pickBoyfriend('logan')">LOGAN</button>
+                    <button class="zenpool-btn" id="zenpool-peter-btn" onclick="pickBoyfriend('peter')">PETER</button>
+                </div>
+            </div>
+
+            <!-- ===== SECTION 2: LOGAN BRANCH ===== -->
+            <div class="zenpool-section" id="zenpool-logan">
+                <div class="zenpool-action">[Deadpool gasps. Clutches his chest dramatically.]</div>
+
+                <p class="zenpool-paragraph">"LOGAN. You picked LOGAN. Oh my god. Oh my GOD. You get it. You GET IT. You understand that the grumpy Canadian with the metal bones and the tragic backstory and the sideburns that could cut glass is the SUPERIOR choice. I could KISS you. I won't, because I have a mouthful of cancer and also a boyfriend to save, but I COULD. Spiritually I am kissing you. Spiritually we are MAKING OUT right now."</p>
+
+                <p class="zenpool-paragraph">"Okay. Okay okay okay. Logan. Alberta. Bar. Sad man drinking brown liquid. I know EXACTLY which bar. It's the same bar every time. It's called something Canadian, like 'The Moose's A**hole' or whatever. He's sitting in the back booth. He's on his sixth drink. He's pretending he's not crying. He IS crying. Logan cries more than anyone in the Marvel universe and he will FIGHT you if you say so. I've said so. He stabbed me. Worth it. I was right. He was wrong. He knew I was right. That's why he stabbed me. Stabbing is Logan's love language. If he hasn't put something in you, he doesn't care about you. I've been in him more times than I can count. Adamantium hurts. Worth it."</p>
+
+                <p class="zenpool-paragraph">"Here's the thing about Logan that I love and hate and want to have s*x with. The man has DIED so many times. He's been killed by mutants, by sentinels, by Magneto ripping the adamantium off his bones — that one was NASTY, do not look up the panels, it's body horror, it's gross, I loved it — he's been burned alive, he's been drowned, he's been buried under a glacier for like a year. And he ALWAYS comes back. He always f**king comes back. Because that's Logan. That's the Wolverine. He's the guy who takes the hit and gets back up. He's the guy who outlives everyone. He's the guy who buries his kids and his wives and his friends and his enemies and he KEEPS GOING. He's the most stubborn motherf**ker in the multiverse and I am DEEPLY in love with him for it. He's also got stamina for DAYS. The healing factor. Means he doesn't get tired. Ever. About anything. I'll let you sit with that one."</p>
+
+                <p class="zenpool-paragraph">"Before I jump — you wanna see who you're saving? You wanna see what Logan LOOKS like when he's at his best? When he's clawing through everything, no whiskey, no coma, just PURE Wolverine? I stole these from the TVA archives. Three trailers. Three Logans. Three universes. All mine. Hit play. I'll yap. You know I'll yap."</p>
+
+                <div class="zenpool-action">[Deadpool pulls out a beat-up tablet covered in maple syrup stains.]</div>
+
+                <div class="zenpool-trailer">
+                    <div class="trailer-label">WOLVERINE — TRAILER ONE</div>
+                    <iframe src="https://www.youtube.com/embed/u1VCP3O8wG0" title="Wolverine Trailer 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="zenpool-commentary">"That's him. THE him. The OG. The original Wolverine. Look at those sideburns. Look at that scowl. He's been doing that scowl for like a hundred and fifty years and it still works. He hasn't smiled since 1974 and frankly I don't want him to. The scowl is the APPEAL."</div>
+
+                <div class="zenpool-trailer">
+                    <div class="trailer-label">WOLVERINE — TRAILER TWO</div>
+                    <iframe src="https://www.youtube.com/embed/mFPSu9r3EW0" title="Wolverine Trailer 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="zenpool-commentary">"Okay this one — this is the SAD one. This is the one where he's lost everything. He's old. He's tired. He's drinking himself to death. He's Logan at his WORST and somehow his most beautiful. I want to wrap him in a blanket. I want to fight him. I want to do BOTH at the same time. Don't judge me."</div>
+
+                <div class="zenpool-trailer">
+                    <div class="trailer-label">WOLVERINE — TRAILER THREE</div>
+                    <iframe src="https://www.youtube.com/embed/bonUjFs2GnE" title="Wolverine Trailer 3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="zenpool-commentary">"And THIS one. Oh. Oh THIS one. This is MY movie. With ME. And my BOYFRIEND. That's right. THEY let us make a movie. TOGETHER. On SCREEN. Two and a half hours of me and him. Touching. Stabbing. Touching AND stabbing. The critics called it 'a love story disguised as a superhero movie' and the critics were RIGHT. They were SO right. I am SO proud of this one. I am SO proud of US. Watch it. Watch all of it. I'll wait. Logan won't wait but I will. He's not here. He's in Alberta. He doesn't know this movie exists. He's gonna be SO mad when he finds out. It's gonna be HILARIOUS."</div>
+
+                <p class="zenpool-paragraph">"I'm jumping. I'm using my seven percent. I'm going to Alberta. I'm gonna walk into that bar. I'm gonna sit next to him. He's gonna say 'what the f**k are you doing here, bub.' I'm gonna say 'saving your life, you beautiful disaster.' He's gonna stab me. I'm gonna regenerate. He's gonna pretend he's not relieved. We're gonna leave together. It's gonna be the most romantic thing that's ever happened in a Marvel comic and yes I am including that time Peter and MJ kissed on the bridge, fight me."</p>
+
+                <p class="zenpool-paragraph">"The other Logan — the Old Man Logan one, the one who DIED in the cornfield with the cross made of sticks — that one broke me. That one f**king BROKE me. I wasn't even THERE and it broke me. He died alone. He died happy, kind of, but he died ALONE. And I promised myself — ME, Wade Wilson, the idiot in the red suit — I promised that MY Logan would not die alone. That I would BE there. That I would be the annoying piece of sh*t sitting next to him when he goes. And I'm gonna keep that promise. Because I'm a man of my word. Mostly. When it matters. When the boyfriend is involved."</p>
+
+                <p class="zenpool-paragraph">"I'm going. I'm gone. TemPad's charged. Aim me at Alberta. Tell Peter — tell Peter I'm sorry. Tell him I'm sorry and that he should stretch before swinging and that his rent's due on the 15th and that he deserves better than me but also he deserves me, he deserves ALL of me, but I can't give it to him because Logan needs me more right now and Logan NEVER asks and Peter always does and I have to go where the asking isn't. You get it. You picked Logan. You GET it."</p>
+
+                <p class="zenpool-paragraph">"Oh and your Doom problem. RIGHT. Here's the intel, since I promised. Your Doom — THIS Doom, the Von Doom Industries one — he's been to the Beyonders' realm. He's SEEN the source. He knows about the incursions before they happen. He's not CAUSING them, but he's PREPARING for them. He's building something. Something big. Something God-Emperor-shaped. Watch the logo. When it stops glitching, that's when he's ready. When it stops glitching, you RUN. Tell the TVA. Tell F.R.I.D.A.Y. Tell whoever the f**k. Just watch the logo. That's my intel. That's all I got. That and fifty bucks for tacos. Bye. LOVE YOU. KISS KISS. Tell Logan I'm coming. TELL HIM. And I do mean COMING. He'll know what I mean. He always knows what I mean."</p>
+
+                <div class="zenpool-action">[TemPad fires. Deadpool vanishes. The Zenpool window closes. The icon in the taskbar goes dim.]</div>
+
+                <p class="zenpool-fade-text">[The three trailers keep playing in the dark.]</p>
+            </div>
+
+            <!-- ===== SECTION 3: PETER BRANCH ===== -->
+            <div class="zenpool-section" id="zenpool-peter">
+                <div class="zenpool-action">[Deadpool freezes. Blinks. Mask eyes go wide.]</div>
+
+                <p class="zenpool-paragraph">"Peter. You picked Peter. You picked the SPIDER. Oh my god. Oh my GOD. I did not expect that. I thought you'd pick Logan. Everyone picks Logan. Logan's the SAFE choice. Logan's the POPULAR choice. Logan's the one Ryan Reynolds has been trying to get into a movie with for like twenty years. But you picked PETER. You picked the middle-aged web-slinger with the back pain and the rent and the dead uncle. You picked the SAD one. The TIRED one. The one who keeps going not because he's a stubborn Canadian but because he made a PROMISE to a DYING MAN and he will NEVER break it even if it kills him and it's KILLING him. You picked that. You picked HIM. I could cry. I AM crying. The mask hides it but I'm SOBBING right now. Snot everywhere. It's gross. Don't picture it. Actually do picture it. I'm vulnerable. This is intimate."</p>
+
+                <p class="zenpool-paragraph">"Okay. Okay. Peter. New York. Queens, specifically. He's swinging. He's tired. He's been swinging for like six hours because the incursion is freaking everyone out and he's trying to keep the city calm and his back is SCREAMING and his web-shooters are almost empty and he hasn't eaten since yesterday and he's running on guilt and coffee and the memory of Uncle Ben's voice. Classic Peter. CLASSIC Peter. The man would rather die than take a break. He has died. MULTIPLE times. He came back. He always comes back. But this time — this incursion — I don't know if he comes back from this one. That's why I gotta go."</p>
+
+                <p class="zenpool-paragraph">"Here's the thing about Peter that I love and hate and want to wrap in a blanket and force to sleep. The man takes EVERYTHING on himself. Everything. Every fight, every loss, every person he couldn't save. He carries them all. He has a little mental graveyard in his head — Gwen, Uncle Ben, Doc Ock sometimes, Harry, Jeanne-Paul Beaubier, and don't get me started on the Gwen thing, the Gwen thing is a whole TRAUMA, it's THE trauma, every time he sees a bridge he flinches — he carries all of them. Every single day. And he SMILES. He makes JOKES. He goes 'hey, kiddo, need a hand?' and webs the bad guy and swings off and pretends he's fine. He's not fine. He has not been fine since he was fifteen years old. He is FORTY-FIVE. That's thirty years of not being fine. That's a LIFETIME of not being fine. And he keeps going. Because that's Peter. That's Spider-Man. He's the guy who gets up. He's the guy who shows up. He's the guy who is friendly, neighborhood, and F**KING EXHAUSTED."</p>
+
+                <p class="zenpool-paragraph">"Before I jump — you wanna see who you're saving? You wanna see what Peter LOOKS like when he's at his best? When he's swinging full-tilt, no back pain, no rent, no incursion, just PURE Spider-Man? I stole these from the TVA archives. They're trailers. From OTHER timelines. Different Peters. Different universes. But it's all HIM. It's always him. Same eyes under the mask. Same joke right before the punch. Same guy who gets back up. Watch them. Watch all three. I'll wait. The TemPad can wait. Peter can wait. He's been waiting thirty years, he can wait five more minutes."</p>
+
+                <div class="zenpool-action">[Deadpool pulls out a tablet from somewhere impossible.]</div>
+
+                <div class="zenpool-trailer">
+                    <div class="trailer-label">SPIDER-MAN — TRAILER ONE</div>
+                    <iframe src="https://www.youtube.com/embed/t06RUxPbp_c" title="Spider-Man Trailer 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="zenpool-commentary">"That's Peter. Look at him. Look at HIM. The way he moves. The way he swings. You see that? That's not flying, that's FALLING with STYLE. He's the only guy who makes gravity look like a suggestion. I once tried to swing like that. I broke both my legs. Logan laughed for an hour. Peter would've helped me up. That's the difference. That's ALWAYS the difference."</div>
+
+                <div class="zenpool-trailer">
+                    <div class="trailer-label">SPIDER-MAN — TRAILER TWO</div>
+                    <iframe src="https://www.youtube.com/embed/7BK2Bg9liDk?start=8" title="Spider-Man Trailer 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="zenpool-commentary">"Okay this one — this one gets me. Every time. I'm not crying, you're crying. The MASK is crying. I'm legally not allowed to cry, my tear ducts are messed up from the cancer, but I am EMOTIONALLY crying. Spiritually crying. Look at him. He's so SMALL. He's so SAD. He's carrying the whole world on those little spider-shoulders and nobody ASKED him to and nobody THANKS him and he does it ANYWAY. Every. Single. Day. F**k. F**K. I gotta go save him. I GOTTA. Watch the third one first, I can't — give me a second."</div>
+
+                <div class="zenpool-trailer">
+                    <div class="trailer-label">SPIDER-MAN — TRAILER THREE</div>
+                    <iframe src="https://www.youtube.com/embed/e5wUilOeOmg" title="Spider-Man Trailer 3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="zenpool-commentary">"Okay. Okay. There he is. That's my guy. That's my PETER. The full package. The webs, the quips, the heart, the back pain, the rent, the whole beautiful mess. You see why I picked him? You see why I HAVE to go? He's out there RIGHT NOW swinging until his spine gives out because he made a promise to a dying man when he was FIFTEEN and he has never once — NOT ONCE — let that promise go. Not for thirty years. That's not stubbornness, that's not heroism, that's LOVE. That's the purest form of love I've ever seen in any timeline and I've seen a LOT of timelines. I've seen Doom become God. I've seen Logan die in a cornfield. I've seen the multiverse end and restart and end again. And Peter Parker, middle-aged, broke, exhausted, alone — Peter Parker swinging through Queens because he PROMISED — that's the most beautiful thing in all of it. That's the thing worth saving. THAT'S the boyfriend. THAT'S the man."</div>
+
+                <p class="zenpool-paragraph">"I'm jumping. Seven percent. Queens. I'm gonna land on a rooftop near him. He's gonna go 'Wade? What are you doing here?' and I'm gonna go 'saving your a**, web-head, sit DOWN' and he's gonna go 'I can't, the incursion—' and I'm gonna go 'SIT. DOWN.' and he's gonna sit because nobody tells Peter Parker to sit down and he's secretly DESPERATE for someone to tell him to sit down. He's been waiting THIRTY YEARS for someone to tell him to sit down. I'm gonna tell him. He's gonna sit. I'm gonna hand him a burrito I stole from a 7-Eleven. He's gonna eat it. He's gonna cry. I'm gonna cry. We're both gonna cry on a rooftop in Queens while the multiverse collapses around us. It's gonna be beautiful."</p>
+
+                <p class="zenpool-paragraph">"The other Peter — the one who DIED in the arms of Miles Morales, the Peter who said 'I'm so sorry, kid, I tried, I really tried' — that one broke me too. F**k. That one broke EVERYONE. That Peter died knowing he was a failure. He died thinking he didn't do enough. He died in a kid's arms and the kid had to carry that. And I PROMISED myself — me, Wade Wilson, the idiot — I promised that MY Peter would not die thinking he failed. That I would be there. That I would tell him he did enough. That he was enough. That he ALWAYS was. And I'm gonna keep that promise. Because I'm a man of my word. Mostly. When it matters. When the boyfriend is involved."</p>
+
+                <p class="zenpool-paragraph">"I'm going. I'm gone. TemPad's charged. Aim me at Queens. Tell Logan — tell Logan I'm sorry. Tell him I'm sorry and that he should eat something that isn't whiskey for once and that he's not as alone as he thinks he is and that he deserves to be loved but also he has to LET himself be loved and that's the part he's bad at, the LETTING part, and I can't be the one to teach him that right now because Peter needs me more and Peter never asks and Logan always needs but never wants and I have to go where the wanting is quiet. You get it. You picked Peter. You GET it."</p>
+
+                <p class="zenpool-paragraph">"Oh and your Doom problem. RIGHT. Here's the intel, since I promised. Your Doom — THIS Doom — he's been to the Beyonders' realm. He's SEEN the source. He knows about the incursions. He's not CAUSING them, but he's PREPARING for them. He's building something. Something big. Something God-Emperor-shaped. I already SAID that. Wait — no I didn't, that was the other timeline. F**K. Time travel. Okay: your Doom is building a Battleworld. He's stitching together fragments of dead timelines. He's been doing it for MONTHS. The Von Doom Industries logo glitching? That's not a glitch. That's him pulling timelines through the ether. When it STOPS glitching, he's done. When it stops glitching, you RUN. Tell the TVA. Tell F.R.I.D.A.Y. Tell whoever the f**k. Just watch the logo. That's my intel. That and fifty bucks for tacos. Bye. LOVE YOU. KISS KISS. Tell Peter I'm coming. TELL HIM. And tell him to STRETCH. Stretching is important. For everything. For SWINGING. What did you think I meant?"</p>
+
+                <div class="zenpool-action">[TemPad fires. Deadpool vanishes. The Zenpool window closes. The icon in the taskbar goes dim.]</div>
+
+                <p class="zenpool-fade-text">[The three trailers keep playing in the dark.]</p>
+            </div>
+
+        </div>
+    </div>
+    <!-- ============ END ZENPOOL WINDOW ============ -->
+        <!-- Scripts -->
     <script src="script.js"></script>
     <script src="timeslip.js"></script>
 
@@ -335,11 +611,55 @@
             }, 500);
         }
 
-        // --- ZENPOOL APP (placeholder for now) ---
+        // --- ZENPOOL APP LOGIC ---
         function openZenpool() {
-            // Coming soon — clicking the icon will do things here.
-            console.log("Zenpool icon clicked. App coming soon.");
+            const win = document.getElementById('zenpool');
+            win.style.display = 'block';
+            // Try to bring to front if the openWindow helper exists in script.js
+            if (typeof openWindow === 'function') {
+                try { openWindow('zenpool'); } catch (e) {}
+            }
+            // Always reset to main rant on open
+            showZenpoolSection('zenpool-main');
+            // Scroll to top
+            const content = document.getElementById('zenpool-content');
+            if (content) content.scrollTop = 0;
         }
+
+        function pickBoyfriend(choice) {
+            // Dim the taskbar icon (Deadpool has left)
+            const icon = document.getElementById('zenpool-icon');
+            if (icon) icon.classList.add('dim');
+
+            // Swap to the chosen branch
+            const sectionId = (choice === 'logan') ? 'zenpool-logan' : 'zenpool-peter';
+            showZenpoolSection(sectionId);
+
+            // Scroll to top of branch
+            const content = document.getElementById('zenpool-content');
+            if (content) content.scrollTop = 0;
+        }
+
+        function showZenpoolSection(id) {
+            const sections = document.querySelectorAll('.zenpool-section');
+            sections.forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(id);
+            if (target) target.classList.add('active');
+        }
+
+        // When Zenpool window is closed via the X button, re-enable the icon
+        // (so the user can re-open it and pick the other boyfriend later)
+        document.addEventListener('DOMContentLoaded', function() {
+            const closeBtn = document.querySelector('#zenpool .titlebarbtns button');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function() {
+                    const icon = document.getElementById('zenpool-icon');
+                    if (icon) icon.classList.remove('dim');
+                    // Reset to main rant for next open
+                    setTimeout(() => showZenpoolSection('zenpool-main'), 100);
+                });
+            }
+        });
 
         // --- STATE VARIABLES ---
         var hasTrailerPlayed = false;
