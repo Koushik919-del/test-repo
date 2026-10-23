@@ -802,7 +802,8 @@
                 </div>
             </div>
         </div>
-    </div>    <!-- ============ ZENPOOL WINDOW ============ -->
+    </div>
+        <!-- ============ ZENPOOL WINDOW ============ -->
     <div class="window" id="zenpool" style="width: 720px; height: 620px; display: none;">
         <div class="title-bar" onmousedown="dragWIndow(event, 'zenpool')">
             <span>ZENPOOL</span>
@@ -886,7 +887,7 @@
                     <div class="trailer-label">WOLVERINE — TRAILER THREE</div>
                     <iframe src="https://www.youtube.com/embed/bonUjFs2GnE" title="Wolverine Trailer 3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
-                <div class="zenpool-commentary">"And THIS one. oh. Oh THIS one. This is MY movie. With ME. And my BOYFRIEND. That's right. THEY let us make a movie. TOGETHER. On SCREEN. Two and a half hours of me and him. Touching. Stabbing. Touching AND stabbing. The critics called it 'a love story disguised as a superhero movie' and the critics were RIGHT. They were SO right. I am SO proud of this one. I am SO proud of US. Watch it. Watch all of it. I'll wait. Logan won't wait but I will. He's not here. He's in Alberta. He doesn't know this movie exists. He's gonna be SO mad when he finds out. It's gonna be HILARIOUS."</div>
+                <div class="zenpool-commentary">"And THIS one. Oh. Oh THIS one. This is MY movie. With ME. And my BOYFRIEND. That's right. THEY let us make a movie. TOGETHER. On SCREEN. Two and a half hours of me and him. Touching. Stabbing. Touching AND stabbing. The critics called it 'a love story disguised as a superhero movie' and the critics were RIGHT. They were SO right. I am SO proud of this one. I am SO proud of US. Watch it. Watch all of it. I'll wait. Logan won't wait but I will. He's not here. He's in Alberta. He doesn't know this movie exists. He's gonna be SO mad when he finds out. It's gonna be HILARIOUS."</div>
 
                 <p class="zenpool-paragraph">"I'm jumping. I'm using my seven percent. I'm going to Alberta. I'm gonna walk into that bar. I'm gonna sit next to him. He's gonna say 'what the f**k are you doing here, bub.' I'm gonna say 'saving your life, you beautiful disaster.' He's gonna stab me. I'm gonna regenerate. He's gonna pretend he's not relieved. We're gonna leave together. It's gonna be the most romantic thing that's ever happened in a Marvel comic and yes I am including that time Peter and MJ kissed on the bridge, fight me."</p>
 
@@ -953,7 +954,7 @@
     <script src="script.js"></script>
     <script src="timeslip.js"></script>
 
-    <!-- TVA Entry & Doom Protocol Scheduler & Audio Logic -->
+    <!-- TVA Entry & Stark/Doom Mode Scheduler & Audio Logic -->
     <script>
         // --- TVA ENTRY SCREEN LOGIC ---
         function enterMarvelOS() {
@@ -1073,13 +1074,36 @@
             };
         }
 
-        // --- DOOM PROTOCOL VISUALS & TRAILER TRIGGER ---
-        function triggerDoomProtocol() {
-            // 1. Change Logo and Text immediately
+        // --- STARK MODE VISUALS ---
+        function triggerStarkMode() {
+            // Change games icon to Stark Industries (using the FRIDAY/Stark icon)
             const gamesIcon = document.getElementById('games-icon-img');
             const gamesText = document.getElementById('games-icon-text');
             if (gamesIcon) {
-                // Using the EXACT URL provided by the user
+                gamesIcon.src = "https://z-cdn-media.chatglm.cn/files/9ce82c84-6e4e-412b-b17c-c985df1b0320.jpg?auth_key=1891817943-77a54412d084417fa0e592602bdcd27b-0-32515bf0f73662de6ae5600530ff5301";
+                gamesIcon.alt = "Stark Industries";
+            }
+            if (gamesText) {
+                gamesText.innerText = "Stark Industries";
+            }
+
+            // Change desktop text to STARK INDUSTRIES (gold)
+            const doomText = document.querySelector('.doom-text');
+            if (doomText) {
+                doomText.innerHTML = "STARK<br>INDUSTRIES";
+                doomText.style.color = "#ffcc00";
+                doomText.style.textShadow = "0 0 20px rgba(255, 204, 0, 0.6)";
+            }
+
+            console.log("STARK MODE activated.");
+        }
+
+        // --- DOOM MODE VISUALS & TRAILER TRIGGER ---
+        function triggerDoomMode() {
+            // Change games icon to Cynthia Entertainment
+            const gamesIcon = document.getElementById('games-icon-img');
+            const gamesText = document.getElementById('games-icon-text');
+            if (gamesIcon) {
                 gamesIcon.src = "https://z-cdn-media.chatglm.cn/files/f2cd5ee8-716c-4005-bafa-c7bc752132b1.jpg?auth_key=1891952674-2485b7ebf32f494381e5f1412c4ab818-0-9aa17777f8dfee02ba4041e4fb8259d8";
                 gamesIcon.alt = "Cynthia Entertainment";
             }
@@ -1087,7 +1111,15 @@
                 gamesText.innerText = "Cynthia Entertainment";
             }
 
-            // 2. Trailer Trigger Logic (5 seconds after protocol starts)
+            // Change desktop text to VON DOOM INDUSTRIES (reset to default)
+            const doomText = document.querySelector('.doom-text');
+            if (doomText) {
+                doomText.innerHTML = "VON DOOM<br>INDUSTRIES";
+                doomText.style.color = "";
+                doomText.style.textShadow = "";
+            }
+
+            // Trailer trigger logic (5 seconds after Doom Mode starts)
             if (!hasTrailerPlayed) {
                 if (!gameVideoPlaying) {
                     // If they aren't playing a game, wait 5 seconds then play
@@ -1110,44 +1142,28 @@
                     }, 5 * 60 * 1000);
                 }
             }
+
+            console.log("DOOM MODE activated.");
         }
 
-        function endDoomProtocol() {
-            const gamesIcon = document.getElementById('games-icon-img');
-            const gamesText = document.getElementById('games-icon-text');
-            if (gamesIcon) {
-                gamesIcon.src = "https://z-cdn-media.chatglm.cn/files/2f3d2fe1-e9a1-403c-8d77-a28e27ecfbf1.png?auth_key=1891819418-26fdbb5a43b4404cb0194b5d7a52d930-0-640db7da43bd44036761e4df6e239cca";
-                gamesIcon.alt = "Insomniac Games";
-            }
-            if (gamesText) {
-                gamesText.innerText = "Insomniac Games";
-            }
-        }
+        // --- TIME SCHEDULER (alternates Stark / Doom every 5 minutes) ---
+        const FIVE_MINUTES = 5 * 60 * 1000; // 300,000 ms
+        let currentModeIsStark = false; // will be set true immediately below
 
-        // --- TIME SCHEDULER ---
-        const ONE_MINUTE = 1 * 60 * 1000;     // 60,000 ms (Initial Wait)
-        const FIVE_MINUTES = 5 * 60 * 1000;   // 300,000 ms (Protocol Duration)
-        const FIFTEEN_MINUTES = 15 * 60 * 1000; // 900,000 ms (Cycle Duration)
+        // Start with Stark Mode immediately on page load
+        triggerStarkMode();
+        currentModeIsStark = true;
 
-        // 1. Wait 1 minute on initial page load, then start the first Doom Protocol
-        setTimeout(() => {
-            triggerDoomProtocol();
-            
-            // End it after 5 minutes
-            setTimeout(() => {
-                endDoomProtocol();
-            }, FIVE_MINUTES);
-        }, ONE_MINUTE);
-
-        // 2. Set up the recurring 15-minute cycle
+        // Alternate every 5 minutes: Stark → Doom → Stark → Doom → ...
         setInterval(() => {
-            triggerDoomProtocol();
-            
-            // End it after 5 minutes
-            setTimeout(() => {
-                endDoomProtocol();
-            }, FIVE_MINUTES);
-        }, FIFTEEN_MINUTES);
+            if (currentModeIsStark) {
+                triggerDoomMode();
+                currentModeIsStark = false;
+            } else {
+                triggerStarkMode();
+                currentModeIsStark = true;
+            }
+        }, FIVE_MINUTES);
     </script>
 </body>
 </html>
