@@ -224,19 +224,381 @@
 
     <!-- Hidden iframe for Doomsday Trailer Audio (Underneath the main screen) -->
     <iframe id="doomsday-audio-player" style="position: fixed; top: 0; left: 0; width: 1px; height: 1px; z-index: -1; opacity: 0; pointer-events: none;" allow="autoplay"></iframe>
+        <!-- Daily Bugle Newspaper Styles -->
+    <style>
+        #dailybugle {
+            background: #f5efde !important;
+            color: #1a1a1a !important;
+            font-family: 'Times New Roman', Times, serif !important;
+            border: 3px solid #1a1a1a !important;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5) !important;
+        }
+        #dailybugle .title-bar {
+            background: #1a1a1a !important;
+            color: #f5efde !important;
+            font-family: 'Times New Roman', Times, serif !important;
+            letter-spacing: 1px !important;
+        }
+        #dailybugle .window-content {
+            padding: 0 !important;
+            background: #f5efde !important;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(180, 140, 80, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 90% 70%, rgba(150, 110, 60, 0.04) 0%, transparent 50%) !important;
+            overflow-y: auto !important;
+        }
+        .bugle-masthead {
+            background: #f5efde;
+            border-bottom: 4px double #1a1a1a;
+            padding: 20px 25px 15px 25px;
+            text-align: center;
+        }
+        .bugle-masthead .bugle-title-big {
+            font-family: 'Pirata One', 'Times New Roman', serif;
+            font-size: 3.8rem;
+            margin: 0;
+            line-height: 1;
+            letter-spacing: 2px;
+            color: #1a1a1a;
+            text-shadow: 1px 1px 0 rgba(0,0,0,0.08);
+        }
+        .bugle-masthead .bugle-tagline {
+            font-style: italic;
+            font-size: 0.85rem;
+            margin: 8px 0 12px 0;
+            color: #444;
+        }
+        .bugle-meta-row {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #1a1a1a;
+            border-bottom: 1px solid #1a1a1a;
+            padding: 4px 0;
+            font-size: 0.75rem;
+            font-variant: small-caps;
+            letter-spacing: 1px;
+            color: #1a1a1a;
+        }
+        .bugle-body {
+            padding: 18px 22px 22px 22px;
+        }
+        .bugle-headline-strip {
+            font-family: 'Pirata One', 'Times New Roman', serif;
+            font-size: 1.6rem;
+            text-align: center;
+            margin: 0 0 14px 0;
+            padding: 10px 0;
+            border-top: 2px solid #1a1a1a;
+            border-bottom: 1px solid #1a1a1a;
+            letter-spacing: 1px;
+        }
+        .bugle-columns {
+            column-count: 2;
+            column-gap: 24px;
+            column-rule: 1px solid #999;
+        }
+        .bugle-article {
+            break-inside: avoid;
+            margin-bottom: 18px;
+            padding-bottom: 14px;
+            border-bottom: 1px dotted #777;
+        }
+        .bugle-article:last-child {
+            border-bottom: none;
+        }
+        .bugle-article h3 {
+            font-family: 'Pirata One', 'Times New Roman', serif;
+            font-size: 1.25rem;
+            line-height: 1.15;
+            margin: 0 0 4px 0;
+            color: #1a1a1a;
+            letter-spacing: 0.5px;
+        }
+        .bugle-article .bugle-byline {
+            font-size: 0.7rem;
+            font-variant: small-caps;
+            color: #555;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+        .bugle-article p {
+            font-size: 0.85rem;
+            line-height: 1.45;
+            margin: 0;
+            text-align: justify;
+            color: #1a1a1a;
+        }
+        .bugle-article .bugle-lead::first-letter {
+            font-family: 'Pirata One', serif;
+            font-size: 2.6rem;
+            float: left;
+            line-height: 0.85;
+            padding: 4px 6px 0 0;
+            color: #1a1a1a;
+        }
+        .bugle-ad {
+            break-inside: avoid;
+            margin: 18px 0;
+            padding: 12px;
+            background: #fff;
+            border: 2px dashed #b8000f;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .bugle-ad .ad-eyebrow {
+            font-size: 0.6rem;
+            font-variant: small-caps;
+            color: #888;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+        .bugle-ad .ad-logo-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin: 6px 0;
+        }
+        .bugle-ad .ad-lego-logo {
+            height: 32px;
+            width: auto;
+        }
+        .bugle-ad .ad-marvel-text {
+            background: #ed1d24;
+            color: #fff;
+            font-family: 'Arial Black', sans-serif;
+            font-size: 0.9rem;
+            padding: 4px 8px;
+            letter-spacing: 1px;
+            font-style: italic;
+            font-weight: bold;
+        }
+        .bugle-ad .ad-set-name {
+            font-family: 'Arial Black', sans-serif;
+            font-size: 1.05rem;
+            margin: 6px 0 2px 0;
+            color: #1a1a1a;
+            text-transform: uppercase;
+        }
+        .bugle-ad .ad-set-info {
+            font-size: 0.75rem;
+            color: #555;
+            margin: 2px 0;
+        }
+        .bugle-ad .ad-set-price {
+            font-family: 'Arial Black', sans-serif;
+            font-size: 1.2rem;
+            color: #b8000f;
+            margin: 6px 0 2px 0;
+        }
+        .bugle-ad .ad-cta {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 6px 16px;
+            background: #b8000f;
+            color: #fff !important;
+            text-decoration: none;
+            font-family: 'Arial Black', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            border-radius: 3px;
+        }
+        .bugle-ad .ad-cta:hover {
+            background: #d40012;
+        }
+        .bugle-podcast-section {
+            margin-top: 22px;
+            padding: 16px;
+            background: #1a1a1a;
+            color: #f5efde;
+            border-top: 4px double #f5efde;
+        }
+        .bugle-podcast-section h2 {
+            font-family: 'Pirata One', serif;
+            font-size: 1.8rem;
+            margin: 0 0 4px 0;
+            color: #ffcc00;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+        .bugle-podcast-section .podcast-sub {
+            font-style: italic;
+            font-size: 0.8rem;
+            color: #ccc;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        .bugle-podcast-section iframe {
+            width: 100%;
+            height: 360px;
+            border: 2px solid #ffcc00;
+            background: #000;
+        }
+        .bugle-podcast-footnote {
+            font-size: 0.7rem;
+            color: #888;
+            text-align: center;
+            margin-top: 8px;
+            font-style: italic;
+        }
+        .bugle-footer-bar {
+            border-top: 2px solid #1a1a1a;
+            margin-top: 18px;
+            padding-top: 8px;
+            font-size: 0.7rem;
+            font-variant: small-caps;
+            text-align: center;
+            color: #444;
+            letter-spacing: 1px;
+        }
+    </style>
 
     <!-- Daily Bugle Window -->
-    <div class="window" id="dailybugle" style="width: 600px; height: 500px;">
+    <div class="window" id="dailybugle" style="width: 880px; height: 680px;">
         <div class="title-bar" onmousedown="dragWIndow(event, 'dailybugle')"><span>The Daily Bugle</span><div class="titlebarbtns"><button onclick="closeWindow('dailybugle')"></button></div></div>
         <div class="window-content">
-            <div class="bugle-header"><h1>The Daily Bugle</h1><p>"Truth. Justice. And Putting Spider-Man Behind Bars."</p></div>
-            <div class="bugle-article"><h3>How Many Hulks Are There?! Hulk-Hater Ross Exposed As Red Hulk!</h3><div class="meta">By J. Jonah Jameson</div><p>First we had the green one. Then the grey one. Now, sources reveal that Thaddeus "Thunderbolt" Ross has mutated into the infamous Red Hulk!</p></div>
-            <div class="bugle-article"><h3>Is Bruce Banner Safe To Be Around?</h3><div class="meta">By J. Jonah Jameson</div><p>After his terrifying new Hulk out inside a Department of Damage Control facility, we have to ask: is Bruce Banner a liability to society?</p></div>
-            <div class="bugle-article"><h3>Spider-Man is a Bad Guy! The Evidence is Clear!</h3><div class="meta">By J. Jonah Jameson</div><p>He wears a mask to hide his identity. He attacks law enforcement. It is time we stop calling him a hero and start calling him what he is: a public menace!</p></div>
+
+            <div class="bugle-masthead">
+                <div class="bugle-title-big">The Daily Bugle</div>
+                <div class="bugle-tagline">"Truth. Justice. And Putting Spider-Man Behind Bars."</div>
+                <div class="bugle-meta-row">
+                    <span>Vol. XCIV &middot; No. 412</span>
+                    <span>New York City &middot; Sacred Timeline Edition</span>
+                    <span>Price: 35&cent;</span>
+                </div>
+            </div>
+
+            <div class="bugle-body">
+
+                <div class="bugle-headline-strip">SPIDER-MAN MENACE STRIKES AGAIN &mdash; HOW MANY MORE?</div>
+
+                <div class="bugle-columns">
+
+                    <!-- Article 1 -->
+                    <div class="bugle-article">
+                        <h3>Spider-Man is a Bad Guy! The Evidence is Clear!</h3>
+                        <div class="bugle-byline">By J. Jonah Jameson &middot; Editor-in-Chief</div>
+                        <p class="bugle-lead">He wears a mask to hide his identity. He attacks law enforcement. He swings through our city like he owns it. It is time we stop calling him a hero and start calling him what he is: a public menace! Spider-Man has been spotted three times this week interfering with police operations, leaving behind a trail of property damage that YOU, the taxpayer, will foot the bill for. When will the city wake up?</p>
+                    </div>
+
+                    <!-- Article 2 -->
+                    <div class="bugle-article">
+                        <h3>How Many Hulks Are There?! Hulk-Hater Ross Exposed As Red Hulk!</h3>
+                        <div class="bugle-byline">By J. Jonah Jameson</div>
+                        <p>First we had the green one. Then the grey one. Now, sources reveal that Thaddeus "Thunderbolt" Ross &mdash; the man who SPENT HIS CAREER hunting the Hulk &mdash; has mutated into the infamous Red Hulk! The hypocrisy is staggering. The man who built his reputation on hating Hulks has BECOME one. Where does it end? How many Hulks must we tolerate before somebody does something?</p>
+                    </div>
+
+                    <!-- Ad 1 — Lego Daily Bugle -->
+                    <div class="bugle-ad">
+                        <div class="ad-eyebrow">&mdash; Advertisement &mdash;</div>
+                        <div class="ad-logo-row">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/LEGO_logo.svg/256px-LEGO_logo.svg.png" alt="LEGO" class="ad-lego-logo">
+                            <span class="ad-marvel-text">MARVEL</span>
+                        </div>
+                        <div class="ad-set-name">Daily Bugle (Set 76178)</div>
+                        <div class="ad-set-info">3,772 pieces &middot; 25 minifigures &middot; 32 in. tall</div>
+                        <div class="ad-set-price">$299.99</div>
+                        <a href="https://www.lego.com/en-us/product/daily-bugle-76178" target="_blank" class="ad-cta">BUILD THE BUGLE! &rsaquo;</a>
+                    </div>
+
+                    <!-- Article 3 -->
+                    <div class="bugle-article">
+                        <h3>Is Bruce Banner Safe To Be Around?</h3>
+                        <div class="bugle-byline">By J. Jonah Jameson</div>
+                        <p>After his terrifying new Hulk-out inside a Department of Damage Control facility, we have to ask: is Bruce Banner a liability to society? The man turns into a giant green rage monster whenever he gets angry, and yet we are expected to just let him walk the streets. One bad day at the coffee shop and half of Manhattan is rubble. Where is the accountability? Where is the oversight? Where is the COMMON SENSE?</p>
+                    </div>
+
+                    <!-- Article 4 -->
+                    <div class="bugle-article">
+                        <h3>Captain America Sues the New Avengerz! Copyright Chaos!</h3>
+                        <div class="bugle-byline">By J. Jonah Jameson</div>
+                        <p>In a legal battle that has the entire superhero community reeling, the original Captain America has filed a multi-billion dollar lawsuit against the newly-formed "Avengerz" (yes, with a Z) over copyright infringement. "I was Captain America first," Rogers reportedly told confidants. The new team, which uses the same name but a trendy misspelling, claims fair use. The case has no end in sight, and we expect this Infinity War of lawyers to drag on for years.</p>
+                    </div>
+
+                    <!-- Article 5 -->
+                    <div class="bugle-article">
+                        <h3>Mutants: Born or Made? DODC's Dark Secret Exposed!</h3>
+                        <div class="bugle-byline">By J. Jonah Jameson</div>
+                        <p>An inside source at the Department of Damage Control has confirmed what many have long suspected: people are being BORN with mutations, and the DODC has been performing illegal testing on them for years. These so-called "mutants" have powers from birth &mdash; not from accidents, not from experiments, not from radioactive spiders (looking at YOU, menace). They are the next step in human evolution, and our government is treating them like lab rats. DISGUSTING.</p>
+                    </div>
+
+                    <!-- Article 6 -->
+                    <div class="bugle-article">
+                        <h3>The Sokovia Accords: Are They Working?</h3>
+                        <div class="bugle-byline">By J. Jonah Jameson</div>
+                        <p>Signed. Sealed. And barely enforced. The Sokovia Accords were supposed to bring enhanced individuals under control, but a year later the streets are more chaotic than ever. Tony Stark signed. War Machine signed. Captain America DECLINED. And what happened? Cap went rogue, the Avengers fractured, and Spider-Man swings free as a bird. The Accords are a piece of paper. We need enforcement, not legislation.</p>
+                    </div>
+
+                    <!-- Ad 2 — Lego Spider-Man vs Sandman -->
+                    <div class="bugle-ad">
+                        <div class="ad-eyebrow">&mdash; Advertisement &mdash;</div>
+                        <div class="ad-logo-row">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/LEGO_logo.svg/256px-LEGO_logo.svg.png" alt="LEGO" class="ad-lego-logo">
+                            <span class="ad-marvel-text">MARVEL</span>
+                        </div>
+                        <div class="ad-set-name">Spider-Man vs. Sandman (Set 76315)</div>
+                        <div class="ad-set-info">582 pieces &middot; Ages 8+ &middot; Battle in the quarry</div>
+                        <div class="ad-set-price">$49.99</div>
+                        <a href="https://www.lego.com/en-us/themes/marvel" target="_blank" class="ad-cta">SHOP NOW &rsaquo;</a>
+                    </div>
+
+                    <!-- Article 7 -->
+                    <div class="bugle-article">
+                        <h3>Where is Tony Stark? Reclusive Billionaire Goes Silent!</h3>
+                        <div class="bugle-byline">By J. Jonah Jameson</div>
+                        <p>Stark Industries has not released a public statement from CEO Tony Stark in over six weeks. No press conferences. No gala appearances. No "I am Iron Man" grandstanding. Sources close to the billionaire suggest he has retreated to his upstate compound, fueling rumors of a falling-out with the Avengers or, worse, a relapse. We deserve answers. Stark built his fortune on weapons and his redemption on a suit of armor. We have a right to know what he's building now.</p>
+                    </div>
+
+                    <!-- Article 8 -->
+                    <div class="bugle-article">
+                        <h3>Fantastic 4 Spaceship Spotted Over NYC!</h3>
+                        <div class="bugle-byline">By J. Jonah Jameson</div>
+                        <p>A completely white spacecraft, evading standard radar and satellite imaging, was spotted hovering over Manhattan last night. The only notable feature: a glowing blue "4" painted on the hull. Are these visitors? Invaders? Tourists? Whoever they are, they came from somewhere that uses the same numbering system we do, which means they're either friendly or extremely good at imitation. We are watching. We are ALWAYS watching.</p>
+                    </div>
+
+                    <!-- Article 9 -->
+                    <div class="bugle-article">
+                        <h3>Avengerz Tower Sold to Mystery Buyer!</h3>
+                        <div class="bugle-byline">By J. Jonah Jameson</div>
+                        <p>The former Stark Tower &mdash; now rebranded as "Avengerz Tower" &mdash; has reportedly been sold to an unnamed buyer for an undisclosed sum. The deal was closed through seventeen shell companies, none of which have public officers listed. Whoever now owns the building that overlooks ALL of Manhattan has gone to extraordinary lengths to remain anonymous. The real estate agent, when reached for comment, said only: "I cannot confirm or deny." Comforting. Very comforting.</p>
+                    </div>
+
+                    <!-- Ad 3 — Lego Venom -->
+                    <div class="bugle-ad">
+                        <div class="ad-eyebrow">&mdash; Advertisement &mdash;</div>
+                        <div class="ad-logo-row">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/LEGO_logo.svg/256px-LEGO_logo.svg.png" alt="LEGO" class="ad-lego-logo">
+                            <span class="ad-marvel-text">MARVEL</span>
+                        </div>
+                        <div class="ad-set-name">Venom &mdash; Symbiote Showdown (Set 76287)</div>
+                        <div class="ad-set-info">463 pieces &middot; Includes Venom &amp; Spider-Man minifigs</div>
+                        <div class="ad-set-price">$34.99</div>
+                        <a href="https://www.lego.com/en-us/themes/marvel" target="_blank" class="ad-cta">SHOP NOW &rsaquo;</a>
+                    </div>
+
+                </div>
+
+                <div class="bugle-footer-bar">
+                    &copy; Daily Bugle Publishing &middot; Printed in New York City &middot; All Rights Reserved &middot; "If it's in the Bugle, it's the truth." &mdash; JJJ
+                </div>
+
+                <!-- Podcast Section -->
+                <div class="bugle-podcast-section">
+                    <h2>&#127911; JUST THE FACTS &mdash; The Podcast</h2>
+                    <div class="podcast-sub">Live from the booth of J. Jonah Jameson &middot; Stream every episode</div>
+                    <iframe src="https://www.youtube.com/embed/videoseries?list=PLeysuy2ZG8eci5hvOr77pZRfpZIXdRFtX" 
+                            title="Just the Facts with J. Jonah Jameson" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen></iframe>
+                    <div class="bugle-podcast-footnote">Episodes sourced from Marvel's Spider-Man (Insomniac) &middot; The opinions of JJJ do not reflect those of the management. Or anyone. Ever.</div>
+                </div>
+
+            </div>
+
         </div>
     </div>
-
-    <!-- F.R.I.D.A.Y. Window -->
+        <!-- F.R.I.D.A.Y. Window -->
     <div class="window" id="friday" style="width: 380px; height: 550px;">
         <div class="title-bar" onmousedown="dragWIndow(event, 'friday')"><span>F.R.I.D.A.Y. Interface</span><div class="titlebarbtns"><button onclick="closeWindow('friday')"></button></div></div>
         <div class="window-content">
@@ -440,9 +802,7 @@
                 </div>
             </div>
         </div>
-    </div>
-    
-    <!-- ============ ZENPOOL WINDOW ============ -->
+    </div>    <!-- ============ ZENPOOL WINDOW ============ -->
     <div class="window" id="zenpool" style="width: 720px; height: 620px; display: none;">
         <div class="title-bar" onmousedown="dragWIndow(event, 'zenpool')">
             <span>ZENPOOL</span>
@@ -526,7 +886,7 @@
                     <div class="trailer-label">WOLVERINE — TRAILER THREE</div>
                     <iframe src="https://www.youtube.com/embed/bonUjFs2GnE" title="Wolverine Trailer 3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
-                <div class="zenpool-commentary">"And THIS one. Oh. Oh THIS one. This is MY movie. With ME. And my BOYFRIEND. That's right. THEY let us make a movie. TOGETHER. On SCREEN. Two and a half hours of me and him. Touching. Stabbing. Touching AND stabbing. The critics called it 'a love story disguised as a superhero movie' and the critics were RIGHT. They were SO right. I am SO proud of this one. I am SO proud of US. Watch it. Watch all of it. I'll wait. Logan won't wait but I will. He's not here. He's in Alberta. He doesn't know this movie exists. He's gonna be SO mad when he finds out. It's gonna be HILARIOUS."</div>
+                <div class="zenpool-commentary">"And THIS one. oh. Oh THIS one. This is MY movie. With ME. And my BOYFRIEND. That's right. THEY let us make a movie. TOGETHER. On SCREEN. Two and a half hours of me and him. Touching. Stabbing. Touching AND stabbing. The critics called it 'a love story disguised as a superhero movie' and the critics were RIGHT. They were SO right. I am SO proud of this one. I am SO proud of US. Watch it. Watch all of it. I'll wait. Logan won't wait but I will. He's not here. He's in Alberta. He doesn't know this movie exists. He's gonna be SO mad when he finds out. It's gonna be HILARIOUS."</div>
 
                 <p class="zenpool-paragraph">"I'm jumping. I'm using my seven percent. I'm going to Alberta. I'm gonna walk into that bar. I'm gonna sit next to him. He's gonna say 'what the f**k are you doing here, bub.' I'm gonna say 'saving your life, you beautiful disaster.' He's gonna stab me. I'm gonna regenerate. He's gonna pretend he's not relieved. We're gonna leave together. It's gonna be the most romantic thing that's ever happened in a Marvel comic and yes I am including that time Peter and MJ kissed on the bridge, fight me."</p>
 
